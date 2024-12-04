@@ -1,8 +1,4 @@
-let floor, player, faceR, faceL
-
-function preload() {
-  faceR = loadImage(`theMeatManRight.png`)
-}
+let floor, player
 
 function setup() {
   new Canvas(1000, 1000)
