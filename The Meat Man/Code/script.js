@@ -20,7 +20,8 @@ function draw() {
   clear()
   if (kb.presses('left')) {
     meatMan.image = faceL
-  } else if (kb.presses('right')) {
+  }
+  if (kb.presses('right')) {
     meatMan.image = faceR
   }
 }
