@@ -4,7 +4,10 @@ let walkR = {}
 function preload() {
   faceR = loadImage('theMeatManRight.png')
   faceL = loadImage('theMeatManLeft.png')
-  walkR.push(loadImage(''))
+  walkR.push(loadImage('theMeatManWalkingRight-1.png'))
+  walkR.push(loadImage('theMeatManWalkingRight-2.png'))
+  walkR.push(loadImage('theMeatManWalkingRight-3.png'))
+  walkR.push(loadImage('theMeatManWalkingRight-4.png'))
 }
 
 function setup() {
@@ -18,11 +21,13 @@ function setup() {
 }
 
 function draw() {
-  if (kb.presses('left')) {
-    meatMan.image = faceL
-  }
-  if (kb.presses('right')) {
+  if (kb.pressing('right') && kb.pressing('left')) {
+  } else if (kb.pressing('right')) {
     meatMan.image = faceR
+    meatMan.move(10, 'right', 4)
+  } else if (kb.pressing('left')) {
+    meatMan.image = faceL
+    meatMan.move(10, 'left', 4)
   }
   meatMan.image.scale = 0.25
   clear()
