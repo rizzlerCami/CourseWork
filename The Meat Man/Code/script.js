@@ -1,13 +1,14 @@
 let floor, player, faceR, faceL
-let walkR = {}
+let count, l
+let walkR = {'': '', '': ''}
 
 function preload() {
   faceR = loadImage('theMeatManRight.png')
   faceL = loadImage('theMeatManLeft.png')
-  walkR.push(loadImage('theMeatManWalkingRight-1.png'))
-  walkR.push(loadImage('theMeatManWalkingRight-2.png'))
-  walkR.push(loadImage('theMeatManWalkingRight-3.png'))
-  walkR.push(loadImage('theMeatManWalkingRight-4.png'))
+  walkR[0] = loadImage('theMeatManWalkingRight-1.png')
+  walkR[1] = loadImage('theMeatManWalkingRight-2.png')
+  walkR[2] = loadImage('theMeatManWalkingRight-3.png')
+  walkR[3] = loadImage('theMeatManWalkingRight-4.png')
 }
 
 function setup() {
@@ -23,7 +24,16 @@ function setup() {
 function draw() {
   if (kb.pressing('right') && kb.pressing('left')) {
   } else if (kb.pressing('right')) {
-    meatMan.image = faceR
+    count = 0
+    l = 0
+    if (count === 20) {
+      if (l === 4) {
+        l = 0
+      }
+      meatMan.image = walkR[l + 1]
+      l++
+    }
+    count++
     meatMan.move(10, 'right', 4)
   } else if (kb.pressing('left')) {
     meatMan.image = faceL
