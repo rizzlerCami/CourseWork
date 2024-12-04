@@ -1,8 +1,10 @@
-let floor, player, faceR
+let floor, player, faceR, faceL
+let walkR = {}
 
 function preload() {
   faceR = loadImage('theMeatManRight.png')
   faceL = loadImage('theMeatManLeft.png')
+  walkR.push(loadImage(''))
 }
 
 function setup() {
