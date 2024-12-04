@@ -2,7 +2,7 @@ let floor, player, faceR
 
 function preload() {
   faceR = loadImage('theMeatManRight.png')
-  faceL = loadImage('The Meat Man Left.png')
+  faceL = loadImage('theMeatManLeft.png')
 }
 
 function setup() {
@@ -13,15 +13,15 @@ function setup() {
   
   meatMan = new Sprite(200, 800, 93, 100)
   meatMan.image = faceR
-  meatMan.image.scale = 0.25
 }
 
 function draw() {
-  clear()
   if (kb.presses('left')) {
     meatMan.image = faceL
   }
   if (kb.presses('right')) {
     meatMan.image = faceR
   }
+  meatMan.image.scale = 0.25
+  clear()
 }
