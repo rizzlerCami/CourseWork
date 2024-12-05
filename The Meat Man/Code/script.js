@@ -1,13 +1,14 @@
 let floor, player, faceR, faceL, crouchR, crouchL
 let count, l, temp
+let jump = false
 let walkR = ['', '', '', '']
 let walkL = ['', '', '', '']
 
 function preload() {
   faceR = loadImage('theMeatManRight.png')
   faceL = loadImage('theMeatManLeft.png')
-  crouchR = loadImage('theMeatManCrouched.png')
-  
+  crouchR = loadImage('theMeatManCrouchedRight.png')
+  crouchL = loadImage('theMeatManCrouchedLeft.png')
   walkR[0] = loadImage('theMeatManWalkingRight-1.png')
   walkR[1] = loadImage('theMeatManWalkingRight-2.png')
   walkR[2] = loadImage('theMeatManWalkingRight-3.png')
@@ -19,43 +20,52 @@ function preload() {
 }
 
 function movement() {
-  if (kb.pressing('right') && kb.pressing('left')) {
-  } else if (kb.pressing('right')) {
-    if (count === 12) {
-      if (l === 4) {
-        l = 0
+  if (jump === false) {
+    if (kb.pressing('right') && kb.pressing('left')) {
+    } else if (kb.pressing('right')) {
+      if (count === 12) {
+        if (l === 4) {
+          l = 0
+        }
+        meatMan.image = walkR[l]
+        l++
+        count = 0
       }
-      meatMan.image = walkR[l]
-      l++
-      count = 0
-    }
-    count++
-    meatMan.move(10, 'right', 4)
-  } else if (kb.pressing('left')) {
-    if (count === 12) {
-      if (l === 4) {
-        l = 0
+      count++
+      meatMan.move(10, 'right', 4)
+    } else if (kb.pressing('left')) {
+      if (count === 12) {
+        if (l === 4) {
+          l = 0
+        }
+        meatMan.image = walkL[l]
+        l++
+        count = 0
       }
-      meatMan.image = walkL[l]
-      l++
-      count = 0
+      count++
+      meatMan.move(10, 'left', 4)
     }
-    count++
-    meatMan.move(10, 'left', 4)
+  
+    if (kb.pressed('right')) {
+      meatMan.image = 'theMeatManRight.png'
+    } else if (kb.pressed('left')) {
+      meatMan.image = 'theMeatManLeft.png'
+    }
   }
 
-  if (kb.pressed('right')) {
-    meatMan.image = 'theMeatManRight.png'
-  } else if (kb.pressed('left')) {
-    meatMan.image = 'theMeatManLeft.png'
-  }
-
-  if (kb.presses('space')) {
+  if (kb.presses('space') && (meatMan.image === faceL || meatMan.image === walkL[0] || meatMan.image === walkL[1] || meatMan.image === walkL[2] || meatMan.image === walkL[3])) {
     temp = meatMan.image
-    meatMan.image = crouch
+    meatMan.image = crouchL
+    jump = true
+  } else if (kb.presses('space') && (meatMan.image === faceR || meatMan.image === walkR[0] || meatMan.image === walkR[1] || meatMan.image === walkR[2] || meatMan.image === walkR[3])) {
+    temp = meatMan.image
+    meatMan.image = crouchR
+    jump = true
   }
+
   if (kb.pressed('space')) {
     meatMan.image = temp
+    jump = false
   }
 }
 
