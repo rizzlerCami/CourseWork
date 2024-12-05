@@ -1,4 +1,4 @@
-let floor, player, faceR, faceL, crouch
+let floor, player, faceR, faceL, crouchR, crouchL
 let count, l, temp
 let walkR = ['', '', '', '']
 let walkL = ['', '', '', '']
@@ -6,7 +6,8 @@ let walkL = ['', '', '', '']
 function preload() {
   faceR = loadImage('theMeatManRight.png')
   faceL = loadImage('theMeatManLeft.png')
-  crouch = loadImage('theMeatManCrouched.png')
+  crouchR = loadImage('theMeatManCrouched.png')
+  
   walkR[0] = loadImage('theMeatManWalkingRight-1.png')
   walkR[1] = loadImage('theMeatManWalkingRight-2.png')
   walkR[2] = loadImage('theMeatManWalkingRight-3.png')
