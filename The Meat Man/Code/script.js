@@ -1,5 +1,4 @@
 let floor, player, faceR, faceL
-let count, l
 let walkR = {'': '', '': ''}
 
 function preload() {
