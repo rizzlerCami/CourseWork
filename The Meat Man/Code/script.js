@@ -1,6 +1,7 @@
 let floor, player, faceR, faceL, crouchR, crouchL
 let count, l, temp
 let jump = false
+let crouch = false
 let walkR = ['', '', '', '']
 let walkL = ['', '', '', '']
 
@@ -20,7 +21,7 @@ function preload() {
 }
 
 function movement() {
-  if (jump === false) {
+  if (crouch === false && jump === false) {
     if (kb.pressing('right') && kb.pressing('left')) {
     } else if (kb.pressing('right')) {
       if (count === 12) {
@@ -45,7 +46,7 @@ function movement() {
       count++
       meatMan.move(10, 'left', 4)
     }
-  
+
     if (kb.pressed('right')) {
       meatMan.image = 'theMeatManRight.png'
     } else if (kb.pressed('left')) {
@@ -53,22 +54,34 @@ function movement() {
     }
   }
 
-  if (kb.presses('space') && (meatMan.image === faceL || meatMan.image === walkL[0] || meatMan.image === walkL[1] || meatMan.image === walkL[2] || meatMan.image === walkL[3])) {
-    temp = meatMan.image
+  if (kb.presses('shift') && (meatMan.image === faceL || meatMan.image === walkL[0] || meatMan.image === walkL[1] || meatMan.image === walkL[2] || meatMan.image === walkL[3])) {
+    temp = faceL
     meatMan.image = crouchL
-    jump = true
-  } else if (kb.presses('space') && (meatMan.image === faceR || meatMan.image === walkR[0] || meatMan.image === walkR[1] || meatMan.image === walkR[2] || meatMan.image === walkR[3])) {
-    temp = meatMan.image
+    crouch = true
+  } else if (kb.presses('shift') && (meatMan.image === faceR || meatMan.image === walkR[0] || meatMan.image === walkR[1] || meatMan.image === walkR[2] || meatMan.image === walkR[3])) {
+    temp = faceR
     meatMan.image = crouchR
-    jump = true
+    crouch = true
   }
-
-  if (kb.pressed('space')) {
+  if (kb.pressed('shift')) {
     meatMan.image = temp
-    jump = false
+    crouch = false
   }
 }
 
+function jumping() {
+  if (kb.presses('space')) {
+    if (meatMan.image === faceL || meatMan.image === walkL[0] || meatMan.image === walkL[1] || meatMan.image === walkL[2] || meatMan.image === walkL[3]) {
+      meatMan.image = crouchL
+        meatMan.image = faceL
+    } else if (meatMan.image === faceR || meatMan.image === walkR[0] || meatMan.image === walkR[1] || meatMan.image === walkR[2] || meatMan.image === walkR[3]) {
+      meatMan.image = crouchR
+        meatMan.image = faceR
+    }
+    meatMan.velocity.y = -4
+        jump = true
+  }
+}
 function setup() {
   new Canvas(1000, 1000)
   world.gravity.y = 9.8
@@ -79,7 +92,7 @@ function setup() {
   meatMan = new Sprite(200, 800, 93, 100)
   meatMan.image = faceR
   meatMan.rotationLock = true
-  meatMan.mass = 5
+  meatMan.mass = 30
   meatMan.bounciness = 0
 
   count = 0
@@ -88,8 +101,11 @@ function setup() {
 
 function draw() {
   movement()
+  jumping()
+  if (meatMan.collides(floor)) {
+    jump = false
+  }
   camera.pos = meatMan.pos
   meatMan.image.scale = 0.25
   clear()
-
 }
