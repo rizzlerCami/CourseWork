@@ -1,6 +1,5 @@
 let floor, player, faceR, faceL, crouchR, crouchL
 let count, l, temp
-let jump = false
 let crouch = false
 let walkR = ['', '', '', '']
 let walkL = ['', '', '', '']
@@ -21,7 +20,7 @@ function preload() {
 }
 
 function movement() {
-  if (crouch === false && jump === false) {
+  if (crouch === false && meatMan.colliding(floor) > 0) {
     if (kb.pressing('right') && kb.pressing('left')) {
     } else if (kb.pressing('right')) {
       if (count === 12) {
@@ -71,15 +70,9 @@ function movement() {
 
 function jumping() {
   if (kb.presses('space')) {
-    if (meatMan.image === faceL || meatMan.image === walkL[0] || meatMan.image === walkL[1] || meatMan.image === walkL[2] || meatMan.image === walkL[3]) {
-      meatMan.image = crouchL
-        meatMan.image = faceL
-    } else if (meatMan.image === faceR || meatMan.image === walkR[0] || meatMan.image === walkR[1] || meatMan.image === walkR[2] || meatMan.image === walkR[3]) {
-      meatMan.image = crouchR
-        meatMan.image = faceR
+    if (meatMan.colliding(floor) > 0) {
+      meatMan.velocity.y = -7
     }
-    meatMan.velocity.y = -4
-        jump = true
   }
 }
 function setup() {
@@ -100,12 +93,14 @@ function setup() {
 }
 
 function draw() {
-  movement()
   jumping()
-  if (meatMan.collides(floor)) {
-    jump = false
-  }
+  movement()
   camera.pos = meatMan.pos
   meatMan.image.scale = 0.25
   clear()
+  if (meatMan.colliding(floor) > 0) {
+    meatMan.debug = true
+  } else {
+    meatMan.debug = false
+  }
 }
