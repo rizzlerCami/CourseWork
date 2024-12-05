@@ -1,11 +1,12 @@
-let floor, player, faceR, faceL
-let count, l
+let floor, player, faceR, faceL, crouch
+let count, l, temp
 let walkR = ['', '', '', '']
 let walkL = ['', '', '', '']
 
 function preload() {
   faceR = loadImage('theMeatManRight.png')
   faceL = loadImage('theMeatManLeft.png')
+  crouch = loadImage('theMeatManCrouched.png')
   walkR[0] = loadImage('theMeatManWalkingRight-1.png')
   walkR[1] = loadImage('theMeatManWalkingRight-2.png')
   walkR[2] = loadImage('theMeatManWalkingRight-3.png')
@@ -48,8 +49,12 @@ function movement() {
     meatMan.image = 'theMeatManLeft.png'
   }
 
-  if (kb.pressing('space')) {
-    meatMan.velocity.y = -5
+  if (kb.presses('space')) {
+    temp = meatMan.image
+    meatMan.image = crouch
+  }
+  if (kb.pressed('space')) {
+    meatMan.image = temp
   }
 }
 
