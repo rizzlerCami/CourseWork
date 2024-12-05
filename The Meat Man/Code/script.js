@@ -1,5 +1,6 @@
 let floor, player, faceR, faceL
-let walkR = {'': '', '': ''}
+let count, l
+let walkR = ['', '', '', '']
 
 function preload() {
   faceR = loadImage('theMeatManRight.png')
@@ -23,13 +24,23 @@ function setup() {
 function draw() {
   if (kb.pressing('right') && kb.pressing('left')) {
   } else if (kb.pressing('right')) {
-    meatMan.image = faceR
-    meatMan.move(8, 'right', 4)
+    skib()
   } else if (kb.pressing('left')) {
     meatMan.image = faceL
-    meatMan.move(8, 'left', 4)
+    meatMan.move(10, 'left', 4)
   }
   meatMan.image.scale = 0.25
-  meatMan.debug = mouse.pressing()
   clear()
+}
+
+function skib() {
+  count = 0
+    l = 0
+      if (l === 4) {
+        l = 0
+      }
+      meatMan.image = walkR[l]
+      l++
+    count++
+    meatMan.move(10, 'right', 4)
 }
