@@ -1,6 +1,5 @@
 let floor, player, faceR, faceL, crouchR, crouchL
 let count, l, temp
-let jump = false
 let crouch = false
 let walkR = ['', '', '', '']
 let walkL = ['', '', '', '']
@@ -24,26 +23,34 @@ function movement() {
   if (crouch === false) {
     if (kb.pressing('right') && kb.pressing('left')) {
     } else if (kb.pressing('right')) {
-      if (count === 12) {
-        if (l === 4) {
-          l = 0
+      if (meatMan.colliding(floor) > 0) {
+        if (count === 12) {
+          if (l === 4) {
+            l = 0
+          }
+          meatMan.image = walkR[l]
+          l++
+          count = 0
         }
-        meatMan.image = walkR[l]
-        l++
-        count = 0
+        count++
+      } else {
+        meatMan.image = faceR
       }
-      count++
       meatMan.velocity.x = 6
     } else if (kb.pressing('left')) {
-      if (count === 12) {
-        if (l === 4) {
-          l = 0
+      if (meatMan.colliding(floor) > 0) {
+        if (count === 12) {
+          if (l === 4) {
+            l = 0
+          }
+          meatMan.image = walkL[l]
+          l++
+          count = 0
         }
-        meatMan.image = walkL[l]
-        l++
-        count = 0
+        count++
+      } else {
+        meatMan.image = faceL
       }
-      count++
       meatMan.velocity.x = -6
     }
 
@@ -70,11 +77,13 @@ function movement() {
 }
 
 function jumping() {
-  if (kb.presses('space')) {
-    if (jump === false) {
+  if (kb.presses('space') && meatMan.colliding(floor) > 0) {
       meatMan.velocity.y = -7
-          jump = true
-    }
+  }
+  if (kb.presses('space') && (meatMan.image === faceL || meatMan.image === walkL[0] || meatMan.image === walkL[1] || meatMan.image === walkL[2] || meatMan.image === walkL[3])) {
+    meatMan.image = faceL
+  } else if (kb.presses('space') && (meatMan.image === faceR || meatMan.image === walkR[0] || meatMan.image === walkR[1] || meatMan.image === walkR[2] || meatMan.image === walkR[3])) {
+    meatMan.image = faceR
   }
 }
 function setup() {
@@ -98,10 +107,8 @@ function setup() {
 function draw() {
   movement()
   jumping()
-  if (meatMan.collides(floor)) {
-    jump = false
-  }
   camera.pos = meatMan.pos
   meatMan.image.scale = 0.25
+  meatMan.debug = mouse.pressing()
   clear()
 }
