@@ -9,6 +9,10 @@ function preload() {
   walkR[1] = loadImage('theMeatManWalkingRight-2.png')
   walkR[2] = loadImage('theMeatManWalkingRight-3.png')
   walkR[3] = loadImage('theMeatManWalkingRight-4.png')
+  walkL[0] = loadImage('theMeatManWalkingLeft-1.png')
+  walkL[1] = loadImage('theMeatManWalkingLeft-2.png')
+  walkL[2] = loadImage('theMeatManWalkingLeft-3.png')
+  walkL[3] = loadImage('theMeatManWalkingLeft-4.png')
 }
 
 function setup() {
@@ -19,28 +23,35 @@ function setup() {
   
   meatMan = new Sprite(200, 800, 93, 100)
   meatMan.image = faceR
+  count = 0
+  l = 0
 }
 
 function draw() {
   if (kb.pressing('right') && kb.pressing('left')) {
   } else if (kb.pressing('right')) {
-    skib()
-  } else if (kb.pressing('left')) {
-    meatMan.image = faceL
-    meatMan.move(10, 'left', 4)
-  }
-  meatMan.image.scale = 0.25
-  clear()
-}
-
-function skib() {
-  count = 0
-    l = 0
+    if (count === 20) {
       if (l === 4) {
         l = 0
       }
       meatMan.image = walkR[l]
       l++
+      count = 0
+    }
     count++
     meatMan.move(10, 'right', 4)
+  } else if (kb.pressing('left')) {
+    if (count === 20) {
+      if (l === 4) {
+        l = 0
+      }
+      meatMan.image = walkL[l]
+      l++
+      count = 0
+    }
+    count++
+    meatMan.move(10, 'left', 4)
+  }
+  meatMan.image.scale = 0.25
+  clear()
 }
