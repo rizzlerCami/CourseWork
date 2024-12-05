@@ -93,7 +93,7 @@ function setup() {
   floor = new Sprite(500, 900, 1000, 300, "s")
   floor.bounciness = 0
   
-  meatMan = new Sprite(200, 800, 93, 100)
+  meatMan = new Sprite([[400, 750], [347, 750], [320, 720], [320, 680], [450, 680], [450, 720], [400, 750]])
   meatMan.image = faceR
   meatMan.rotationLock = true
   meatMan.mass = 30
@@ -110,5 +110,7 @@ function draw() {
   camera.pos = meatMan.pos
   meatMan.image.scale = 0.25
   meatMan.debug = mouse.pressing()
+  meatMan.image.offset.y = -70
+  meatMan.image.offset.x = -60
   clear()
 }
