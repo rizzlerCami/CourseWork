@@ -49,8 +49,7 @@ function movement() {
   }
 
   if (kb.pressing('space')) {
-    meatMan.bearing = 90
-    meatMan.applyForce(3)
+    meatMan.velocity.y = -5
   }
 }
 
@@ -59,10 +58,13 @@ function setup() {
   world.gravity.y = 9.8
 
   floor = new Sprite(500, 900, 1000, 300, "s")
+  floor.bounciness = 0
   
   meatMan = new Sprite(200, 800, 93, 100)
   meatMan.image = faceR
   meatMan.rotationLock = true
+  meatMan.mass = 5
+  meatMan.bounciness = 0
 
   count = 0
   l = 0
