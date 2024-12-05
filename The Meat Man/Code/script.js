@@ -24,21 +24,13 @@ function setup() {
 function draw() {
   if (kb.pressing('right') && kb.pressing('left')) {
   } else if (kb.pressing('right')) {
-    count = 0
-    l = 0
-    if (count === 20) {
-      if (l === 4) {
-        l = 0
-      }
-      meatMan.image = walkR[l + 1]
-      l++
-    }
-    count++
-    meatMan.move(10, 'right', 4)
+    meatMan.image = faceR
+    meatMan.move(8, 'right', 4)
   } else if (kb.pressing('left')) {
     meatMan.image = faceL
-    meatMan.move(10, 'left', 4)
+    meatMan.move(8, 'left', 4)
   }
   meatMan.image.scale = 0.25
+  meatMan.debug = mouse.pressing()
   clear()
 }
