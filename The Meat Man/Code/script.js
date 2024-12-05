@@ -47,6 +47,11 @@ function movement() {
   } else if (kb.pressed('left')) {
     meatMan.image = 'theMeatManLeft.png'
   }
+
+  if (kb.pressing('space')) {
+    meatMan.bearing = 90
+    meatMan.applyForce(3)
+  }
 }
 
 function setup() {
@@ -57,14 +62,15 @@ function setup() {
   
   meatMan = new Sprite(200, 800, 93, 100)
   meatMan.image = faceR
+  meatMan.rotationLock = true
+
   count = 0
   l = 0
 }
 
 function draw() {
-
   movement()
-
+  camera.pos = meatMan.pos
   meatMan.image.scale = 0.25
   clear()
 
