@@ -16,19 +16,7 @@ function preload() {
   walkL[3] = loadImage('theMeatManWalkingLeft-4.png')
 }
 
-function setup() {
-  new Canvas(1000, 1000)
-  world.gravity.y = 9.8
-
-  floor = new Sprite(500, 900, 1000, 300, "s")
-  
-  meatMan = new Sprite(200, 800, 93, 100)
-  meatMan.image = faceR
-  count = 0
-  l = 0
-}
-
-function draw() {
+function movement() {
   if (kb.pressing('right') && kb.pressing('left')) {
   } else if (kb.pressing('right')) {
     if (count === 12) {
@@ -53,6 +41,31 @@ function draw() {
     count++
     meatMan.move(10, 'left', 4)
   }
+
+  if (kb.pressed('right')) {
+    meatMan.image = 'theMeatManRight.png'
+  } else if (kb.pressed('left')) {
+    meatMan.image = 'theMeatManLeft.png'
+  }
+}
+
+function setup() {
+  new Canvas(1000, 1000)
+  world.gravity.y = 9.8
+
+  floor = new Sprite(500, 900, 1000, 300, "s")
+  
+  meatMan = new Sprite(200, 800, 93, 100)
+  meatMan.image = faceR
+  count = 0
+  l = 0
+}
+
+function draw() {
+
+  movement()
+
   meatMan.image.scale = 0.25
   clear()
+
 }
