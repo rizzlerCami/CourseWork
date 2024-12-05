@@ -1,2 +1,2 @@
 # CourseWork
-A level Computing coursework
+A Level Computing Coursework
