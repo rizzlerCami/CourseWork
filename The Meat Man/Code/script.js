@@ -83,10 +83,6 @@ function movement() {
   }
 }
 
-function meatball() {
-
-}
-
 function blinking() {
   if (blink === 20) {
     if (meatMan.image === faceL) {
@@ -140,7 +136,6 @@ function setup() {
 function draw() {
   movement()
   blinking()
-  meatball()
   camera.pos = meatMan.pos
   meatMan.image.scale = 0.25
   meatMan.debug = mouse.pressing()
