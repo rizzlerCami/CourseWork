@@ -115,4 +115,4 @@ function draw() {
   meatMan.image.offset.y = -30
   meatMan.image.offset.x = 4
   clear()
-} test
+}
