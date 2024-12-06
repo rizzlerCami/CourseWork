@@ -109,9 +109,9 @@ function blinking() {
           bli++
         } else {
           bli = 0
-          blink = 0
-          delay = 0
         }
+        blink = 0
+        delay = 0
       } else {
         delay++
       }
