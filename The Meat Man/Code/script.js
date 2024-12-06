@@ -131,6 +131,7 @@ function setup() {
   l = 0
   blink = 0
   bli = 0
+  delay = 0
 }
 
 function draw() {
