@@ -41,6 +41,9 @@ function movement() {
         meatMan.image = faceR
       }
       meatMan.velocity.x = 6
+      blink = 0
+      bli = 0
+      delay = 0
     } else if (kb.pressing('left')) {
       if (meatMan.colliding(floor) > 0) {
         if (count === 12) {
@@ -56,6 +59,9 @@ function movement() {
         meatMan.image = faceL
       }
       meatMan.velocity.x = -6
+      blink = 0
+      bli = 0
+      delay = 0
     }
 
     if (kb.pressed('right')) {
@@ -84,11 +90,11 @@ function movement() {
 }
 
 function blinking() {
-  if (blink === 20) {
+  if (blink === 50) {
     if (meatMan.image === faceL) {
 
     } else if (meatMan.image === faceR) {
-      if (delay === 5) {
+      if (delay === 10) {
         if (bli === 0) {
           meatMan.image = blinkR[0]
           bli++
@@ -103,14 +109,16 @@ function blinking() {
           bli++
         } else {
           bli = 0
+          blink = 0
+          delay = 0
         }
-        delay = 0
+      } else {
+        delay++
       }
-      delay++
     }
-    blink = 0
+  } else {
+    blink++
   }
-  blink++
 }
 
 function setup() {
