@@ -21,6 +21,8 @@ function preload() {
   walkL[3] = loadImage('theMeatManWalkingLeft-4.png')
   blinkR[0] = loadImage('theMeatManBlinkingRight-1.png')
   blinkR[1] = loadImage('theMeatManBlinkingRight-2.png')
+  blinkL[0] = loadImage('theMeatManBlinkingLeft-1.png')
+  blinkL[1] = loadImage('theMeatManBlinkingLeft-2.png')
 }
 
 function movement() {
@@ -92,7 +94,27 @@ function movement() {
 function blinking() {
   if (blink === 50) {
     if (meatMan.image === faceL) {
-
+      if (delay === 10) {
+        if (bli === 0) {
+          meatMan.image = blinkL[0]
+          bli++
+        } else if (bli === 1) {
+          meatMan.image = blinkL[1]
+          bli++
+        } else if (bli === 2) {
+          meatMan.image = blinkL[0]
+          bli++
+        } else if (bli === 3){
+          meatMan.image = faceL
+          bli++
+        } else {
+          bli = 0
+          blink = 0
+        }
+        delay = 0
+      } else {
+        delay++
+      }
     } else if (meatMan.image === faceR) {
       if (delay === 10) {
         if (bli === 0) {
