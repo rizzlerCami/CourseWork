@@ -61,18 +61,21 @@ function movement() {
     }
   }
 
-  if (kb.presses('shift') && (meatMan.image === faceL || meatMan.image === walkL[0] || meatMan.image === walkL[1] || meatMan.image === walkL[2] || meatMan.image === walkL[3])) {
-    temp = faceL
-    meatMan.image = crouchL
-    crouch = true
-  } else if (kb.presses('shift') && (meatMan.image === faceR || meatMan.image === walkR[0] || meatMan.image === walkR[1] || meatMan.image === walkR[2] || meatMan.image === walkR[3])) {
-    temp = faceR
-    meatMan.image = crouchR
-    crouch = true
-  }
-  if (kb.pressed('shift')) {
-    meatMan.image = temp
-    crouch = false
+  if (meatMan.colliding(floor) > 0) {
+    if (kb.presses('space') && (meatMan.image === faceL || meatMan.image === walkL[0] || meatMan.image === walkL[1] || meatMan.image === walkL[2] || meatMan.image === walkL[3])) {
+      temp = faceL
+      meatMan.image = crouchL
+      crouch = true
+    } else if (kb.presses('space') && (meatMan.image === faceR || meatMan.image === walkR[0] || meatMan.image === walkR[1] || meatMan.image === walkR[2] || meatMan.image === walkR[3])) {
+      temp = faceR
+      meatMan.image = crouchR
+      crouch = true
+    }
+    if (kb.pressed('space')) {
+      meatMan.image = temp
+      crouch = false
+      meatMan.velocity.y = -7
+    }
   }
 }
 
@@ -106,7 +109,6 @@ function setup() {
 
 function draw() {
   movement()
-  jumping()
   camera.pos = meatMan.pos
   meatMan.image.scale = 0.25
   meatMan.debug = mouse.pressing()
