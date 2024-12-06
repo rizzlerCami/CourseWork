@@ -97,20 +97,17 @@ function blinking() {
       if (delay === 10) {
         if (bli === 0) {
           meatMan.image = blinkL[0]
-          bli++
         } else if (bli === 1) {
           meatMan.image = blinkL[1]
-          bli++
         } else if (bli === 2) {
-          meatMan.image = blinkL[0]
-          bli++
+          meatMan.image = blinkL[0] 
         } else if (bli === 3){
           meatMan.image = faceL
-          bli++
-        } else {
-          bli = 0
+        } else if (bli === 4){
+          bli = -1
           blink = 0
         }
+        bli++
         delay = 0
       } else {
         delay++
