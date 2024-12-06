@@ -79,6 +79,10 @@ function movement() {
   }
 }
 
+function meatball() {
+  
+}
+
 function setup() {
   new Canvas(1000, 1000)
   world.gravity.y = 9.8
@@ -99,6 +103,7 @@ function setup() {
 
 function draw() {
   movement()
+  meatball()
   camera.pos = meatMan.pos
   meatMan.image.scale = 0.25
   meatMan.debug = mouse.pressing()
