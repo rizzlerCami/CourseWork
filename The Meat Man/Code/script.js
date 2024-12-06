@@ -1,6 +1,7 @@
 let floor, player, faceR, faceL, crouchR, crouchL
 let count, l, temp
 let crouch = false
+let blink
 let walkR = ['', '', '', '']
 let walkL = ['', '', '', '']
 
@@ -80,7 +81,13 @@ function movement() {
 }
 
 function meatball() {
-  
+
+}
+
+function blinking() {
+  if (blink === 200 && (meatMan.image = faceL || meatMan.image = faceR)) {
+    
+  }
 }
 
 function setup() {
@@ -99,10 +106,12 @@ function setup() {
 
   count = 0
   l = 0
+  blink = 0
 }
 
 function draw() {
   movement()
+  blinking()
   meatball()
   camera.pos = meatMan.pos
   meatMan.image.scale = 0.25
