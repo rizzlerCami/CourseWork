@@ -169,7 +169,6 @@ function draw() {
   blinking()
   camera.pos = meatMan.pos
   meatMan.image.scale = 0.25
-  meatMan.debug = mouse.pressing()
   meatMan.image.offset.y = -30
   meatMan.image.offset.x = 4
   clear()
