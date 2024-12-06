@@ -79,16 +79,6 @@ function movement() {
   }
 }
 
-function jumping() {
-  if (kb.presses('space') && meatMan.colliding(floor) > 0) {
-      meatMan.velocity.y = -7
-  }
-  if (kb.presses('space') && (meatMan.image === faceL || meatMan.image === walkL[0] || meatMan.image === walkL[1] || meatMan.image === walkL[2] || meatMan.image === walkL[3])) {
-    meatMan.image = faceL
-  } else if (kb.presses('space') && (meatMan.image === faceR || meatMan.image === walkR[0] || meatMan.image === walkR[1] || meatMan.image === walkR[2] || meatMan.image === walkR[3])) {
-    meatMan.image = faceR
-  }
-}
 function setup() {
   new Canvas(1000, 1000)
   world.gravity.y = 9.8
