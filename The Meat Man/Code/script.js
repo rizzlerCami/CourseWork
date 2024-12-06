@@ -1,7 +1,8 @@
 let floor, player, faceR, faceL, crouchR, crouchL
-let count, l, temp
+let count, l, temp, blink, delay, bli
 let crouch = false
-let blink
+let blinkR = ['', '']
+let blinkL = ['', '']
 let walkR = ['', '', '', '']
 let walkL = ['', '', '', '']
 
@@ -18,6 +19,8 @@ function preload() {
   walkL[1] = loadImage('theMeatManWalkingLeft-2.png')
   walkL[2] = loadImage('theMeatManWalkingLeft-3.png')
   walkL[3] = loadImage('theMeatManWalkingLeft-4.png')
+  blinkR[0] = loadImage('theMeatManBlinkingRight-1.png')
+  blinkR[1] = loadImage('theMeatManBlinkingRight-2.png')
 }
 
 function movement() {
@@ -85,9 +88,33 @@ function meatball() {
 }
 
 function blinking() {
-  if (blink === 200 && (meatMan.image = faceL || meatMan.image = faceR)) {
-    
+  if (blink === 20) {
+    if (meatMan.image === faceL) {
+
+    } else if (meatMan.image === faceR) {
+      if (delay === 5) {
+        if (bli === 0) {
+          meatMan.image = blinkR[0]
+          bli++
+        } else if (bli === 1) {
+          meatMan.image = blinkR[1]
+          bli++
+        } else if (bli === 2) {
+          meatMan.image = blinkR[0]
+          bli++
+        } else if (bli === 3){
+          meatMan.image = faceR
+          bli++
+        } else {
+          bli = 0
+        }
+        delay = 0
+      }
+      delay++
+    }
+    blink = 0
   }
+  blink++
 }
 
 function setup() {
@@ -107,6 +134,7 @@ function setup() {
   count = 0
   l = 0
   blink = 0
+  bli = 0
 }
 
 function draw() {
