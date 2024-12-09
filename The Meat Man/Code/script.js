@@ -1,4 +1,4 @@
-let floor, player, faceR, faceL, crouchR, crouchL
+let floor, player, faceR, faceL, crouchR, crouchL, meatball, openMouthL, openMouthR
 let count, l, temp, blink, delay, bli
 let crouch = false
 let blinkR = ['', '']
@@ -23,6 +23,9 @@ function preload() {
   blinkR[1] = loadImage('theMeatManBlinkingRight-2.png')
   blinkL[0] = loadImage('theMeatManBlinkingLeft-1.png')
   blinkL[1] = loadImage('theMeatManBlinkingLeft-2.png')
+  meatball = loadImage('Meatball.png')
+  openMouthL = loadImage('theMeatManOpenMouthL.png')
+  openMouthR = loadImage('theMeatManOpenMouthR.png')
 }
 
 function movement() {
@@ -140,6 +143,27 @@ function blinking() {
   }
 }
 
+function shoot() {
+  if (mouse.pressing()) {
+    if (meatMan.image === faceL || meatMan.image === walkL[0] || meatMan.image === walkL[1] || meatMan.image === walkL[2] || meatMan.image === walkL[3]) {
+      meatMan.image = openMouthL
+      crouch = true
+    } else if (meatMan.image === faceR || meatMan.image === walkR[0] || meatMan.image === walkR[1] || meatMan.image === walkR[2] || meatMan.image === walkR[3]) {
+      meatMan.image = openMouthR
+        crouch = true
+    }
+  }
+
+  if (mouse.pressed()) {
+    crouch = false
+    if (meatMan.image === openMouthL) {
+      meatMan.image = faceL
+    } else if (meatMan.image === openMouthR) {
+      meatMan.image = faceR
+    }
+  }
+}
+
 function setup() {
   new Canvas(1000, 1000)
   world.gravity.y = 9.8
@@ -164,6 +188,7 @@ function setup() {
 function draw() {
   movement()
   blinking()
+  shoot()
   camera.pos = meatMan.pos
   meatMan.image.scale = 0.25
   meatMan.image.offset.y = -30
