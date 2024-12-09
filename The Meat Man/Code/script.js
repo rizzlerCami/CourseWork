@@ -67,9 +67,9 @@ function movement() {
     }
 
     if (kb.pressed('right')) {
-      meatMan.image = 'theMeatManRight.png'
+      meatMan.image = faceR
     } else if (kb.pressed('left')) {
-      meatMan.image = 'theMeatManLeft.png'
+      meatMan.image = faceL
     }
   }
 
