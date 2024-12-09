@@ -92,9 +92,9 @@ function movement() {
 }
 
 function blinking() {
-  if (blink === 50) {
-    if (meatMan.image === faceL) {
-      if (delay === 10) {
+  if (blink === 150) {
+    if (meatMan.image === faceL || meatMan.image === blinkL[0] || meatMan.image === blinkL[1]) {
+      if (delay === 3) {
         if (bli === 0) {
           meatMan.image = blinkL[0]
         } else if (bli === 1) {
@@ -112,8 +112,8 @@ function blinking() {
       } else {
         delay++
       }
-    } else if (meatMan.image === faceR) {
-      if (delay === 10) {
+    } else if (meatMan.image === faceR || meatMan.image === blinkR[0] || meatMan.image === blinkR[1]) {
+      if (delay === 3) {
         if (bli === 0) {
           meatMan.image = blinkR[0]
           bli++
