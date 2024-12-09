@@ -1,4 +1,4 @@
-let floor, player, faceR, faceL, crouchR, crouchL, meatball, openMouthL, openMouthR
+let floor, meatMan, faceR, faceL, crouchR, crouchL, meatballSprite, openMouthL, openMouthR, meatball
 let count, l, temp, blink, delay, bli
 let crouch = false
 let blinkR = ['', '']
@@ -23,7 +23,7 @@ function preload() {
   blinkR[1] = loadImage('theMeatManBlinkingRight-2.png')
   blinkL[0] = loadImage('theMeatManBlinkingLeft-1.png')
   blinkL[1] = loadImage('theMeatManBlinkingLeft-2.png')
-  meatball = loadImage('Meatball.png')
+  meatballSprite = loadImage('Meatball.png')
   openMouthL = loadImage('theMeatManOpenMouthL.png')
   openMouthR = loadImage('theMeatManOpenMouthR.png')
 }
@@ -144,6 +144,11 @@ function blinking() {
 }
 
 function shoot() {
+
+  if (mouse.presses()) {
+    let meat = new meatball.Sprite()
+  }
+
   if (mouse.pressing()) {
     if (meatMan.image === faceL || meatMan.image === walkL[0] || meatMan.image === walkL[1] || meatMan.image === walkL[2] || meatMan.image === walkL[3]) {
       meatMan.image = openMouthL
@@ -178,6 +183,10 @@ function setup() {
   meatMan.bounciness = 0
   meatMan.friction = 500
 
+  meatball = new Group()
+  meatball.image = meatballSprite
+  meatball.d = 37
+
   count = 0
   l = 0
   blink = 0
@@ -193,5 +202,11 @@ function draw() {
   meatMan.image.scale = 0.25
   meatMan.image.offset.y = -30
   meatMan.image.offset.x = 4
+
+  meatball.image.scale = 0.24
+  meatball.image.offset.x = -17
+  meatball.image.offset.y = 6
+  meatball.debug = true
+  meatMan.debug = true
   clear()
 }
