@@ -88,6 +88,10 @@ function movement() {
       crouch = false
       meatMan.velocity.y = -7
     }
+
+    if (kb.pressed('right') || kb.pressed('left')) {
+      meatMan.velocity.x = 0
+    }
   }
 }
 
