@@ -1,5 +1,5 @@
 let floor, meatMan, faceR, faceL, crouchR, crouchL, meatballSprite, openMouthL, openMouthR, meatball
-let count, l, temp, blink, delay, bli
+let count, l, temp, blink, delay, bli, v, shooting
 let crouch = false
 let blinkR = ['', '']
 let blinkL = ['', '']
@@ -144,29 +144,46 @@ function blinking() {
 }
 
 function shoot() {
-
-  if (mouse.presses()) {
-    let meat = new meatball.Sprite()
-  }
-
-  if (mouse.pressing()) {
-    if (meatMan.image === faceL || meatMan.image === walkL[0] || meatMan.image === walkL[1] || meatMan.image === walkL[2] || meatMan.image === walkL[3]) {
-      meatMan.image = openMouthL
-      crouch = true
-    } else if (meatMan.image === faceR || meatMan.image === walkR[0] || meatMan.image === walkR[1] || meatMan.image === walkR[2] || meatMan.image === walkR[3]) {
-      meatMan.image = openMouthR
+    if (mouse.presses() && shooting === false) {
+      let meat = new meatball.Sprite()
+      if (meatMan.image === faceL || meatMan.image === walkL[0] || meatMan.image === walkL[1] || meatMan.image === walkL[2] || meatMan.image === walkL[3] || meatMan.image === openMouthL || meatMan.image === blinkL[0] || meatMan.image === blinkL[1]) {
+        meat.x = meatMan.x - 60
+        meat.velocity.x = -5
+      } else {
+        meat.x = meatMan.x + 60
+        meat.velocity.x = 5
+      }
+      meat.velocity.y = -7
+      meat.y = meatMan.y - 30
+      v -= 0.01
+      meatMan.w -= 4
+      meatMan.h -= 4
+      shooting = true
+    }
+  
+    if (meatball.collides(floor)) {
+      meatball.remove()
+      shooting = false
+    }
+  
+    if (mouse.pressing()) {
+      if (meatMan.image === faceL || meatMan.image === walkL[0] || meatMan.image === walkL[1] || meatMan.image === walkL[2] || meatMan.image === walkL[3]) {
+        meatMan.image = openMouthL
         crouch = true
+      } else if (meatMan.image === faceR || meatMan.image === walkR[0] || meatMan.image === walkR[1] || meatMan.image === walkR[2] || meatMan.image === walkR[3]) {
+        meatMan.image = openMouthR
+          crouch = true
+      }
     }
-  }
-
-  if (mouse.pressed()) {
-    crouch = false
-    if (meatMan.image === openMouthL) {
-      meatMan.image = faceL
-    } else if (meatMan.image === openMouthR) {
-      meatMan.image = faceR
+  
+    if (mouse.pressed()) {
+      crouch = false
+      if (meatMan.image === openMouthL) {
+        meatMan.image = faceL
+      } else if (meatMan.image === openMouthR) {
+        meatMan.image = faceR
+      }
     }
-  }
 }
 
 function setup() {
@@ -192,6 +209,8 @@ function setup() {
   blink = 0
   bli = 0
   delay = 0
+  v = 0.24
+  shooting = false
 }
 
 function draw() {
@@ -199,14 +218,17 @@ function draw() {
   blinking()
   shoot()
   camera.pos = meatMan.pos
-  meatMan.image.scale = 0.25
+  meatMan.image.scale = v
   meatMan.image.offset.y = -30
   meatMan.image.offset.x = 4
 
   meatball.image.scale = 0.24
   meatball.image.offset.x = -17
   meatball.image.offset.y = 6
-  meatball.debug = true
-  meatMan.debug = true
+
+  if (v === 0) {
+    //GAME OVER
+  }
+
   clear()
 }
