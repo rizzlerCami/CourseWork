@@ -191,7 +191,7 @@ function setup() {
   floor = new Sprite(500, 900, 1000, 300, "s")
   floor.bounciness = 0
   
-  meatMan = new Sprite([[388, 750], [347, 750], [320, 720], [320, 650], [413, 650], [413, 720], [388, 750]])
+  meatMan = new Sprite([[388, 747], [347, 747], [320, 720], [320, 653], [413, 653], [413, 720], [388, 747]])
   meatMan.image = faceR
   meatMan.rotationLock = true
   meatMan.mass = 30
@@ -226,7 +226,7 @@ function draw() {
   meatball.image.offset.x = -17
   meatball.image.offset.y = 6
 
-  if (v === 0 || meatMan.collides(bottom)) {
+  if (v <= 0 || meatMan.collides(bottom)) {
     //GAME OVER
   }
   clear()
