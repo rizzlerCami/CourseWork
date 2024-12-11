@@ -1,4 +1,4 @@
-let floor, meatMan, faceR, faceL, crouchR, crouchL, meatballSprite, openMouthL, openMouthR, meatball
+let floor, meatMan, faceR, faceL, crouchR, crouchL, meatballSprite, openMouthL, openMouthR, meatball, bottom
 let count, l, temp, blink, delay, bli, v, shooting
 let crouch = false
 let blinkR = ['', '']
@@ -144,7 +144,7 @@ function blinking() {
 }
 
 function shoot() {
-    if (mouse.presses() && shooting === false) {
+    if (mouse.presses()) {
       let meat = new meatball.Sprite()
       if (meatMan.image === faceL || meatMan.image === walkL[0] || meatMan.image === walkL[1] || meatMan.image === walkL[2] || meatMan.image === walkL[3] || meatMan.image === openMouthL || meatMan.image === blinkL[0] || meatMan.image === blinkL[1]) {
         meat.x = meatMan.x - 60
@@ -158,12 +158,10 @@ function shoot() {
       v -= 0.01
       meatMan.w -= 4
       meatMan.h -= 4
-      shooting = true
     }
-  
-    if (meatball.collides(floor)) {
-      meatball.remove()
-      shooting = false
+
+    if (meatball.collides(floor) || meatball.collides(bottom)) {
+      meatball[0].remove()
     }
   
     if (mouse.pressing()) {
@@ -204,13 +202,15 @@ function setup() {
   meatball.image = meatballSprite
   meatball.d = 37
 
+  bottom = new Sprite(500, 1500, 2000, 3, "s")
+  bottom.img = ''
+
   count = 0
   l = 0
   blink = 0
   bli = 0
   delay = 0
   v = 0.24
-  shooting = false
 }
 
 function draw() {
@@ -226,9 +226,8 @@ function draw() {
   meatball.image.offset.x = -17
   meatball.image.offset.y = 6
 
-  if (v === 0) {
+  if (v === 0 || meatMan.collides(bottom)) {
     //GAME OVER
   }
-
   clear()
 }
