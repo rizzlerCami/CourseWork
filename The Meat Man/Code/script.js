@@ -1,5 +1,6 @@
 let ground, floor, meatMan, faceR, faceL, crouchR, crouchL, meatballSprite, openMouthL, openMouthR, meatball, bottom
 let count, l, temp, blink, delay, bli, v, shooting
+let y = 1
 let crouch = false
 let blinkR = ['', '']
 let blinkL = ['', '']
@@ -26,7 +27,7 @@ function preload() {
   meatballSprite = loadImage('Meatball.png')
   openMouthL = loadImage('theMeatManOpenMouthL.png')
   openMouthR = loadImage('theMeatManOpenMouthR.png')
-  ground = loadImage('Ground.png')
+  ground = loadImage('newGround.png')
 }
 
 function movement() {
@@ -189,11 +190,22 @@ function setup() {
   new Canvas(1000, 1000)
   world.gravity.y = 9.8
 
-  floor = new Sprite(500, 900, 1000, 300, "s")
+  floor = new Group()
   floor.image = ground
   floor.bounciness = 0
+  floor.image.scale = 0.4
+  floor.image.offset.y = -32
+  for (let i = -1; i <= 50; i++) {
+    if (i === 5) {
+      i = 6
+    }
+    if (i >= 6) {
+      y = -100
+    }
+    let gr = new floor.Sprite(135*i, 820+y, 135, 140, "s")
+  }
   
-  meatMan = new Sprite([[388, 747], [347, 747], [320, 720], [320, 653], [413, 653], [413, 720], [388, 747]])
+  meatMan = new Sprite([[388, 747], [347, 747], [327, 720], [327, 653], [413, 653], [413, 720], [388, 747]])
   meatMan.image = faceR
   meatMan.rotationLock = true
   meatMan.mass = 30
