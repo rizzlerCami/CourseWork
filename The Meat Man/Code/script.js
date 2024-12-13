@@ -27,7 +27,7 @@ function preload() {
   meatballSprite = loadImage('Meatball.png')
   openMouthL = loadImage('theMeatManOpenMouthL.png')
   openMouthR = loadImage('theMeatManOpenMouthR.png')
-  ground = loadImage('newGround.png')
+  ground = loadImage('Ground.png')
   underImg = loadImage('underGround.png')
 
 }
@@ -241,9 +241,6 @@ function draw() {
   movement()
   blinking()
   shoot()
-  if (meatMan.y < 800) {
-    camera.pos = meatMan.pos
-  } else {}
   meatMan.image.scale = v
   meatMan.image.offset.y = -30
   meatMan.image.offset.x = 4
@@ -251,7 +248,11 @@ function draw() {
   meatball.image.scale = 0.24
   meatball.image.offset.x = -17
   meatball.image.offset.y = 6
-
+  if (meatMan.y < 800) {
+    camera.pos = meatMan.pos
+  } else {
+    meatMan.velocity.x = 0
+  }
   if (v <= 0 || meatMan.collides(bottom)) {
     //GAME OVER
   }
