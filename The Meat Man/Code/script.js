@@ -187,7 +187,7 @@ function shoot() {
 }
 
 function setup() {
-  new Canvas(1000, 1000)
+  new Canvas(windowWidth, windowHeight)
   world.gravity.y = 9.8
 
   floor = new Group()
