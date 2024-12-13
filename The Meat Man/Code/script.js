@@ -1,5 +1,5 @@
 let ground, floor, meatMan, faceR, faceL, crouchR, crouchL, meatballSprite, openMouthL, openMouthR, meatball, bottom
-let count, l, temp, blink, delay, bli, v, shooting
+let count, l, temp, blink, delay, bli, v, shooting, underImg, underGround
 let y = 1
 let crouch = false
 let blinkR = ['', '']
@@ -28,6 +28,8 @@ function preload() {
   openMouthL = loadImage('theMeatManOpenMouthL.png')
   openMouthR = loadImage('theMeatManOpenMouthR.png')
   ground = loadImage('newGround.png')
+  underImg = loadImage('underGround.png')
+
 }
 
 function movement() {
@@ -195,14 +197,22 @@ function setup() {
   floor.bounciness = 0
   floor.image.scale = 0.4
   floor.image.offset.y = -32
+
+  underGround = new Group()
+  underGround.image = underImg
+  underGround.image.scale = 0.4
+  underGround.image.offset.y = -32
   for (let i = -1; i <= 50; i++) {
     if (i === 5) {
-      i = 6
+      i = 7
     }
     if (i >= 6) {
       y = -100
     }
     let gr = new floor.Sprite(135*i, 820+y, 135, 140, "s")
+    for (let l = 0; l <= 3; l++) {
+      let ugr = new underGround.Sprite(135*i, 960+y+135*l, 135, 140, "s")
+    }
   }
   
   meatMan = new Sprite([[388, 747], [347, 747], [327, 720], [327, 653], [413, 653], [413, 720], [388, 747]])
@@ -231,7 +241,9 @@ function draw() {
   movement()
   blinking()
   shoot()
-  camera.pos = meatMan.pos
+  if (meatMan.y < 800) {
+    camera.pos = meatMan.pos
+  } else {}
   meatMan.image.scale = v
   meatMan.image.offset.y = -30
   meatMan.image.offset.x = 4
