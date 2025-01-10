@@ -23,6 +23,23 @@ function setup() {
   meatMan.bounciness = 0
   meatMan.friction = 500
   v = 0.24
+
+  floor = new Group()
+  floor.image = ground
+  floor.bounciness = 0
+  floor.image.scale = 0.4
+  floor.image.offset.y = -32
+
+  underGround = new Group()
+  underGround.image = underImg
+  underGround.image.scale = 0.4
+  underGround.image.offset.y = -32
+  for (let i = -1; i <= 10; i++) {
+    let gr = new floor.Sprite(135*i, 700, 135, 140, "s")
+    for (let l = 0; l <= 3; l++) {
+      let ugr = new underGround.Sprite(135*i, 835+135*l, 135, 140, "s")
+    }
+  }
 }
 
 function draw() {
