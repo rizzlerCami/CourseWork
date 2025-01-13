@@ -1,5 +1,5 @@
-let meatMan, sky, cloudB, cloudM, cloudF, FMount, GMount, grass, ground, underImg, floor
-let v
+let meatMan, sky, cloudB, cloudM, cloudF, FMount, GMount, grass, ground, underImg, floor, blinkAni
+let v, blink
 function preload() {
   sky = loadImage('sky_fc.png')
   cloudB = loadImage('clouds_mid_t_fc.png')
@@ -7,15 +7,16 @@ function preload() {
   cloudF = loadImage('clouds_front_t_fc.png')
   FMount = loadImage('far_mountains_fc.png')
   GMount = loadImage('grassy_mountains_fc.png')
-  grass = loadImage('Ground.png')
   faceR = loadImage('theMeatManRight.png')
-  ground = loadImage('Ground.png')
+  ground = loadImage('Ground-1.png')
   underImg = loadImage('underGround.png')
+  blinkAni = loadAni('theMeatManBlinkingRight-1.png', 'theMeatManBlinkingRight-2.png')
 }
 
 function setup() {
   new Canvas(windowWidth, windowHeight, "pixelated")
 
+  blink = false
   meatMan = new Sprite([[188, 677], [147, 677], [127, 650], [127, 583], [213, 583], [213, 650], [188, 677]])
   meatMan.image = faceR
   meatMan.rotationLock = true
@@ -51,7 +52,11 @@ function draw() {
   image(cloudB, 0, 0, 900 * 16/9, 900)
   image(cloudM, 0, 0, 900 * 16/9, 900)
   image(cloudF, 0, 0, 900 * 16/9, 900)
-  meatMan.image.scale = v
+  if (blink === false) {
+    meatMan.addAni(blinkAni)
+    blink === true
+  }
   meatMan.image.offset.y = -30
   meatMan.image.offset.x = 4
+  meatMan.image.scale = v
 } 
