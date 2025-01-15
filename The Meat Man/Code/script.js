@@ -18,16 +18,5 @@ function setup() {
 
 function draw() {
   meatMan.image.scale = scaleF
-  meatMan.image.offset.y = -30
-  meatMan.image.offset.x = 4
-
-  if (meatMan.y < 800) {
-    camera.pos = meatMan.pos
-  } else {
-    meatMan.velocity.x = 0
-  }
-  if (scaleF <= 0) {
-    //GAME OVER
-  }
   clear()
 }
