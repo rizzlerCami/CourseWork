@@ -31,7 +31,6 @@ function setup() {
 
 function draw() {
   clear()
-  meatMan.image.scale = scaleF
 
   if (level[0] === true) {
     menu()
@@ -53,6 +52,9 @@ function draw() {
     shooting()
     blinking()
   }
+
+  meatMan.image.scale = scaleF
+
 }
 
 function movement() {
@@ -77,7 +79,12 @@ function menu() {
 }
 
 function one() {
-
+  image(skyImg, 0, 0, 1408, 792)
+  image(fMountImg, 0, 0, 1408, 792)
+  image(cMountImg, 0, 0, 1408, 792)
+  image(fCloudImg, 0, 0, 1408, 792)
+  image(mCloudImg, 0, 0, 1408, 792)
+  image(cCloudImg, 0, 0, 1408, 792)
 }
 
 function two() {
