@@ -3,10 +3,20 @@ let level = [true, false, false, false, false, false, false]
 let idle
 let scaleF
 let skyImg
+let fMountImg
+let cMountImg
+let fCloudImg
+let mCloudImg
+let cCloudImg
 
 function preload() {
   idle = loadImage('idle.png')
   skyImg = loadImage('sky_fc.png')
+  fMountImg = loadImage('far_mountains_fc.png')
+  cMountImg = loadImage('grassy_mountains_fc.png')
+  fCloudImg = loadImage('clouds_mid_fc.png')
+  mCloudImg = loadImage('clouds_mid_t_fc.png')
+  cCloudImg = loadImage('clouds_front_t_fc.png')
 }
 
 function setup() {
@@ -20,6 +30,7 @@ function setup() {
 }
 
 function draw() {
+  clear()
   meatMan.image.scale = scaleF
 
   if (level[0] === true) {
@@ -42,7 +53,6 @@ function draw() {
     shooting()
     blinking()
   }
-  clear()
 }
 
 function movement() {
@@ -58,7 +68,12 @@ function blinking() {
 }
 
 function menu() {
-  image(skyImg, 0, 0)
+  image(skyImg, 0, 0, 1408, 792)
+  image(fMountImg, 0, 0, 1408, 792)
+  image(cMountImg, 0, 0, 1408, 792)
+  image(fCloudImg, 0, 0, 1408, 792)
+  image(mCloudImg, 0, 0, 1408, 792)
+  image(cCloudImg, 0, 0, 1408, 792)
 }
 
 function one() {
