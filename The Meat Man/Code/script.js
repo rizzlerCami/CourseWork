@@ -100,9 +100,9 @@ function blinking() {
         meatMan.image = idle
       } else {
         blinkDelay[2] = -1
+        blinkDelay[0] = 0
       }
       blinkDelay[2]++
-      blinkDelay[0] = 0
       blinkDelay[1] = 0
     } else {
       blinkDelay[1]++
