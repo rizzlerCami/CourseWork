@@ -36,7 +36,6 @@ function setup() {
 
   meatMan = new Sprite([[358, 647], [317, 647], [297, 620], [297, 553], [383, 553], [383, 620], [358, 647]])
   meatMan.image = idle
-  meatMan.image.offset.y = -30
   scaleF = 0.24
 
   floor = new Group()
@@ -78,7 +77,7 @@ function draw() {
   uGround.image.offset.y = -30
   uGround.collider = "s"
   meatMan.image.scale = scaleF
-
+  meatMan.image.offset.y = -30
 }
 
 function movement() {
@@ -91,7 +90,7 @@ function shooting() {
 
 function blinking() {
   if (blinkDelay[0] === 150) {
-    if (blinkDelay[1] === 3) {
+    if (blinkDelay[1] === 4) {
       if (blinkDelay[2] === 0 || blinkDelay[2] === 2) {
         meatMan.image = blink[0]
       } else if (blinkDelay[2] === 1) {
@@ -131,7 +130,7 @@ function menu() {
     }
     set = true
   }
-
+  blinking()
 }
 
 function one() {
