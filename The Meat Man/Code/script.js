@@ -24,14 +24,15 @@ function preload() {
   mCloudImg = loadImage('clouds_mid_t_fc.png')
   cCloudImg = loadImage('clouds_front_t_fc.png')
   floorImg = loadImage('ground.png')
-  blink[0] = loadImage('meatManBlinking-1.png', 'meatManBlinking-2.png')
+  blink[0] = loadImage('meatManBlinking-1.png')
+  blink[1] = loadImage('meatManBlinking-2.png')
 }
 
 function setup() {
   new Canvas(1200, 792)
   world.gravity.y = 9.8
 
-  meatMan = new Sprite([[358, 617], [317, 617], [297, 590], [297, 523], [383, 523], [383, 590], [358, 617]])
+  meatMan = new Sprite([[358, 647], [317, 647], [297, 620], [297, 553], [383, 553], [383, 620], [358, 647]])
   meatMan.image = idle
   meatMan.image.offset.y = -30
   scaleF = 0.24
@@ -82,7 +83,25 @@ function shooting() {
 
 function blinking() {
   if (move === false) {
-    
+    if (blinkDelay[0] === 150) {
+      if (blinkDelay[1] === 3) {
+        if (blinkDelay[2] === 0 || blinkDelay[2] === 2) {
+          meatMan.image = blink[0]
+        } else if (blinkDelay[2] === 1) {
+          meatMan.image = blink[1]
+        } else if (blinkDelay[2] === 3) {
+          meatMan.image = idle
+        } else {
+          blinkDelay[2] = 0
+        }
+        blinkDelay[0] = 0
+        blinkDelay[1] = 0
+      } else {
+        blinkDelay[1]++
+      }
+    } else {
+      blinkDelay[0]++
+    }
   }
 }
 
