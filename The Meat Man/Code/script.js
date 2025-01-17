@@ -10,10 +10,11 @@ let mCloudImg
 let cCloudImg
 let floor
 let floorImg
+let uGround
+let uGroundImg
 let set = false
 let blinkDelay = [0, 0, 0]
 let blink = ["", ""]
-let move
 
 function preload() {
   idle = loadImage('idle.png')
@@ -24,12 +25,13 @@ function preload() {
   mCloudImg = loadImage('clouds_mid_t_fc.png')
   cCloudImg = loadImage('clouds_front_t_fc.png')
   floorImg = loadImage('ground.png')
+  uGroundImg = loadImage('underGround.png')
   blink[0] = loadImage('meatManBlinking-1.png')
   blink[1] = loadImage('meatManBlinking-2.png')
 }
 
 function setup() {
-  new Canvas(1200, 792)
+  new Canvas(1200, 1000)
   world.gravity.y = 9.8
 
   meatMan = new Sprite([[358, 647], [317, 647], [297, 620], [297, 553], [383, 553], [383, 620], [358, 647]])
@@ -40,6 +42,9 @@ function setup() {
   floor = new Group()
   floor.w = 101
   floor.h = 105
+  uGround = new Group()
+  uGround.w = 101
+  uGround.h = 105
 
 }
 
@@ -69,6 +74,9 @@ function draw() {
   floor.image.scale = 0.3
   floor.image.offset.y = -30
   floor.collider = "s"
+  uGround.image.scale = 0.3
+  uGround.image.offset.y = -30
+  uGround.collider = "s"
   meatMan.image.scale = scaleF
 
 }
@@ -82,32 +90,30 @@ function shooting() {
 }
 
 function blinking() {
-  if (move === false) {
-    if (blinkDelay[0] === 150) {
-      if (blinkDelay[1] === 3) {
-        if (blinkDelay[2] === 0 || blinkDelay[2] === 2) {
-          meatMan.image = blink[0]
-        } else if (blinkDelay[2] === 1) {
-          meatMan.image = blink[1]
-        } else if (blinkDelay[2] === 3) {
-          meatMan.image = idle
-        } else {
-          blinkDelay[2] = -1
-        }
-        blinkDelay[2]++
-        blinkDelay[0] = 0
-        blinkDelay[1] = 0
+  if (blinkDelay[0] === 150) {
+    if (blinkDelay[1] === 3) {
+      if (blinkDelay[2] === 0 || blinkDelay[2] === 2) {
+        meatMan.image = blink[0]
+      } else if (blinkDelay[2] === 1) {
+        meatMan.image = blink[1]
+      } else if (blinkDelay[2] === 3) {
+        meatMan.image = idle
       } else {
-        blinkDelay[1]++
+        blinkDelay[2] = -1
       }
+      blinkDelay[2]++
+      blinkDelay[0] = 0
+      blinkDelay[1] = 0
     } else {
-      blinkDelay[0]++
+      blinkDelay[1]++
     }
+  } else {
+    blinkDelay[0]++
   }
 }
 
 function menu() {
-  move = false
+  background('#d1e8eb')
   image(skyImg, 0, 0, 1408, 792)
   image(fMountImg, 0, 0, 1408, 792)
   image(cMountImg, 0, 0, 1408, 792)
@@ -115,9 +121,13 @@ function menu() {
   image(mCloudImg, 0, 0, 1408, 792)
   image(cCloudImg, 0, 0, 1408, 792)
   floor.image = floorImg
+  uGround.image = uGroundImg
   if (set === false) {
     for (let i = 0; i<= 20; i++) {
-      let ground = new floor.Sprite(0 + 101*i, 700)
+      let ground = new floor.Sprite(101*i, 700)
+      for (let l = 0; l <= 2; l++) {
+        let uFloor = new uGround.Sprite(101*i, 805 + 105*l)
+      }
     }
     set = true
   }
