@@ -15,6 +15,7 @@ let uGroundImg
 let set = false
 let blinkDelay = [0, 0, 0]
 let blink = ["", ""]
+let titleImg
 
 function preload() {
   idle = loadImage('idle.png')
@@ -28,6 +29,7 @@ function preload() {
   uGroundImg = loadImage('underGround.png')
   blink[0] = loadImage('meatManBlinking-1.png')
   blink[1] = loadImage('meatManBlinking-2.png')
+  titleImg = loadImage('title.png')
 }
 
 function setup() {
@@ -119,6 +121,7 @@ function menu() {
   image(fCloudImg, 0, 0, 1408, 792)
   image(mCloudImg, 0, 0, 1408, 792)
   image(cCloudImg, 0, 0, 1408, 792)
+  image(titleImg, 440, -80, 500, 500)
   floor.image = floorImg
   uGround.image = uGroundImg
   if (set === false) {
