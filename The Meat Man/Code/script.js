@@ -120,7 +120,6 @@ function blinking() {
 }
 
 function menu() {
-  background('#d1e8eb')
   image(skyImg, 0, 0, 1408, 792)
   image(fMountImg, 0, 0, 1408, 792)
   image(cMountImg, 0, 0, 1408, 792)
@@ -149,6 +148,7 @@ function menu() {
 }
 
 function one() {
+  background('#d1e8eb')
   image(skyImg, 0, 0, 1408, 792)
   image(fMountImg, 0, 0, 1408, 792)
   image(cMountImg, 0, 0, 1408, 792)
