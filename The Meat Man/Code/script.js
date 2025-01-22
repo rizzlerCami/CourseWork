@@ -16,6 +16,7 @@ let set = false
 let blinkDelay = [0, 0, 0]
 let blink = ["", ""]
 let titleImg
+let treeImg
 
 function preload() {
   idle = loadImage('idle.png')
@@ -30,14 +31,16 @@ function preload() {
   blink[0] = loadImage('meatManBlinking-1.png')
   blink[1] = loadImage('meatManBlinking-2.png')
   titleImg = loadImage('title.png')
+  treeImg = loadImage('tree.png')
 }
 
 function setup() {
   new Canvas(1200, 1000)
   world.gravity.y = 9.8
 
-  meatMan = new Sprite([[358, 647], [317, 647], [297, 620], [297, 553], [383, 553], [383, 620], [358, 647]])
+  meatMan = new Sprite([[158, 647], [117, 647], [97, 620], [97, 553], [183, 553], [183, 620], [158, 647]])
   meatMan.image = idle
+  meatMan.rotationLock = true
   scaleF = 0.24
 
   floor = new Group()
@@ -46,6 +49,7 @@ function setup() {
   uGround = new Group()
   uGround.w = 101
   uGround.h = 105
+
 
 }
 
@@ -121,7 +125,10 @@ function menu() {
   image(fCloudImg, 0, 0, 1408, 792)
   image(mCloudImg, 0, 0, 1408, 792)
   image(cCloudImg, 0, 0, 1408, 792)
-  image(titleImg, 440, -80, 500, 500)
+  for (let i = 0; i <= 3; i++) {
+    image(treeImg, 200 + i*400, 381, 270, 270)
+  }
+  image(titleImg, 340, -80, 500, 500)
   floor.image = floorImg
   uGround.image = uGroundImg
   if (set === false) {
