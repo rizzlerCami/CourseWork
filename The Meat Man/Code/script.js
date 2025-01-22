@@ -130,7 +130,7 @@ function menu() {
   floor.image = floorImg
   uGround.image = uGroundImg
   if (set === false) {
-    play = new Sprite(700, 520, 50, 50, "k")
+    play = new Sprite(600, 520, 50, 50, "k")
     play.image = playImg[0]
     play.image.scale = 0.6
     for (let i = 0; i<= 20; i++) {
