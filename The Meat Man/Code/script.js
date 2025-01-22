@@ -17,6 +17,8 @@ let blinkDelay = [0, 0, 0]
 let blink = ["", ""]
 let titleImg
 let treeImg
+let playImg = ["", ""]
+let play
 
 function preload() {
   idle = loadImage('idle.png')
@@ -32,6 +34,8 @@ function preload() {
   blink[1] = loadImage('meatManBlinking-2.png')
   titleImg = loadImage('title.png')
   treeImg = loadImage('tree.png')
+  playImg[0] = loadImage('play-1.png')
+  playImg[1] = loadImage('play-2.png')
 }
 
 function setup() {
@@ -49,8 +53,6 @@ function setup() {
   uGround = new Group()
   uGround.w = 101
   uGround.h = 105
-
-
 }
 
 function draw() {
@@ -125,13 +127,13 @@ function menu() {
   image(fCloudImg, 0, 0, 1408, 792)
   image(mCloudImg, 0, 0, 1408, 792)
   image(cCloudImg, 0, 0, 1408, 792)
-  for (let i = 0; i <= 3; i++) {
-    image(treeImg, 200 + i*400, 381, 270, 270)
-  }
-  image(titleImg, 340, -80, 500, 500)
+  image(treeImg, 850, 381, 270, 270)
   floor.image = floorImg
   uGround.image = uGroundImg
   if (set === false) {
+    play = new Sprite(700, 520, 50, 50, "k")
+    play.image = playImg[0]
+    play.image.scale = 0.6
     for (let i = 0; i<= 20; i++) {
       let ground = new floor.Sprite(101*i, 700)
       for (let l = 0; l <= 2; l++) {
@@ -140,6 +142,9 @@ function menu() {
     }
     set = true
   }
+  image(titleImg, 340, -80, 500, 500)
+  
+  
   blinking()
 }
 
