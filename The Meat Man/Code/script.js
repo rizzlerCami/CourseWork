@@ -86,6 +86,7 @@ function draw() {
   uGround.collider = "s"
   meatMan.image.scale = scaleF
   meatMan.image.offset.y = -30
+  play.debug = true
 }
 
 function movement() {
@@ -130,7 +131,8 @@ function menu() {
   floor.image = floorImg
   uGround.image = uGroundImg
   if (set === false) {
-    play = new Sprite(600, 520, 50, 50, "k")
+    play = new Sprite([[520, 590], [650, 550], [600, 700], [520, 590]])
+    play.collider = "k"
     play.image = playImg[0]
     play.image.scale = 0.6
     for (let i = 0; i<= 20; i++) {
