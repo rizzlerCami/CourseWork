@@ -80,8 +80,8 @@ function draw() {
     }
     movement()
     shooting()
-    blinking()
   }
+  blinking()
   floor.image.scale = 0.3
   floor.image.offset.y = -30
   floor.collider = "s"
@@ -137,8 +137,15 @@ function menu() {
     play = new Sprite([[480, 480], [480, 518], [527, 565], [660, 565], [700, 525], [700, 479], [660, 439], [521, 439], [480, 480]])
     play.collider = "k"
     play.image = playImg[0]
+    controls = new Sprite([[300, 620], [300, 658], [347, 705], [570, 705], [610, 665], [610, 619], [570, 579], [341, 579], [300, 620]])
+    controls.collider = "k"
+    controls.image = controlsImg[0]
+    controls.image.offset.x = 107
+    controls.image.offset.y = 144
+    controls.layer = 2
     for (let i = 0; i<= 20; i++) {
       let ground = new floor.Sprite(101*i, 700)
+      ground.layer = 1
       for (let l = 0; l <= 2; l++) {
         let uFloor = new uGround.Sprite(101*i, 805 + 105*l)
       }
@@ -146,17 +153,21 @@ function menu() {
     set = true
   }
   image(titleImg, 340, -80, 500, 500)
-  blinking()
   if (play.mouse.pressing()) {
     play.img = playImg[1]
+
   } else {
     play.img = playImg[0]
   }
+  if (controls.mouse.pressing()) {
+    controls.img = controlsImg[1]
+    controls.image.offset.x = 107
+    controls.image.offset.y = 144
+  } else {
+    controls.img = controlsImg[0]
+  }
   play.image.scale = 0.6
-}
-
-function levelSelect() {
-
+  controls.image.scale = 0.86
 }
 
 function one() {
