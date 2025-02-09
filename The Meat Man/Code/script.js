@@ -1,5 +1,6 @@
 let meatMan
 let level = [true, false, false, false, false, false, false]
+let selector = false
 let idle
 let scaleF
 let skyImg
@@ -23,6 +24,9 @@ let controlsImg = ["", ""]
 let controls
 let exitImg = ["", ""]
 let exit
+let muteImg = ["", ""]
+let mute
+let sound = true
 
 function preload() {
   idle = loadImage('idle.png')
@@ -44,6 +48,8 @@ function preload() {
   controlsImg[1] = loadImage('controls-2.png')
   exitImg[0] = loadImage('exit-1.png')
   exitImg[1] = loadImage('exit-2.png')
+  muteImg[0] = loadImage('sound.png')
+  muteImg[1] = loadImage('noSound.png')
 }
 
 function setup() {
@@ -61,6 +67,9 @@ function setup() {
   uGround = new Group()
   uGround.w = 101
   uGround.h = 105
+
+  mute = new Sprite(1130, 70, 83, 83, "k")
+  mute.img = muteImg[0]
 }
 
 function draw() {
@@ -85,6 +94,16 @@ function draw() {
     movement()
     shooting()
   }
+  if (mute.mouse.presses()) {
+    if (sound) {
+      mute.img = muteImg[1]
+      sound = false
+    } else {
+      mute.img = muteImg[0]
+      sound = true
+    }
+  }
+
   blinking()
   floor.image.scale = 0.3
   floor.image.offset.y = -30
@@ -94,6 +113,7 @@ function draw() {
   uGround.collider = "s"
   meatMan.image.scale = scaleF
   meatMan.image.offset.y = -30
+  mute.img.scale = 0.2
 }
 
 function movement() {
@@ -166,6 +186,9 @@ function menu() {
   } else {
     play.img = playImg[0]
   }
+  if (play.mouse.pressed()) {
+    selector = true
+  }
   if (exit.mouse.pressing()) {
     exit.img = exitImg[1]
 
@@ -182,6 +205,12 @@ function menu() {
   play.image.scale = 0.6
   exit.image.scale = 0.6
   controls.image.scale = 0.86
+
+  if (selector) {
+    play.remove()
+    exit.remove()
+    controls.remove()
+  }
 }
 
 function one() {
