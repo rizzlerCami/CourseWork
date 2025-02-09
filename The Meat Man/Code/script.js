@@ -21,6 +21,8 @@ let playImg = ["", ""]
 let play
 let controlsImg = ["", ""]
 let controls
+let exitImg = ["", ""]
+let exit
 
 function preload() {
   idle = loadImage('idle.png')
@@ -40,6 +42,8 @@ function preload() {
   playImg[1] = loadImage('play-2.png')
   controlsImg[0] = loadImage('controls-1.png')
   controlsImg[1] = loadImage('controls-2.png')
+  exitImg[0] = loadImage('exit-1.png')
+  exitImg[1] = loadImage('exit-2.png')
 }
 
 function setup() {
@@ -137,6 +141,9 @@ function menu() {
     play = new Sprite([[480, 480], [480, 518], [527, 565], [660, 565], [700, 525], [700, 479], [660, 439], [521, 439], [480, 480]])
     play.collider = "k"
     play.image = playImg[0]
+    exit = new Sprite([[630, 620], [630, 658], [677, 705], [810, 705], [850, 665], [850, 619], [810, 579], [671, 579], [630, 620]])
+    exit.collider = "k"
+    exit.image = exitImg[0]
     controls = new Sprite([[300, 620], [300, 658], [347, 705], [570, 705], [610, 665], [610, 619], [570, 579], [341, 579], [300, 620]])
     controls.collider = "k"
     controls.image = controlsImg[0]
@@ -159,6 +166,12 @@ function menu() {
   } else {
     play.img = playImg[0]
   }
+  if (exit.mouse.pressing()) {
+    exit.img = exitImg[1]
+
+  } else {
+    exit.img = exitImg[0]
+  }
   if (controls.mouse.pressing()) {
     controls.img = controlsImg[1]
     controls.image.offset.x = 107
@@ -167,6 +180,7 @@ function menu() {
     controls.img = controlsImg[0]
   }
   play.image.scale = 0.6
+  exit.image.scale = 0.6
   controls.image.scale = 0.86
 }
 
