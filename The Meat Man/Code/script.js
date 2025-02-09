@@ -191,7 +191,7 @@ function menu() {
   }
   if (exit.mouse.pressing()) {
     exit.img = exitImg[1]
-
+    //terminate
   } else {
     exit.img = exitImg[0]
   }
