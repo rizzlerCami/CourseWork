@@ -19,6 +19,8 @@ let titleImg
 let treeImg
 let playImg = ["", ""]
 let play
+let controlsImg = ["", ""]
+let controls
 
 function preload() {
   idle = loadImage('idle.png')
@@ -36,6 +38,8 @@ function preload() {
   treeImg = loadImage('tree.png')
   playImg[0] = loadImage('play-1.png')
   playImg[1] = loadImage('play-2.png')
+  controlsImg[0] = loadImage('controls-1.png')
+  controlsImg[1] = loadImage('controls-2.png')
 }
 
 function setup() {
@@ -86,7 +90,6 @@ function draw() {
   uGround.collider = "s"
   meatMan.image.scale = scaleF
   meatMan.image.offset.y = -30
-  play.debug = true
 }
 
 function movement() {
@@ -131,10 +134,9 @@ function menu() {
   floor.image = floorImg
   uGround.image = uGroundImg
   if (set === false) {
-    play = new Sprite([[520, 590], [650, 550], [600, 700], [520, 590]])
+    play = new Sprite([[480, 480], [480, 518], [527, 565], [660, 565], [700, 525], [700, 479], [660, 439], [521, 439], [480, 480]])
     play.collider = "k"
     play.image = playImg[0]
-    play.image.scale = 0.6
     for (let i = 0; i<= 20; i++) {
       let ground = new floor.Sprite(101*i, 700)
       for (let l = 0; l <= 2; l++) {
@@ -144,9 +146,17 @@ function menu() {
     set = true
   }
   image(titleImg, 340, -80, 500, 500)
-  
-  
   blinking()
+  if (play.mouse.pressing()) {
+    play.img = playImg[1]
+  } else {
+    play.img = playImg[0]
+  }
+  play.image.scale = 0.6
+}
+
+function levelSelect() {
+
 }
 
 function one() {
