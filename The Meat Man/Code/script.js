@@ -1,5 +1,5 @@
 let meatMan
-let level = [true, false, false, false, false, false, false]
+let level = [true, true, false, false, false, false, false]
 let selector = false
 let idle
 let scaleF
@@ -13,7 +13,7 @@ let floor
 let floorImg
 let uGround
 let uGroundImg
-let set = false
+let set = [false, false]
 let blinkDelay = [0, 0, 0]
 let blink = ["", ""]
 let titleImg
@@ -27,6 +27,11 @@ let exit
 let muteImg = ["", ""]
 let mute
 let sound = true
+let levelSelectImg
+let enlarge = 0
+let lockImg
+let levelClick = ["", "", "", "", "", ""]
+let spacer = 0
 
 function preload() {
   idle = loadImage('idle.png')
@@ -50,6 +55,8 @@ function preload() {
   exitImg[1] = loadImage('exit-2.png')
   muteImg[0] = loadImage('sound.png')
   muteImg[1] = loadImage('noSound.png')
+  levelSelectImg = loadImage('levelSelect.png')
+  lockImg = loadImage('lock.png')
 }
 
 function setup() {
@@ -70,6 +77,8 @@ function setup() {
 
   mute = new Sprite(1130, 70, 83, 83, "k")
   mute.img = muteImg[0]
+
+  levelClick = new Group()
 }
 
 function draw() {
@@ -157,7 +166,7 @@ function menu() {
   image(treeImg, 850, 381, 270, 270)
   floor.image = floorImg
   uGround.image = uGroundImg
-  if (set === false) {
+  if (set[0] === false) {
     play = new Sprite([[480, 480], [480, 518], [527, 565], [660, 565], [700, 525], [700, 479], [660, 439], [521, 439], [480, 480]])
     play.collider = "k"
     play.image = playImg[0]
@@ -177,7 +186,7 @@ function menu() {
         let uFloor = new uGround.Sprite(101*i, 805 + 105*l)
       }
     }
-    set = true
+    set[0] = true
   }
   image(titleImg, 340, -80, 500, 500)
   if (play.mouse.pressing()) {
@@ -210,6 +219,29 @@ function menu() {
     play.remove()
     exit.remove()
     controls.remove()
+    if (enlarge === 1000) {
+      if (set[1] === false) {
+        for (let i = 1; i<=6; i++) {
+          if (i === 6) {
+            let levels = new levelClick.Sprite(618, 475, 170, 170, "k")
+          } else {
+            let levels = new levelClick.Sprite(322 + spacer, 305, 120, 120, "k")
+            spacer += 148.3
+          }
+          if (level[i] === false) {
+            levelClick[i - 1].img = lockImg
+          } else {
+            levelClick[i - 1].img = ""
+          }
+          levelClick[i-1].image.scale = 0.47
+        }
+        set[1] = true
+      }
+    } else {
+      enlarge += 50
+    }
+    image(levelSelectImg, 122, -200, enlarge, enlarge)
+    
   }
 }
 
