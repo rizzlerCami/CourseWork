@@ -89,13 +89,13 @@ function draw() {
   } else {
     if (level[1]) {
       one()
-    } else if (level[2]) {
+    } else if (level[1] && level[2]) {
       two()
-    } else if (level[3]) {
+    } else if (level[1] && level[2] && level[3]) {
       three()
-    } else if (level[4]) {
+    } else if (level[1] && level[2] && level[3] && level[4]) {
       four()
-    } else if (level[5]) {
+    } else if (level[1] && level[2] && level[3] && level[4] && level[5]) {
       five()
     } else {
       six()
@@ -241,7 +241,14 @@ function menu() {
       enlarge += 50
     }
     image(levelSelectImg, 122, -200, enlarge, enlarge)
-    
+    for (let i = 0; i <= 5; i++) {
+      if (levelClick[i].mouse.presses() && levelClick[i].image != lockImg) {
+        for (let l = i + 1; i >= 1; i--) {
+          level[l] = true
+        }
+        level[0] = false
+      }
+    }
   }
 }
 
