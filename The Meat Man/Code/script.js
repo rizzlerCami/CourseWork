@@ -84,7 +84,7 @@ function setup() {
 function draw() {
   clear()
 
-  if (level[0] === true) {
+  if (level[0]) {
     menu()
   } else {
     if (level[1]) {
@@ -100,6 +100,7 @@ function draw() {
     } else {
       six()
     }
+    levelClick.remove()
     movement()
     shooting()
   }
@@ -242,12 +243,14 @@ function menu() {
       enlarge += 50
     }
     image(levelSelectImg, 122, -200, enlarge, enlarge)
-    for (let i = 0; i <= 5; i++) {
-      if (levelClick[i].mouse.presses() && levelClick[i].img != lockImg) {
-        for (let l = i + 1; l >= 1; l--) {
-          level[l] = true
+    if (set[1]) {
+      for (let i = 0; i <= 5; i++) {
+        if (levelClick[i].mouse.presses() && levelClick[i].img != lockImg) {
+          for (let l = i + 1; l >= 1; l--) {
+            level[l] = true
+          }
+          level[0] = false
         }
-        level[0] = false
       }
     }
   }
