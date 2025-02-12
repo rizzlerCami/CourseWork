@@ -243,8 +243,8 @@ function menu() {
     }
     image(levelSelectImg, 122, -200, enlarge, enlarge)
     for (let i = 0; i <= 5; i++) {
-      if (levelClick[i].mouse.presses() && levelClick[i].image != lockImg) {
-        for (let l = i + 1; i >= 1; i--) {
+      if (levelClick[i].mouse.presses() && levelClick[i].img != lockImg) {
+        for (let l = i + 1; l >= 1; l--) {
           level[l] = true
         }
         level[0] = false
