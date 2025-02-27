@@ -58,7 +58,7 @@ function preload() {
   muteImg[1] = loadImage('noSound.png')
   levelSelectImg = loadImage('levelSelect.png')
   lockImg = loadImage('lock.png')
-  REM = loadAudio('LosingMyReligion-09.wav')
+  REM = loadSound('LosingMyReligion-09.wav')
 }
 
 function setup() {
