@@ -19,7 +19,7 @@ let blink = ["", ""]
 let titleImg
 let treeImg
 let playImg = ["", ""]
-let play
+let playButton
 let controlsImg = ["", ""]
 let controls
 let exitImg = ["", ""]
@@ -32,6 +32,7 @@ let enlarge = 0
 let lockImg
 let levelClick = ["", "", "", "", "", ""]
 let spacer = 0
+let REM
 
 function preload() {
   idle = loadImage('idle.png')
@@ -57,17 +58,18 @@ function preload() {
   muteImg[1] = loadImage('noSound.png')
   levelSelectImg = loadImage('levelSelect.png')
   lockImg = loadImage('lock.png')
+  REM = loadAudio('LosingMyReligion-09.wav')
 }
 
 function setup() {
   new Canvas(1200, 1000)
-  world.gravity.y = 9.8
 
+  REM.play()
+  world.gravity.y = 9.8
   meatMan = new Sprite([[158, 647], [117, 647], [97, 620], [97, 553], [183, 553], [183, 620], [158, 647]])
   meatMan.image = idle
   meatMan.rotationLock = true
   scaleF = 0.24
-
   floor = new Group()
   floor.w = 101
   floor.h = 105
@@ -169,9 +171,9 @@ function menu() {
   floor.image = floorImg
   uGround.image = uGroundImg
   if (set[0] === false) {
-    play = new Sprite([[480, 480], [480, 518], [527, 565], [660, 565], [700, 525], [700, 479], [660, 439], [521, 439], [480, 480]])
-    play.collider = "k"
-    play.image = playImg[0]
+    playButton = new Sprite([[480, 480], [480, 518], [527, 565], [660, 565], [700, 525], [700, 479], [660, 439], [521, 439], [480, 480]])
+    playButton.collider = "k"
+    playButton.image = playImg[0]
     exit = new Sprite([[630, 620], [630, 658], [677, 705], [810, 705], [850, 665], [850, 619], [810, 579], [671, 579], [630, 620]])
     exit.collider = "k"
     exit.image = exitImg[0]
@@ -191,13 +193,13 @@ function menu() {
     set[0] = true
   }
   image(titleImg, 340, -80, 500, 500)
-  if (play.mouse.pressing()) {
-    play.img = playImg[1]
+  if (playButton.mouse.pressing()) {
+    playButton.img = playImg[1]
 
   } else {
-    play.img = playImg[0]
+    playButton.img = playImg[0]
   }
-  if (play.mouse.pressed()) {
+  if (playButton.mouse.pressed()) {
     selector = true
   }
   if (exit.mouse.pressing()) {
@@ -213,12 +215,12 @@ function menu() {
   } else {
     controls.img = controlsImg[0]
   }
-  play.image.scale = 0.6
+  playButton.image.scale = 0.6
   exit.image.scale = 0.6
   controls.image.scale = 0.86
 
   if (selector) {
-    play.remove()
+    playButton.remove()
     exit.remove()
     controls.remove()
     if (enlarge === 1000) {
