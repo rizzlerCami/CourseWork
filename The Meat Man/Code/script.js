@@ -207,8 +207,8 @@ function menu() {
     set[0] = true
   }
   image(titleImg, 340, -80, 500, 500)
-  if (black.opacity != 0) {
-    black.opacity -= 0.005
+  if (black.opacity > 0.006) {
+    black.opacity -= 0.006
   }
   if (playButton.mouse.pressing()) {
     playButton.img = playImg[1]
