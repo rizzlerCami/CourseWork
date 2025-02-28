@@ -32,7 +32,6 @@ let enlarge = 0
 let lockImg
 let levelClick = ["", "", "", "", "", ""]
 let spacer = 0
-let REM
 
 function preload() {
   idle = loadImage('idle.png')
@@ -58,13 +57,11 @@ function preload() {
   muteImg[1] = loadImage('noSound.png')
   levelSelectImg = loadImage('levelSelect.png')
   lockImg = loadImage('lock.png')
-  REM = loadSound('LosingMyReligion-09.wav')
 }
 
 function setup() {
   new Canvas(1200, 1000)
 
-  REM.play()
   world.gravity.y = 9.8
   meatMan = new Sprite([[158, 647], [117, 647], [97, 620], [97, 553], [183, 553], [183, 620], [158, 647]])
   meatMan.image = idle
