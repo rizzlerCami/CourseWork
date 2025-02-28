@@ -32,6 +32,7 @@ let enlarge = 0
 let lockImg
 let levelClick = ["", "", "", "", "", ""]
 let spacer = 0
+let black
 
 function preload() {
   idle = loadImage('idle.png')
@@ -62,10 +63,14 @@ function preload() {
 function setup() {
   new Canvas(1200, 1000)
 
+  black = new Sprite(0, 0, 3000, 5000, "n")
+  black.layer = 100
+  black.color = "black"
   world.gravity.y = 9.8
   meatMan = new Sprite([[158, 647], [117, 647], [97, 620], [97, 553], [183, 553], [183, 620], [158, 647]])
   meatMan.image = idle
   meatMan.rotationLock = true
+  meatMan.layer = 3
   scaleF = 0.24
   floor = new Group()
   floor.w = 101
@@ -73,11 +78,14 @@ function setup() {
   uGround = new Group()
   uGround.w = 101
   uGround.h = 105
+  uGround.layer = 3
 
   mute = new Sprite(1130, 70, 83, 83, "k")
+  mute.layer = 20
   mute.img = muteImg[0]
 
   levelClick = new Group()
+  levelClick.layer = 5
 }
 
 function draw() {
@@ -156,6 +164,13 @@ function blinking() {
   }
 }
 
+function fadeOut() {
+  black = new Sprite(0, 0, 1500, 1500, "n")
+  black.layer = 100
+  black.opacity = 
+  allSprites.remove()
+}
+
 function menu() {
   background('#d1e8eb')
   image(skyImg, 0, 0, 1408, 792)
@@ -170,9 +185,11 @@ function menu() {
   if (set[0] === false) {
     playButton = new Sprite([[480, 480], [480, 518], [527, 565], [660, 565], [700, 525], [700, 479], [660, 439], [521, 439], [480, 480]])
     playButton.collider = "k"
+    playButton.layer = 3
     playButton.image = playImg[0]
     exit = new Sprite([[630, 620], [630, 658], [677, 705], [810, 705], [850, 665], [850, 619], [810, 579], [671, 579], [630, 620]])
     exit.collider = "k"
+    exit.layer = 4
     exit.image = exitImg[0]
     controls = new Sprite([[300, 620], [300, 658], [347, 705], [570, 705], [610, 665], [610, 619], [570, 579], [341, 579], [300, 620]])
     controls.collider = "k"
@@ -190,6 +207,9 @@ function menu() {
     set[0] = true
   }
   image(titleImg, 340, -80, 500, 500)
+  if (black.opacity != 0) {
+    black.opacity -= 0.005
+  }
   if (playButton.mouse.pressing()) {
     playButton.img = playImg[1]
 
