@@ -35,6 +35,7 @@ let spacer = 0
 let black
 let wind
 let soundDelay = 0
+let openingScene = true
 
 function preload() {
   idle = loadImage('idle.png')
@@ -177,107 +178,106 @@ function fadeOut() {
 }
 
 function menu() {
-  
-  background('#d1e8eb')
-  image(skyImg, 0, 0, 1408, 792)
-  image(fMountImg, 0, 0, 1408, 792)
-  image(cMountImg, 0, 0, 1408, 792)
-  image(fCloudImg, 0, 0, 1408, 792)
-  image(mCloudImg, 0, 0, 1408, 792)
-  image(cCloudImg, 0, 0, 1408, 792)
-  image(treeImg, 850, 381, 270, 270)
-  floor.image = floorImg
-  uGround.image = uGroundImg
-  if (set[0] === false) {
-    playButton = new Sprite([[480, 480], [480, 518], [527, 565], [660, 565], [700, 525], [700, 479], [660, 439], [521, 439], [480, 480]])
-    playButton.collider = "k"
-    playButton.layer = 3
-    playButton.image = playImg[0]
-    exit = new Sprite([[630, 620], [630, 658], [677, 705], [810, 705], [850, 665], [850, 619], [810, 579], [671, 579], [630, 620]])
-    exit.collider = "k"
-    exit.layer = 4
-    exit.image = exitImg[0]
-    controls = new Sprite([[300, 620], [300, 658], [347, 705], [570, 705], [610, 665], [610, 619], [570, 579], [341, 579], [300, 620]])
-    controls.collider = "k"
-    controls.image = controlsImg[0]
-    controls.image.offset.x = 107
-    controls.image.offset.y = 144
-    controls.layer = 2
-    for (let i = 0; i<= 20; i++) {
-      let ground = new floor.Sprite(101*i, 700)
-      ground.layer = 1
-      for (let l = 0; l <= 2; l++) {
-        let uFloor = new uGround.Sprite(101*i, 805 + 105*l)
-      }
-    }
-    set[0] = true
-  }
-  image(titleImg, 340, -80, 500, 500)
-  if (black.opacity > 0.25) {
-    black.opacity -= 0.006
-  }
-  if (playButton.mouse.pressing()) {
-    playButton.img = playImg[1]
-  } else {
-    playButton.img = playImg[0]
-  }
-  if (playButton.mouse.pressed()) {
-    selector = true
-  }
-  if (exit.mouse.pressing()) {
-    exit.img = exitImg[1]
-    //terminate
-  } else {
-    exit.img = exitImg[0]
-  }
-  if (controls.mouse.pressing()) {
-    controls.img = controlsImg[1]
-    controls.image.offset.x = 107
-    controls.image.offset.y = 144
-  } else {
-    controls.img = controlsImg[0]
-  }
-  playButton.image.scale = 0.6
-  exit.image.scale = 0.6
-  controls.image.scale = 0.86
-
-  if (selector) {
-    playButton.remove()
-    exit.remove()
-    controls.remove()
-    if (enlarge === 1000) {
-      if (set[1] === false) {
-        for (let i = 1; i<=6; i++) {
-          if (i === 6) {
-            let levels = new levelClick.Sprite(618, 475, 170, 170, "k")
-          } else {
-            let levels = new levelClick.Sprite(322 + spacer, 305, 120, 120, "k")
-            spacer += 148.3
-          }
-          if (level[i] === false) {
-            levelClick[i - 1].img = lockImg
-          } else {
-            levelClick[i - 1].img = ""
-          }
-          levelClick[i-1].image.scale = 0.47
+    background('#d1e8eb')
+    image(skyImg, 0, 0, 1408, 792)
+    image(fMountImg, 0, 0, 1408, 792)
+    image(cMountImg, 0, 0, 1408, 792)
+    image(fCloudImg, 0, 0, 1408, 792)
+    image(mCloudImg, 0, 0, 1408, 792)
+    image(cCloudImg, 0, 0, 1408, 792)
+    image(treeImg, 850, 381, 270, 270)
+    floor.image = floorImg
+    uGround.image = uGroundImg
+    if (set[0] === false) {
+      playButton = new Sprite([[480, 480], [480, 518], [527, 565], [660, 565], [700, 525], [700, 479], [660, 439], [521, 439], [480, 480]])
+      playButton.collider = "k"
+      playButton.layer = 3
+      playButton.image = playImg[0]
+      exit = new Sprite([[630, 620], [630, 658], [677, 705], [810, 705], [850, 665], [850, 619], [810, 579], [671, 579], [630, 620]])
+      exit.collider = "k"
+      exit.layer = 4
+      exit.image = exitImg[0]
+      controls = new Sprite([[300, 620], [300, 658], [347, 705], [570, 705], [610, 665], [610, 619], [570, 579], [341, 579], [300, 620]])
+      controls.collider = "k"
+      controls.image = controlsImg[0]
+      controls.image.offset.x = 107
+      controls.image.offset.y = 144
+      controls.layer = 2
+      for (let i = 0; i<= 20; i++) {
+        let ground = new floor.Sprite(101*i, 700)
+        ground.layer = 1
+        for (let l = 0; l <= 2; l++) {
+          let uFloor = new uGround.Sprite(101*i, 805 + 105*l)
         }
-        set[1] = true
       }
+      set[0] = true
+    }
+    image(titleImg, 340, -80, 500, 500)
+    if (black.opacity > 0.25) {
+      black.opacity -= 0.006
+    }
+    if (playButton.mouse.pressing()) {
+      playButton.img = playImg[1]
     } else {
-      enlarge += 50
+      playButton.img = playImg[0]
     }
-    image(levelSelectImg, 122, -200, enlarge, enlarge)
-    if (set[1]) {
-      for (let i = 0; i <= 5; i++) {
-        if (levelClick[i].mouse.presses() && levelClick[i].img != lockImg) {
-          for (let l = i + 1; l >= 1; l--) {
-            level[l] = true
+    if (playButton.mouse.pressed()) {
+      selector = true
+    }
+    if (exit.mouse.pressing()) {
+      exit.img = exitImg[1]
+      //terminate
+    } else {
+      exit.img = exitImg[0]
+    }
+    if (controls.mouse.pressing()) {
+      controls.img = controlsImg[1]
+      controls.image.offset.x = 107
+      controls.image.offset.y = 144
+    } else {
+      controls.img = controlsImg[0]
+    }
+    playButton.image.scale = 0.6
+    exit.image.scale = 0.6
+    controls.image.scale = 0.86
+  
+    if (selector) {
+      playButton.remove()
+      exit.remove()
+      controls.remove()
+      if (enlarge === 1000) {
+        if (set[1] === false) {
+          for (let i = 1; i<=6; i++) {
+            if (i === 6) {
+              let levels = new levelClick.Sprite(618, 475, 170, 170, "k")
+            } else {
+              let levels = new levelClick.Sprite(322 + spacer, 305, 120, 120, "k")
+              spacer += 148.3
+            }
+            if (level[i] === false) {
+              levelClick[i - 1].img = lockImg
+            } else {
+              levelClick[i - 1].img = ""
+            }
+            levelClick[i-1].image.scale = 0.47
           }
-          level[0] = false
+          set[1] = true
+        }
+      } else {
+        enlarge += 50
+      }
+      image(levelSelectImg, 122, -200, enlarge, enlarge)
+      if (set[1]) {
+        for (let i = 0; i <= 5; i++) {
+          if (levelClick[i].mouse.presses() && levelClick[i].img != lockImg) {
+            for (let l = i + 1; l >= 1; l--) {
+              level[l] = true
+            }
+            level[0] = false
+          }
         }
       }
     }
-  }
 }
 
 function one() {
