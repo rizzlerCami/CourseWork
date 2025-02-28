@@ -33,6 +33,8 @@ let lockImg
 let levelClick = ["", "", "", "", "", ""]
 let spacer = 0
 let black
+let wind
+let soundDelay = 0
 
 function preload() {
   idle = loadImage('idle.png')
@@ -58,6 +60,7 @@ function preload() {
   muteImg[1] = loadImage('noSound.png')
   levelSelectImg = loadImage('levelSelect.png')
   lockImg = loadImage('lock.png')
+  wind = createAudio('wind.mp3')
 }
 
 function setup() {
@@ -86,6 +89,8 @@ function setup() {
 
   levelClick = new Group()
   levelClick.layer = 5
+
+  wind.play()
 }
 
 function draw() {
@@ -172,6 +177,7 @@ function fadeOut() {
 }
 
 function menu() {
+  
   background('#d1e8eb')
   image(skyImg, 0, 0, 1408, 792)
   image(fMountImg, 0, 0, 1408, 792)
@@ -207,7 +213,7 @@ function menu() {
     set[0] = true
   }
   image(titleImg, 340, -80, 500, 500)
-  if (black.opacity > 0.006) {
+  if (black.opacity > 0.25) {
     black.opacity -= 0.006
   }
   if (playButton.mouse.pressing()) {
