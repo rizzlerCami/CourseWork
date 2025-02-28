@@ -142,8 +142,8 @@ function shooting() {
 }
 
 function blinking() {
-  if (blinkDelay[0] === 150) {
-    if (blinkDelay[1] === 4) {
+  if (blinkDelay[0] === 300) {
+    if (blinkDelay[1] === 6) {
       if (blinkDelay[2] === 0 || blinkDelay[2] === 2) {
         meatMan.image = blink[0]
       } else if (blinkDelay[2] === 1) {
@@ -212,7 +212,6 @@ function menu() {
   }
   if (playButton.mouse.pressing()) {
     playButton.img = playImg[1]
-
   } else {
     playButton.img = playImg[0]
   }
