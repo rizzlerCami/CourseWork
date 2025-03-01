@@ -88,7 +88,7 @@ function setup() {
   floor = new Group()
   floor.w = 101
   floor.h = 105
-  
+
   uGround = new Group()
   uGround.w = 101
   uGround.h = 105
@@ -297,10 +297,10 @@ function menu() {
         }
       }
     }
-    /*if (x.mouse.presses()) {
+    if (x.mouse.presses()) {
       selector = false
       x.remove()
-    }*/
+    }
   }
   if (openingScene) {
     if (blinkDelay[0] === 3100) {
