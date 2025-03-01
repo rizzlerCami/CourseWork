@@ -124,6 +124,7 @@ function draw() {
       six()
     }
     levelClick.remove()
+    x.remove()
     movement()
     shooting()
   }
@@ -137,7 +138,6 @@ function draw() {
   uGround.collider = "s"
   meatMan.image.scale = scaleF
   meatMan.image.offset.y = -30
-  x.debug = true
 }
 
 function movement() {
@@ -193,7 +193,7 @@ function menu() {
   if (set[0] === false) {
     playButton = new Sprite([[480, 480], [480, 518], [527, 565], [660, 565], [700, 525], [700, 479], [660, 439], [521, 439], [480, 480]])
     playButton.collider = "k"
-    playButton.layer = 3
+    playButton.layer = 50
     playButton.image = playImg[0]
     exit = new Sprite([[630, 620], [630, 658], [677, 705], [810, 705], [850, 665], [850, 619], [810, 579], [671, 579], [630, 620]])
     exit.collider = "k"
@@ -205,7 +205,7 @@ function menu() {
     controls.image.offset.x = 107
     controls.image.offset.y = 144
     controls.layer = 2
-    x = new Sprite(1150, 50, 50, 50, "n")
+    x = new Sprite(1150, 50, 50, 50, "k")
     x.img = ximg
     x.img.scale = 2
     x.opacity = 0
@@ -261,9 +261,9 @@ function menu() {
   controls.image.scale = 0.86
 
   if (selector) {
-    playButton.remove()
-    exit.remove()
-    controls.remove()
+    playButton.opacity = 0
+    exit.opacity = 0
+    controls.opacity = 0
     if (enlarge === 1000) {
       if (set[1] === false) {
         for (let i = 1; i<=6; i++) {
@@ -298,8 +298,15 @@ function menu() {
       }
     }
     if (x.mouse.presses()) {
+      enlarge = 0
       selector = false
-      x.remove()
+      set[1] = false
+      x.opacity = 0
+      levelClick.remove()
+      playButton.opacity = 1
+      controls.opacity = 1
+      exit.opacity = 1
+      spacer = 0
     }
   }
   if (openingScene) {
