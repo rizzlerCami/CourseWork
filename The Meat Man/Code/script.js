@@ -204,9 +204,11 @@ function menu() {
     controls.image.offset.x = 107
     controls.image.offset.y = 144
     controls.layer = 2
-    x = new Sprite(1150, 50, 50, 50, "k")
+    x = new Sprite(1155, 45, 45, 45, "k")
     x.img = ximg
     x.img.scale = 2
+    x.img.offset.y = 2
+    x.img.offset.x = 1
     x.opacity = 0
     for (let i = 0; i<= 20; i++) {
       let ground = new floor.Sprite(101*i, 700)
