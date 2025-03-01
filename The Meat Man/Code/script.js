@@ -73,19 +73,22 @@ function preload() {
 
 function setup() {
   new Canvas(1200, 1000)
+  world.gravity.y = 9.8
 
   black = new Sprite(0, 0, 3000, 5000, "n")
   black.layer = 100
   black.color = "black"
-  world.gravity.y = 9.8
+
   meatMan = new Sprite([[158, 647], [117, 647], [97, 620], [97, 553], [183, 553], [183, 620], [158, 647]])
   meatMan.image = idle
   meatMan.rotationLock = true
   meatMan.layer = 3
   scaleF = 0.24
+
   floor = new Group()
   floor.w = 101
   floor.h = 105
+  
   uGround = new Group()
   uGround.w = 101
   uGround.h = 105
