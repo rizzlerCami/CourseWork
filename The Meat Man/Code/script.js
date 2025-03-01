@@ -37,6 +37,7 @@ let soundDelay = 0
 let openingScene = true
 let ctpimg
 let ctp
+let click = ["", ""]
 
 function preload() {
   idle = loadImage('idle.png')
@@ -63,6 +64,8 @@ function preload() {
   wind = createAudio('wind.mp3')
   wind2 = createAudio('wind.mp3')
   ctpimg = loadImage('CTPlogo.png')
+  click[0] = createAudio('click.mp3')
+  click[1] = createAudio('clickOff.mp3')
 }
 
 function setup() {
@@ -139,7 +142,7 @@ function shooting() {
 }
 
 function blinking() {
-  if (blinkDelay[0] === 300) {
+  if (blinkDelay[0] === 450) {
     if (blinkDelay[1] === 6) {
       if (blinkDelay[2] === 0 || blinkDelay[2] === 2) {
         meatMan.image = blink[0]
@@ -208,6 +211,9 @@ function menu() {
   if (black.opacity > 0.25) {
     black.opacity -= 0.005
   }
+  if (playButton.mouse.presses()) {
+    click[0].play()
+  }
   if (playButton.mouse.pressing()) {
     playButton.img = playImg[1]
   } else {
@@ -215,6 +221,10 @@ function menu() {
   }
   if (playButton.mouse.pressed()) {
     selector = true
+    click[1].play()
+  }
+  if (exit.mouse.presses()) {
+    click[0].play()
   }
   if (exit.mouse.pressing()) {
     exit.img = exitImg[1]
@@ -222,12 +232,18 @@ function menu() {
   } else {
     exit.img = exitImg[0]
   }
+  if (controls.mouse.presses()) {
+    click[0].play()
+  }
   if (controls.mouse.pressing()) {
     controls.img = controlsImg[1]
     controls.image.offset.x = 107
     controls.image.offset.y = 144
   } else {
     controls.img = controlsImg[0]
+  }
+  if (controls.mouse.pressed()) {
+    click[1].play()
   }
   playButton.image.scale = 0.6
   exit.image.scale = 0.6
