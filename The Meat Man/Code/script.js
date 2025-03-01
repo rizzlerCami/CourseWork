@@ -38,6 +38,8 @@ let openingScene = true
 let ctpimg
 let ctp
 let click = ["", ""]
+let x
+let ximg
 
 function preload() {
   idle = loadImage('idle.png')
@@ -66,6 +68,7 @@ function preload() {
   ctpimg = loadImage('CTPlogo.png')
   click[0] = createAudio('click.mp3')
   click[1] = createAudio('clickOff.mp3')
+  ximg = loadImage('x.png')
 }
 
 function setup() {
@@ -131,6 +134,7 @@ function draw() {
   uGround.collider = "s"
   meatMan.image.scale = scaleF
   meatMan.image.offset.y = -30
+  x.debug = true
 }
 
 function movement() {
@@ -198,6 +202,10 @@ function menu() {
     controls.image.offset.x = 107
     controls.image.offset.y = 144
     controls.layer = 2
+    x = new Sprite(1150, 50, 50, 50, "n")
+    x.img = ximg
+    x.img.scale = 2
+    x.opacity = 0
     for (let i = 0; i<= 20; i++) {
       let ground = new floor.Sprite(101*i, 700)
       ground.layer = 1
@@ -275,6 +283,7 @@ function menu() {
       enlarge += 50
     }
     image(levelSelectImg, 122, -200, enlarge, enlarge)
+    x.opacity = 1
     if (set[1]) {
       for (let i = 0; i <= 5; i++) {
         if (levelClick[i].mouse.presses() && levelClick[i].img != lockImg) {
@@ -285,6 +294,10 @@ function menu() {
         }
       }
     }
+    /*if (x.mouse.presses()) {
+      selector = false
+      x.remove()
+    }*/
   }
   if (openingScene) {
     if (blinkDelay[0] === 3100) {
@@ -296,6 +309,7 @@ function menu() {
       playButton.remove()
       controls.remove()
       exit.remove()
+      x.remove()
       black.opacity = 1
       if (blinkDelay[1] === 500) {
         if (ctp.opacity < 1) {
