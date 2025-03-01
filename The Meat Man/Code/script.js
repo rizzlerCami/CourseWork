@@ -124,7 +124,6 @@ function draw() {
       six()
     }
     levelClick.remove()
-    x.remove()
     movement()
     shooting()
   }
@@ -294,6 +293,7 @@ function menu() {
             level[l] = true
           }
           level[0] = false
+          x.remove()
         }
       }
     }
