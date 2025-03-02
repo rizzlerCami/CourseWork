@@ -40,6 +40,8 @@ let ctp
 let click = ["", ""]
 let x
 let ximg
+let fade = false
+let fading = false
 
 function preload() {
   idle = loadImage('idle.png')
@@ -123,7 +125,6 @@ function draw() {
     } else {
       six()
     }
-    levelClick.remove()
     movement()
     shooting()
   }
@@ -220,8 +221,10 @@ function menu() {
     set[0] = true
   }
   image(titleImg, 340, -80, 500, 500)
-  if (black.opacity > 0.25) {
+  if (black.opacity > 0.25 && fade === false) {
     black.opacity -= 0.005
+  } else {
+fade === true
   }
   if (playButton.mouse.presses()) {
     click[0].play()
@@ -294,9 +297,17 @@ function menu() {
           for (let l = i + 1; l >= 1; l--) {
             level[l] = true
           }
-          level[0] = false
+          fading = true
+          levelClick.remove()
           x.remove()
         }
+      }
+    }
+    if (fading) {
+      if (black.opacity < 1){
+        black.opacity += 0.05
+      } else {
+        level[0] = false
       }
     }
     if (x.mouse.presses()) {
