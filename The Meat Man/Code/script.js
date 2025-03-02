@@ -125,6 +125,7 @@ function draw() {
     } else {
       six()
     }
+    levelClick.remove()
     movement()
     shooting()
   }
@@ -193,7 +194,7 @@ function menu() {
   if (set[0] === false) {
     playButton = new Sprite([[480, 480], [480, 518], [527, 565], [660, 565], [700, 525], [700, 479], [660, 439], [521, 439], [480, 480]])
     playButton.collider = "k"
-    playButton.layer = 50
+    playButton.layer = 3
     playButton.image = playImg[0]
     exit = new Sprite([[630, 620], [630, 658], [677, 705], [810, 705], [850, 665], [850, 619], [810, 579], [671, 579], [630, 620]])
     exit.collider = "k"
@@ -224,7 +225,7 @@ function menu() {
   if (black.opacity > 0.25 && fade === false) {
     black.opacity -= 0.005
   } else {
-fade === true
+    fade === true
   }
   if (playButton.mouse.presses()) {
     click[0].play()
@@ -265,9 +266,9 @@ fade === true
   controls.image.scale = 0.86
 
   if (selector) {
-    playButton.opacity = 0
-    exit.opacity = 0
-    controls.opacity = 0
+    playButton.remove()
+    controls.remove()
+    exit.remove()
     if (enlarge === 1000) {
       if (set[1] === false) {
         for (let i = 1; i<=6; i++) {
@@ -298,14 +299,13 @@ fade === true
             level[l] = true
           }
           fading = true
-          levelClick.remove()
           x.remove()
         }
       }
     }
     if (fading) {
       if (black.opacity < 1){
-        black.opacity += 0.05
+        black.opacity += 0.02
       } else {
         level[0] = false
       }
@@ -313,7 +313,7 @@ fade === true
     if (x.mouse.presses()) {
       enlarge = 0
       selector = false
-      set[1] = false
+      set = [false, false]
       x.opacity = 0
       levelClick.remove()
       playButton.opacity = 1
