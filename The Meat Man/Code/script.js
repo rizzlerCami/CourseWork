@@ -42,6 +42,7 @@ let x
 let ximg
 let fade = false
 let fading = false
+let feint
 
 function preload() {
   idle = loadImage('idle.png')
@@ -71,6 +72,7 @@ function preload() {
   click[0] = createAudio('click.mp3')
   click[1] = createAudio('clickOff.mp3')
   ximg = loadImage('x.png')
+  feint = createAudio('rem.wav')
 }
 
 function setup() {
@@ -170,13 +172,6 @@ function blinking() {
   } else {
     blinkDelay[0]++
   }
-}
-
-function fadeOut() {
-  black = new Sprite(0, 0, 1500, 1500, "n")
-  black.layer = 100
-  black.opacity = 
-  allSprites.remove()
 }
 
 function menu() {
@@ -306,7 +301,11 @@ function menu() {
     if (fading) {
       if (black.opacity < 1){
         black.opacity += 0.02
+      }
+      if (feint.volume() >= 0.01) {
+        feint.volume(feint.volume() - 0.01)
       } else {
+        feint.stop()
         level[0] = false
       }
     }
@@ -327,6 +326,7 @@ function menu() {
       openingScene = false
       blinkDelay = [0, 0, 0]
       set[0] = false
+      feint.play()
     } else {
       blinkDelay[0]++
       playButton.remove()
