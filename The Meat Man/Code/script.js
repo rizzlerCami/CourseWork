@@ -1,4 +1,7 @@
 let meatMan
+let crouchImg
+let openMouthImg
+let walk = ["", "", "", ""]
 let level = [true, true, false, false, false, false, false]
 let selector = false
 let idle
@@ -42,7 +45,7 @@ let x
 let ximg
 let fade = false
 let fading = false
-let feint
+let meatTheme
 let controlsScreen
 let controlsScreenImg
 let controlsBool = false
@@ -75,8 +78,11 @@ function preload() {
   click[0] = createAudio('click.mp3')
   click[1] = createAudio('clickOff.mp3')
   ximg = loadImage('x.png')
-  feint = createAudio('rem.wav')
+  meatTheme = createAudio('rem.wav')
   controlsScreenImg = loadImage('controlsScreen.png')
+  crouchImg = loadImage('meatManCrouched.png')
+  openMouthImg = loadImage('meatManOpenMouth.png')
+  walk = [loadImage('meatManWalking-1.png'), loadImage('meatManWalking-2.png'), loadImage('meatManWalking-3.png'), loadImage('meatManWalking-4.png')]
 }
 
 function setup() {
@@ -131,6 +137,7 @@ function draw() {
     } else {
       six()
     }
+    camera.pos = meatMan.pos
     levelClick.remove()
     movement()
     shooting()
@@ -145,10 +152,47 @@ function draw() {
   uGround.collider = "s"
   meatMan.image.scale = scaleF
   meatMan.image.offset.y = -30
+  meatMan.friction = 500
 }
 
 function movement() {
-
+  if (kb.pressing('left') && kb.pressing('right')) {
+  } else if (kb.pressing('right')) {
+    meatMan.scale.x = 1
+    if (meatMan.colliding(floor) > 0) {
+      if (enlarge === 12) {
+        if (spacer === 4) {
+          spacer = 0
+        }
+        meatMan.image = walk[spacer]
+        spacer++
+        enlarge = 0
+      }
+      enlarge++
+    } else {
+      meatMan.image = idle
+    }
+    meatMan.velocity.x = 6
+  } else if (kb.pressing('left')) {
+    meatMan.scale.x = -1
+    if (meatMan.colliding(floor) > 0) {
+      if (enlarge === 12) {
+        if (spacer === 4) {
+          spacer = 0
+        }
+        meatMan.image = walk[spacer]
+        spacer++
+        enlarge = 0
+      }
+      enlarge++
+    } else {
+      meatMan.image = idle
+    }
+    meatMan.velocity.x = -6
+  }
+  if (kb.pressed('right') || kb.pressed('left')) {
+    meatMan.image = idle
+  }
 }
 
 function shooting() {
@@ -179,7 +223,6 @@ function blinking() {
 }
 
 function menu() {
-
   background('#d1e8eb')
   image(skyImg, 0, 0, 1408, 792)
   image(fMountImg, 0, 0, 1408, 792)
@@ -326,11 +369,13 @@ function menu() {
       if (black.opacity < 1){
         black.opacity += 0.02
       }
-      if (feint.volume() >= 0.01) {
-        feint.volume(feint.volume() - 0.01)
+      if (meatTheme.volume() >= 0.01) {
+        meatTheme.volume(meatTheme.volume() - 0.01)
       } else {
-        feint.stop()
+        meatTheme.stop()
         level[0] = false
+        enlarge = 0
+        spacer = 0
       }
     }
     if (x.mouse.presses()) {
@@ -350,7 +395,7 @@ function menu() {
       openingScene = false
       blinkDelay = [0, 0, 0]
       set[0] = false
-      feint.play()
+      meatTheme.play()
     } else {
       blinkDelay[0]++
       playButton.remove()
