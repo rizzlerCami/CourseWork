@@ -167,7 +167,7 @@ function draw() {
   meatMan.image.scale = scaleF
   meatMan.image.offset.y = -30
   meatMan.friction = 500
-
+  allSprites.debug = true
   allSprites.bounciness = 0
 }
 
@@ -235,8 +235,8 @@ function shooting() {
     meat.velocity.y = -7
     meat.y = meatMan.y - 30
     scaleF -= 0.005
-    meatMan.w -= 4
-    meatMan.h -= 4
+    meatMan.w -= 1.8
+    meatMan.h -= 2
   }
   if (meatball.collides(floor)) {
     meatball[0].remove()
