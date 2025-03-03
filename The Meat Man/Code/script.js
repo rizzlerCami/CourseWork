@@ -34,7 +34,7 @@ let black
 let wind
 let wind2
 let soundDelay = 0
-let openingScene = false
+let openingScene = true
 let ctpimg
 let ctp
 let click = ["", ""]
