@@ -34,7 +34,7 @@ let black
 let wind
 let wind2
 let soundDelay = 0
-let openingScene = true
+let openingScene = false
 let ctpimg
 let ctp
 let click = ["", ""]
@@ -43,6 +43,9 @@ let ximg
 let fade = false
 let fading = false
 let feint
+let controlsScreen
+let controlsScreenImg
+let controlsBool = false
 
 function preload() {
   idle = loadImage('idle.png')
@@ -73,6 +76,7 @@ function preload() {
   click[1] = createAudio('clickOff.mp3')
   ximg = loadImage('x.png')
   feint = createAudio('rem.wav')
+  controlsScreenImg = loadImage('controlsScreen.png')
 }
 
 function setup() {
@@ -254,12 +258,32 @@ function menu() {
     controls.img = controlsImg[0]
   }
   if (controls.mouse.pressed()) {
+    controlsBool = true
     click[1].play()
   }
   playButton.image.scale = 0.6
   exit.image.scale = 0.6
   controls.image.scale = 0.86
 
+  if (controlsBool) {
+    playButton.remove()
+    controls.remove()
+    exit.remove()
+    if (enlarge != 900) {
+      enlarge += 75
+    }
+    image(controlsScreenImg, 150, -50, enlarge, enlarge)
+    x.opacity = 1
+    if (x.mouse.presses()) {
+      enlarge = 0
+      controlsBool = false
+      set[0] = false
+      x.opacity = 0
+      playButton.opacity = 1
+      controls.opacity = 1
+      exit.opacity = 1
+    }
+  }
   if (selector) {
     playButton.remove()
     controls.remove()
