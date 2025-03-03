@@ -27,7 +27,6 @@ let controlsImg = ["", ""]
 let controls
 let exitImg = ["", ""]
 let exit
-let sound = true
 let levelSelectImg
 let enlarge = 0
 let lockImg
@@ -49,6 +48,8 @@ let meatTheme
 let controlsScreen
 let controlsScreenImg
 let controlsBool = false
+let meatball
+let meatballImg
 
 function preload() {
   idle = loadImage('idle.png')
@@ -83,6 +84,7 @@ function preload() {
   crouchImg = loadImage('meatManCrouched.png')
   openMouthImg = loadImage('meatManOpenMouth.png')
   walk = [loadImage('meatManWalking-1.png'), loadImage('meatManWalking-2.png'), loadImage('meatManWalking-3.png'), loadImage('meatManWalking-4.png')]
+  meatballImg = loadImage('Meatball.png')
 }
 
 function setup() {
@@ -116,6 +118,10 @@ function setup() {
   ctp = new Sprite(600, 360, 400, 400, "n")
   ctp.img = ctpimg
   ctp.opacity = 0
+
+  meatball = new Group()
+  meatball.image = meatballImg
+  meatball.d = 37
 }
 
 function draw() {
@@ -124,23 +130,30 @@ function draw() {
   if (level[0]) {
     menu()
   } else {
-    if (level[1]) {
-      one()
-    } else if (level[1] && level[2]) {
-      two()
-    } else if (level[1] && level[2] && level[3]) {
-      three()
-    } else if (level[1] && level[2] && level[3] && level[4]) {
-      four()
+    if (level[1] && level[2] && level[3] && level[4] && level[5] && level[6]) {
+      six()
     } else if (level[1] && level[2] && level[3] && level[4] && level[5]) {
       five()
+    } else if (level[1] && level[2] && level[3] && level[4]) {
+      four()
+    } else if (level[1] && level[2] && level[3]) {
+      three()
+    } else if (level[1] && level[2]) {
+      two()
     } else {
-      six()
+      one()
     }
-    camera.pos = meatMan.pos
     levelClick.remove()
     movement()
     shooting()
+    meatball.image.scale = 0.24
+    meatball.image.offset.x = -17
+    meatball.image.offset.y = 6
+    if (meatMan.y < 800) {
+    camera.pos = meatMan.pos
+    } else {
+    meatMan.velocity.x = 0
+    }
   }
 
   blinking()
@@ -210,7 +223,30 @@ function movement() {
 }
 
 function shooting() {
-
+  if (mouse.presses()) {
+    let meat = new meatball.Sprite()
+    if (meatMan.scale.x === -1) {
+      meat.x = meatMan.x - 60
+      meat.velocity.x = -5
+    } else {
+      meat.x = meatMan.x + 60
+      meat.velocity.x = 5
+    }
+    meat.velocity.y = -7
+    meat.y = meatMan.y - 30
+    scaleF -= 0.005
+    meatMan.w -= 4
+    meatMan.h -= 4
+  }
+  if (meatball.collides(floor)) {
+    meatball[0].remove()
+  }
+  if (mouse.pressing()) {
+    meatMan.image = openMouthImg
+  }
+  if (mouse.pressed()) {
+    meatMan.image = idle
+  }
 }
 
 function blinking() {
