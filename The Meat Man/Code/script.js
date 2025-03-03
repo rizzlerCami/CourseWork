@@ -147,13 +147,15 @@ function draw() {
   floor.image.scale = 0.3
   floor.image.offset.y = -30
   floor.collider = "s"
+  floor.bounciness = 0
   uGround.image.scale = 0.3
   uGround.image.offset.y = -30
   uGround.collider = "s"
   meatMan.image.scale = scaleF
   meatMan.image.offset.y = -30
   meatMan.friction = 500
-  allSprites.debug = true
+  
+  allSprites.bounciness = 0
 }
 
 function movement() {
@@ -194,6 +196,15 @@ function movement() {
   if (kb.pressed('right') || kb.pressed('left')) {
     meatMan.image = idle
   }
+  if (meatMan.colliding(floor) > 0 && kb.pressing('space')) {
+      meatMan.image = crouchImg
+      crouch = true
+  }
+    if (kb.pressed('space')) {
+      meatMan.image = idle
+      crouch = false
+      meatMan.velocity.y = -7
+    }
 }
 
 function shooting() {
@@ -377,6 +388,7 @@ function menu() {
         level[0] = false
         enlarge = 0
         spacer = 0
+        selector = false
       }
     }
     if (x.mouse.presses()) {
