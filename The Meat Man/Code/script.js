@@ -34,7 +34,7 @@ let black
 let wind
 let wind2
 let soundDelay = 0
-let openingScene = true
+let openingScene = false
 let ctpimg
 let ctp
 let click = ["", ""]
@@ -382,6 +382,10 @@ function one() {
   image(fCloudImg, 0, 0, 1408, 792)
   image(mCloudImg, 0, 0, 1408, 792)
   image(cCloudImg, 0, 0, 1408, 792)
+  if (black.opacity > 0.005) {
+    black.opacity -= 0.005
+  }
+  
 }
 
 function two() {
