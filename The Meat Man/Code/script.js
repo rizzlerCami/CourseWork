@@ -154,7 +154,7 @@ function draw() {
   meatMan.image.scale = scaleF
   meatMan.image.offset.y = -30
   meatMan.friction = 500
-  
+
   allSprites.bounciness = 0
 }
 
@@ -196,15 +196,17 @@ function movement() {
   if (kb.pressed('right') || kb.pressed('left')) {
     meatMan.image = idle
   }
-  if (meatMan.colliding(floor) > 0 && kb.pressing('space')) {
+  if (meatMan.colliding(floor) > 0) {
+    if (kb.pressing('space')) {
       meatMan.image = crouchImg
       crouch = true
-  }
+    }
     if (kb.pressed('space')) {
       meatMan.image = idle
       crouch = false
       meatMan.velocity.y = -7
     }
+  }
 }
 
 function shooting() {
