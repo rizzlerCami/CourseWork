@@ -153,6 +153,7 @@ function draw() {
   meatMan.image.scale = scaleF
   meatMan.image.offset.y = -30
   meatMan.friction = 500
+  allSprites.debug = true
 }
 
 function movement() {
