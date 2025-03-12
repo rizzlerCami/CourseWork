@@ -36,7 +36,7 @@ let black
 let wind
 let wind2
 let soundDelay = 0
-let openingScene = true
+let openingScene = false
 let ctpimg
 let ctp
 let click = ["", ""]
@@ -50,6 +50,7 @@ let controlsScreenImg
 let controlsBool = false
 let meatball
 let meatballImg
+let crouch = false
 
 function preload() {
   idle = loadImage('idle.png')
@@ -171,47 +172,54 @@ function draw() {
 }
 
 function movement() {
-  if (kb.pressing('left') && kb.pressing('right')) {
-  } else if (kb.pressing('right')) {
-    meatMan.scale.x = 1
-    if (meatMan.colliding(floor) > 0) {
-      if (enlarge === 12) {
-        if (spacer === 4) {
-          spacer = 0
+  if (crouch === false) {
+    if (kb.pressing('left') && kb.pressing('right')) {
+    } else if (kb.pressing('right')) {
+      meatMan.scale.x = 1
+      if (meatMan.colliding(floor) > 0) {
+        if (enlarge === 12) {
+          if (spacer === 4) {
+            spacer = 0
+          }
+          meatMan.image = walk[spacer]
+          spacer++
+          enlarge = 0
         }
-        meatMan.image = walk[spacer]
-        spacer++
-        enlarge = 0
+        enlarge++
+      } else {
+        meatMan.image = idle
       }
-      enlarge++
-    } else {
+      meatMan.velocity.x = 6
+    } else if (kb.pressing('left')) {
+      meatMan.scale.x = -1
+      if (meatMan.colliding(floor) > 0) {
+        if (enlarge === 12) {
+          if (spacer === 4) {
+            spacer = 0
+          }
+          meatMan.image = walk[spacer]
+          spacer++
+          enlarge = 0
+        }
+        enlarge++
+      } else {
+        meatMan.image = idle
+      }
+      meatMan.velocity.x = -6
+    }
+    if (kb.pressed('right') || kb.pressed('left')) {
       meatMan.image = idle
     }
-    meatMan.velocity.x = 6
-  } else if (kb.pressing('left')) {
-    meatMan.scale.x = -1
-    if (meatMan.colliding(floor) > 0) {
-      if (enlarge === 12) {
-        if (spacer === 4) {
-          spacer = 0
-        }
-        meatMan.image = walk[spacer]
-        spacer++
-        enlarge = 0
-      }
-      enlarge++
-    } else {
-      meatMan.image = idle
-    }
-    meatMan.velocity.x = -6
-  }
-  if (kb.pressed('right') || kb.pressed('left')) {
-    meatMan.image = idle
   }
   if (meatMan.colliding(floor) > 0) {
     if (kb.pressing('space')) {
       meatMan.image = crouchImg
       crouch = true
+      if (kb.presses('left')) {
+        meatMan.scale.x = -1
+      } else if (kb.presses('right')) {
+        meatMan.scale.x = 1
+      }
     }
     if (kb.pressed('space')) {
       meatMan.image = idle
@@ -480,7 +488,6 @@ function one() {
   if (black.opacity > 0.005) {
     black.opacity -= 0.005
   }
-  
 }
 
 function two() {
