@@ -479,12 +479,12 @@ function menu() {
 
 function one() {
   background('#d1e8eb')
-  image(skyImg, 0, 0, 1408, 792)
-  image(fMountImg, 0, 0, 1408, 792)
-  image(cMountImg, 0, 0, 1408, 792)
-  image(fCloudImg, 0, 0, 1408, 792)
-  image(mCloudImg, 0, 0, 1408, 792)
-  image(cCloudImg, 0, 0, 1408, 792)
+  image(skyImg, 0.2 * (140 - meatMan.pos.x), 0, 1408, 792)
+  image(fMountImg, 0.2 * (140 - meatMan.pos.x), 0, 1408, 792)
+  image(cMountImg, 0.2 * (140 - meatMan.pos.x), 0, 1408, 792)
+  image(fCloudImg, 0.2 * (140 - meatMan.pos.x), 0, 1408, 792)
+  image(mCloudImg, 0.2 * (140 - meatMan.pos.x), 0, 1408, 792)
+  image(cCloudImg, 0.2 * (140 - meatMan.pos.x), 0, 1408, 792)
   if (black.opacity > 0.005) {
     black.opacity -= 0.005
   }
