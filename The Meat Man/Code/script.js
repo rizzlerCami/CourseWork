@@ -480,21 +480,12 @@ function menu() {
 function one() {
   background('#d1e8eb')
     for (let i = 0; i <= 5632; i+=1408) {
-      if (meatMan.pos.y < 800) {
         image(skyImg, 0.1* (140 - meatMan.pos.x) + i, 0.5*(600 - meatMan.pos.y) - 100, 1408, 792)
         image(fMountImg, 0.2* (140 - meatMan.pos.x) + i, 0.5*(600 - meatMan.pos.y), 1408, 792)
         image(cMountImg, 0.3* (140 - meatMan.pos.x) + i, 0.5*(600 - meatMan.pos.y), 1408, 792)
         image(fCloudImg, 0.4* (140 - meatMan.pos.x) + i, 0.5*(600 - meatMan.pos.y), 1408, 792)
         image(mCloudImg, 0.4* (140 - meatMan.pos.x) + i, 0.5*(600 - meatMan.pos.y), 1408, 792)
         image(cCloudImg, 0.5* (140 - meatMan.pos.x) + i, 0.5*(600 - meatMan.pos.y), 1408, 792)
-      } else {
-        image(skyImg, 0.1* (140 - meatMan.pos.x) + i, -200, 1408, 792)
-        image(fMountImg, 0.2* (140 - meatMan.pos.x) + i, -200, 1408, 792)
-        image(cMountImg, 0.3* (140 - meatMan.pos.x) + i, -200, 1408, 792)
-        image(fCloudImg, 0.4* (140 - meatMan.pos.x) + i, -200, 1408, 792)
-        image(mCloudImg, 0.4* (140 - meatMan.pos.x) + i, -200, 1408, 792)
-        image(cCloudImg, 0.5* (140 - meatMan.pos.x) + i, -200, 1408, 792)
-      }
     }
   image(skyImg, 0.1* (140 - meatMan.pos.x) - 1408, 0.5*(600 - meatMan.pos.y) - 100, 1408, 792)
   image(fMountImg, 0.2* (140 - meatMan.pos.x) - 1408, 0.5*(600 - meatMan.pos.y), 1408, 792)
