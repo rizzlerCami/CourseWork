@@ -314,7 +314,7 @@ function menu() {
     for (let i = 0; i<= 100; i++) {
       let ground = new floor.Sprite(101*i, 700)
       ground.layer = 1
-      for (let l = 0; l <= 2; l++) {
+      for (let l = 0; l <= 5; l++) {
         let uFloor = new uGround.Sprite(101*i, 805 + 105*l)
       }
     }
