@@ -51,6 +51,7 @@ let controlsBool = false
 let meatball
 let meatballImg
 let crouch = false
+let walkSound
 
 function preload() {
   idle = loadImage('idle.png')
@@ -86,6 +87,7 @@ function preload() {
   openMouthImg = loadImage('meatManOpenMouth.png')
   walk = [loadImage('meatManWalking-1.png'), loadImage('meatManWalking-2.png'), loadImage('meatManWalking-3.png'), loadImage('meatManWalking-4.png')]
   meatballImg = loadImage('Meatball.png')
+  walkSound = createAudio('walkSound.mp3')
 }
 
 function setup() {
@@ -186,6 +188,7 @@ function movement() {
           enlarge = 0
         }
         enlarge++
+        walkSound.play()
       } else {
         meatMan.image = idle
       }
@@ -206,9 +209,11 @@ function movement() {
         meatMan.image = idle
       }
       meatMan.velocity.x = -6
+      walkSound.play()
     }
     if (kb.pressed('right') || kb.pressed('left')) {
       meatMan.image = idle
+      walkSound.pause()
     }
   }
   if (meatMan.colliding(floor) > 0) {
@@ -226,6 +231,8 @@ function movement() {
       crouch = false
       meatMan.velocity.y = -7
     }
+  } else {
+    walkSound.pause()
   }
 }
 
@@ -429,7 +436,7 @@ function menu() {
       if (meatTheme.volume() >= 0.01) {
         meatTheme.volume(meatTheme.volume() - 0.01)
       } else {
-        meatTheme.stop()
+        meatTheme.pause()
         level[0] = false
         enlarge = 0
         spacer = 0
