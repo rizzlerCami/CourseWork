@@ -52,6 +52,8 @@ let meatball
 let meatballImg
 let crouch = false
 let walkSound
+let jumpSound
+let shootSound
 
 function preload() {
   idle = loadImage('idle.png')
@@ -88,6 +90,8 @@ function preload() {
   walk = [loadImage('meatManWalking-1.png'), loadImage('meatManWalking-2.png'), loadImage('meatManWalking-3.png'), loadImage('meatManWalking-4.png')]
   meatballImg = loadImage('Meatball.png')
   walkSound = createAudio('walkSound.mp3')
+  jumpSound = createAudio('jumpSound.mp3')
+  shootSound = createAudio('shootSound.mp3')
 }
 
 function setup() {
@@ -230,6 +234,7 @@ function movement() {
       meatMan.image = idle
       crouch = false
       meatMan.velocity.y = -7
+      jumpSound.play()
     }
   } else {
     walkSound.pause()
@@ -239,6 +244,7 @@ function movement() {
 function shooting() {
   if (mouse.presses()) {
     let meat = new meatball.Sprite()
+    shootSound.play()
     if (meatMan.scale.x === -1) {
       meat.x = meatMan.x - 60
       meat.velocity.x = -5
