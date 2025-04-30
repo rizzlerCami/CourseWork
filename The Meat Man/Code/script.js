@@ -54,6 +54,8 @@ let crouch = false
 let walkSound
 let jumpSound
 let shootSound
+let crate
+let crateImg
 
 function preload() {
   idle = loadImage('idle.png')
@@ -92,6 +94,7 @@ function preload() {
   walkSound = createAudio('walkSound.mp3')
   jumpSound = createAudio('jumpSound.mp3')
   shootSound = createAudio('shootSound.mp3')
+  crateImg = loadImage('crate.png')
 }
 
 function setup() {
@@ -129,6 +132,15 @@ function setup() {
   meatball = new Group()
   meatball.image = meatballImg
   meatball.d = 37
+
+  crate = new Group()
+  crate.w = 80
+  crate.h = 80
+  crate.collider = "s"
+  crate.img = crateImg
+  crate.img.scale = 0.25
+  crate.layer = 1
+  crate.friction = 10
 }
 
 function draw() {
@@ -182,7 +194,7 @@ function movement() {
     if (kb.pressing('left') && kb.pressing('right')) {
     } else if (kb.pressing('right')) {
       meatMan.scale.x = 1
-      if (meatMan.colliding(floor) > 0) {
+      if (meatMan.colliding(floor) > 0 || (meatMan.colliding(crate) > 0 && meatMan.y < 80)) {
         if (enlarge === 12) {
           if (spacer === 4) {
             spacer = 0
@@ -199,7 +211,7 @@ function movement() {
       meatMan.velocity.x = 6
     } else if (kb.pressing('left')) {
       meatMan.scale.x = -1
-      if (meatMan.colliding(floor) > 0) {
+      if (meatMan.colliding(floor) > 0 || (meatMan.colliding(crate) > 0 && meatMan.y < 80)) {
         if (enlarge === 12) {
           if (spacer === 4) {
             spacer = 0
@@ -220,7 +232,7 @@ function movement() {
       walkSound.pause()
     }
   }
-  if (meatMan.colliding(floor) > 0) {
+  if (meatMan.colliding(floor) > 0 || (meatMan.colliding(crate) > 0 && meatMan.y < 80)) {
     if (kb.pressing('space')) {
       meatMan.image = crouchImg
       crouch = true
@@ -508,6 +520,13 @@ function one() {
   image(cCloudImg, 0.5* (140 - meatMan.pos.x) - 1408, 0.5*(600 - meatMan.pos.y), 1408, 792)
   if (black.opacity > 0.005) {
     black.opacity -= 0.005
+  }
+  if (set[0]) {
+    for (let i = 0; i < 5; i++) {
+      let c = new crate.Sprite(700, 608 - 80 * i)
+    }
+    let p = new crate.Sprite(300, 608)
+    set[0] = false
   }
 }
 
