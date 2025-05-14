@@ -140,7 +140,6 @@ function setup() {
   crate.img = crateImg
   crate.img.scale = 0.25
   crate.layer = 1
-  crate.friction = 10
 }
 
 function draw() {
@@ -194,7 +193,7 @@ function movement() {
     if (kb.pressing('left') && kb.pressing('right')) {
     } else if (kb.pressing('right')) {
       meatMan.scale.x = 1
-      if (meatMan.colliding(floor) > 0 || (meatMan.colliding(crate) > 0 && meatMan.y < 80)) {
+      if (meatMan.colliding(floor) > 0 || meatMan.colliding(crate) > 0) {
         if (enlarge === 12) {
           if (spacer === 4) {
             spacer = 0
@@ -211,7 +210,7 @@ function movement() {
       meatMan.velocity.x = 6
     } else if (kb.pressing('left')) {
       meatMan.scale.x = -1
-      if (meatMan.colliding(floor) > 0 || (meatMan.colliding(crate) > 0 && meatMan.y < 80)) {
+      if (meatMan.colliding(floor) > 0 || meatMan.colliding(crate) > 0) {
         if (enlarge === 12) {
           if (spacer === 4) {
             spacer = 0
@@ -232,7 +231,7 @@ function movement() {
       walkSound.pause()
     }
   }
-  if (meatMan.colliding(floor) > 0 || (meatMan.colliding(crate) > 0 && meatMan.y < 80)) {
+  if (meatMan.colliding(floor) > 0) {
     if (kb.pressing('space')) {
       meatMan.image = crouchImg
       crouch = true
