@@ -521,9 +521,6 @@ function one() {
     black.opacity -= 0.005
   }
   if (set[0]) {
-    for (let i = 0; i < 5; i++) {
-      let c = new crate.Sprite(700, 608 - 80 * i)
-    }
     let p = new crate.Sprite(300, 608)
     set[0] = false
   }
