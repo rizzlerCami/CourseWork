@@ -226,12 +226,12 @@ function movement() {
       meatMan.velocity.x = -6
       walkSound.play()
     }
-    if (kb.pressed('right') || kb.pressed('left')) {
+    if (kb.pressed('right') || kb.pressed('left') || kb.presses('space')) {
       meatMan.image = idle
       walkSound.pause()
     }
   }
-  if (meatMan.colliding(floor) > 0) {
+  if (meatMan.colliding(floor) > 0 || meatMan.colliding(crate) > 0) {
     if (kb.pressing('space')) {
       meatMan.image = crouchImg
       crouch = true
@@ -281,7 +281,8 @@ function shooting() {
 }
 
 function blinking() {
-  if (blinkDelay[0] === 450) {
+  if (meatMan.velocity.x == 0 && meatMan.velocity.y == 0) {
+    if (blinkDelay[0] === 450) {
     if (blinkDelay[1] === 6) {
       if (blinkDelay[2] === 0 || blinkDelay[2] === 2) {
         meatMan.image = blink[0]
@@ -301,6 +302,8 @@ function blinking() {
   } else {
     blinkDelay[0]++
   }
+  }
+  
 }
 
 function menu() {
