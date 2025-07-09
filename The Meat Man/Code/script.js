@@ -56,6 +56,7 @@ let jumpSound
 let shootSound
 let crate
 let crateImg
+let tree
 
 function preload() {
   idle = loadImage('idle.png')
@@ -338,7 +339,7 @@ function menu() {
     x.img.offset.y = 2
     x.img.offset.x = 1
     x.opacity = 0
-    for (let i = 0; i<= 100; i++) {
+    for (let i = 0; i<= 12; i++) {
       let ground = new floor.Sprite(101*i, 700)
       ground.layer = 1
       for (let l = 0; l <= 5; l++) {
@@ -461,6 +462,8 @@ function menu() {
         enlarge = 0
         spacer = 0
         selector = false
+        floor.remove()
+        uGround.remove()
       }
     }
     if (x.mouse.presses()) {
@@ -524,6 +527,16 @@ function one() {
     black.opacity -= 0.005
   }
   if (set[0]) {
+    tree = new Sprite(850, 503, 270, 270, "n")
+    tree.img = treeImg
+    tree.scale = 0.7
+    for (let i = 0; i<= 12; i++) {
+      let ground = new floor.Sprite(101*i, 700)
+      ground.layer = 1
+      for (let l = 0; l <= 5; l++) {
+        let uFloor = new uGround.Sprite(101*i, 805 + 105*l)
+      }
+    }
     let p = new crate.Sprite(300, 608)
     set[0] = false
   }
