@@ -57,6 +57,8 @@ let shootSound
 let crate
 let crateImg
 let tree
+let spoon
+let spoonImg = ["", "", "", ""]
 
 function preload() {
   idle = loadImage('idle.png')
@@ -96,6 +98,7 @@ function preload() {
   jumpSound = createAudio('jumpSound.mp3')
   shootSound = createAudio('shootSound.mp3')
   crateImg = loadImage('crate.png')
+  spoonImg = [loadImage('')]
 }
 
 function setup() {
@@ -530,14 +533,14 @@ function one() {
     tree = new Sprite(850, 503, 270, 270, "n")
     tree.img = treeImg
     tree.scale = 0.7
-    for (let i = 0; i<= 12; i++) {
+    for (let i = 0; i<= 15; i++) {
       let ground = new floor.Sprite(101*i, 700)
       ground.layer = 1
       for (let l = 0; l <= 5; l++) {
         let uFloor = new uGround.Sprite(101*i, 805 + 105*l)
       }
     }
-    let p = new crate.Sprite(300, 608)
+    let p = new crate.Sprite(400, 608)
     set[0] = false
   }
 }
