@@ -59,6 +59,7 @@ let crateImg
 let tree
 let spoon
 let spoonImg = ["", "", "", ""]
+let spoonImgCount = 0
 
 function preload() {
   idle = loadImage('idle.png')
@@ -98,12 +99,17 @@ function preload() {
   jumpSound = createAudio('jumpSound.mp3')
   shootSound = createAudio('shootSound.mp3')
   crateImg = loadImage('crate.png')
-  spoonImg = [loadImage('')]
+  spoonImg = [loadImage('spoon-1.png'), loadImage('spoon-2.png'), loadImage('spoon-3.png'), loadImage('spoon-4.png')]
 }
 
 function setup() {
   new Canvas(1200, 1000)
   world.gravity.y = 9.8
+
+  spoon = new Group()
+  spoon.collider = "k"
+  spoon.h = 100
+  spoon.w = 100
 
   black = new Sprite(0, 0, 3000, 5000, "n")
   black.layer = 100
@@ -176,6 +182,11 @@ function draw() {
     } else {
     meatMan.velocity.x = 0
     }
+    
+    if (spoonImgCount == 3) {
+      spoonImgCount = -1
+    }
+    spoon.img = spoonImg[spoonImgCount + 1]
   }
 
   blinking()
