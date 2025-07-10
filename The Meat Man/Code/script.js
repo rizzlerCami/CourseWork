@@ -550,8 +550,8 @@ function one() {
     let p = new crate.Sprite(400, 608)
     set[0] = false
     let spoo = new spoon.Sprite(650, 503)
-    if (spoonImgCount == 3) {
-      spoonImgCount = -1
+    if (spoonImgCount == 4) {
+      spoonImgCount = 0
     } else {
       spoonImgCount++
     }
