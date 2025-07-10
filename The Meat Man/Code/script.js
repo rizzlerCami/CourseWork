@@ -59,7 +59,7 @@ let crateImg
 let tree
 let spoon
 let spoonImg = ["", "", "", ""]
-let spoonImgCount = 0
+let spoonImgCount = -1
 
 function preload() {
   idle = loadImage('idle.png')
@@ -182,11 +182,7 @@ function draw() {
     } else {
     meatMan.velocity.x = 0
     }
-    
-    if (spoonImgCount == 3) {
-      spoonImgCount = -1
-    }
-    spoon.img = spoonImg[spoonImgCount + 1]
+  
   }
 
   blinking()
@@ -553,6 +549,13 @@ function one() {
     }
     let p = new crate.Sprite(400, 608)
     set[0] = false
+    let spoo = new spoon.Sprite(650, 503)
+    if (spoonImgCount == 3) {
+      spoonImgCount = -1
+    } else {
+      spoonImgCount++
+    }
+    spoo.img = spoonImg[spoonImgCount]
   }
 }
 
