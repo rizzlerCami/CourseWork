@@ -59,7 +59,9 @@ let crateImg
 let tree
 let spoon
 let spoonImg = ["", "", "", ""]
-let spoonImgCount = -1
+let spoonImgCount = 0
+let spoo
+let spoonDelay = 0
 
 function preload() {
   idle = loadImage('idle.png')
@@ -108,8 +110,8 @@ function setup() {
 
   spoon = new Group()
   spoon.collider = "k"
-  spoon.h = 100
-  spoon.w = 100
+  spoon.h = 200
+  spoon.w = 80
 
   black = new Sprite(0, 0, 3000, 5000, "n")
   black.layer = 100
@@ -197,6 +199,8 @@ function draw() {
   meatMan.image.offset.y = -30
   meatMan.friction = 500
   allSprites.bounciness = 0
+  spoon.scale = 0.4
+  spoon.offset.y = 20
 }
 
 function movement() {
@@ -537,6 +541,7 @@ function one() {
     black.opacity -= 0.005
   }
   if (set[0]) {
+    set[0] = false
     tree = new Sprite(850, 503, 270, 270, "n")
     tree.img = treeImg
     tree.scale = 0.7
@@ -548,14 +553,18 @@ function one() {
       }
     }
     let p = new crate.Sprite(400, 608)
-    set[0] = false
-    let spoo = new spoon.Sprite(650, 503)
-    if (spoonImgCount == 4) {
+    spoo = new spoon.Sprite(650, 543)
+  }
+  if (spoonDelay == 18) {
+    if (spoonImgCount === 3) {
       spoonImgCount = 0
     } else {
       spoonImgCount++
     }
-    spoo.img = spoonImg[spoonImgCount]
+    spoonDelay = 0
+    spoon[0].img = spoonImg[spoonImgCount]
+  } else {
+    spoonDelay++
   }
 }
 
