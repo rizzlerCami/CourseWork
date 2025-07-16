@@ -62,6 +62,7 @@ let spoonImg = ["", "", "", ""]
 let spoonImgCount = 0
 let spoo
 let spoonDelay = 0
+let spoonBool = true
 
 function preload() {
   idle = loadImage('idle.png')
@@ -109,9 +110,9 @@ function setup() {
   world.gravity.y = 9.8
 
   spoon = new Group()
-  spoon.collider = "k"
-  spoon.h = 200
-  spoon.w = 80
+  spoon.h = 290
+  spoon.w = 85
+  spoon.rotationLock = true 
 
   black = new Sprite(0, 0, 3000, 5000, "n")
   black.layer = 100
@@ -184,7 +185,7 @@ function draw() {
     } else {
     meatMan.velocity.x = 0
     }
-  
+    spoonMove()
   }
 
   blinking()
@@ -200,7 +201,7 @@ function draw() {
   meatMan.friction = 500
   allSprites.bounciness = 0
   spoon.scale = 0.4
-  spoon.offset.y = 20
+  spoon.offset.y = 10
 }
 
 function movement() {
@@ -318,7 +319,13 @@ function blinking() {
     blinkDelay[0]++
   }
   }
-  
+}
+
+function spoonMove() {
+  if (spoon[0].x <= 480 && spoon.velocity.x <= 0) {
+    spoon.velocity = 2
+  } else if (spoon[0].x >= 2000 && spoon.velocity.x >= 0) {
+  }
 }
 
 function menu() {
@@ -553,7 +560,8 @@ function one() {
       }
     }
     let p = new crate.Sprite(400, 608)
-    spoo = new spoon.Sprite(650, 543)
+    spoo = new spoon.Sprite(650, 580)
+    spoon.velocity.x = -2
   }
   if (spoonDelay == 18) {
     if (spoonImgCount === 3) {
