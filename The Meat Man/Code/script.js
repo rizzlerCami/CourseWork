@@ -63,6 +63,7 @@ let spoonImgCount = 0
 let spoo
 let spoonDelay = 0
 let spoonBool = true
+let flip = -1
 
 function preload() {
   idle = loadImage('idle.png')
@@ -322,10 +323,13 @@ function blinking() {
 }
 
 function spoonMove() {
-  if (spoon[0].x <= 480 && spoon.velocity.x <= 0) {
-    spoon.velocity = 2
-  } else if (spoon[0].x >= 2000 && spoon.velocity.x >= 0) {
+  if (spoon[0].x <= 470) {
+    flip = 1
+    spoon[0].img.scale.x = -1
+  } else if (spoon[0].x >= 1000) {
+    flip = -1
   }
+  spoon[0].x+= 2*flip
 }
 
 function menu() {
