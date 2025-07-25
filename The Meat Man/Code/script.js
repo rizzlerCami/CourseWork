@@ -579,7 +579,7 @@ function one() {
     spoonDelay++
   }
 
-  if (meatMan.collides(spoon) && meatMan.y < spoon + 20) {
+  if (meatMan.collides(spoon) && meatMan.y > spoon + 20) {
     spoon.remove()
   } else if (meatMan.collides(spoon)) {
     meatMan.remove()
