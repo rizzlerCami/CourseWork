@@ -64,6 +64,7 @@ let spoo
 let spoonDelay = 0
 let spoonBool = true
 let flip = -1
+let dead = false
 
 function preload() {
   idle = loadImage('idle.png')
@@ -206,7 +207,7 @@ function draw() {
 }
 
 function movement() {
-  if (crouch === false) {
+  if (crouch === false || dead === false) {
     if (kb.pressing('left') && kb.pressing('right')) {
     } else if (kb.pressing('right')) {
       meatMan.scale.x = 1
@@ -533,6 +534,7 @@ function menu() {
 }
 
 function one() {
+  dead = false
   background('#d1e8eb')
     for (let i = 0; i <= 5632; i+=1408) {
         image(skyImg, 0.1* (140 - meatMan.pos.x) + i, 0.5*(600 - meatMan.pos.y) - 100, 1408, 792)
@@ -579,29 +581,32 @@ function one() {
     spoonDelay++
   }
 
-  if (meatMan.collides(spoon) && meatMan.y > spoon + 20) {
-    spoon.remove()
-  } else if (meatMan.collides(spoon)) {
-    meatMan.remove()
+  if (meatMan.collides(spoon[0])) {
+    dead = true
+  }
+
+  if (dead) {
+    meatMan.velocity.y = -5
+    //dead
   }
 }
 
 function two() {
-
+dead = false
 }
 
 function three() {
-
+dead = false
 }
 
 function four() {
-
+dead = false
 }
 
 function five() {
-
+dead = false
 }
 
 function six() {
-
+dead = false
 }
