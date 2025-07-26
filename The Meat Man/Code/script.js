@@ -63,8 +63,8 @@ let spoonImgCount = 0
 let spoo
 let spoonDelay = 0
 let spoonBool = true
-let flip = -1
 let dead = false
+let flip = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
 
 function preload() {
   idle = loadImage('idle.png')
@@ -324,13 +324,22 @@ function blinking() {
 }
 
 function spoonMove() {
-  if (spoon[0].x <= 470) {
-    flip = 1
+  if (spoon[0].x <= 470 || (spoon[0].collides(spoon) && flip[0] == -1)) {
+    flip[0] = 1
     spoon[0].img.scale.x = -1
-  } else if (spoon[0].x >= 1000) {
-    flip = -1
+  } else if (spoon[0].x >= 1500 || (spoon[0].collides(spoon) && flip[0] == 1)) {
+    flip[0] = -1
   }
-  spoon[0].x+= 2*flip
+  spoon[0].x+= 2*flip[0]
+
+  if (spoon[1].x <= 470 || (spoon[1].collides(spoon) && flip[1] == -1)) {
+    flip[1] = 1
+    spoon[1].img.scale.x = -1
+  } else if (spoon[1].x >= 1500 || (spoon[1].collides(spoon) && flip[1] == 1)) {
+    flip[1] = -1
+  }
+  spoon[1].x+= 2*flip[1]
+
 }
 
 function menu() {
@@ -567,6 +576,7 @@ function one() {
     }
     let p = new crate.Sprite(400, 608)
     spoo = new spoon.Sprite(650, 580)
+    spoo2 = new spoon.Sprite(900, 580)
     spoon.velocity.x = -2
   }
   if (spoonDelay == 18) {
@@ -577,17 +587,20 @@ function one() {
     }
     spoonDelay = 0
     spoon[0].img = spoonImg[spoonImgCount]
+    spoon[1].img = spoonImg[spoonImgCount]
   } else {
     spoonDelay++
   }
 
-  if (meatMan.collides(spoon)) {
+  if (meatMan.collides(spoon) && meatMan.y + 70 < spoon[0].y) {
+    //remove spoon
+  } else if (meatMan.collides(spoon)) {
     meatMan.velocity.y = -5
     dead = true
   }
 
   if (meatball.collides(spoon)) {
-    meatMan.remove()
+    //DO SOMETHING
   }
 }
 
