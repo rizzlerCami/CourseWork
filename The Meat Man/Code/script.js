@@ -259,7 +259,7 @@ function movement() {
         meatMan.scale.x = 1
       }
     }
-    if (kb.pressed('space')) {
+    if (kb.pressed('space') && dead == false) {
       meatMan.image = idle
       crouch = false
       meatMan.velocity.y = -7
@@ -581,9 +581,13 @@ function one() {
     spoonDelay++
   }
 
-  if (meatMan.collides(spoon[0])) {
+  if (meatMan.collides(spoon)) {
     meatMan.velocity.y = -5
     dead = true
+  }
+
+  if (meatball.collides(spoon)) {
+    meatMan.remove()
   }
 }
 
