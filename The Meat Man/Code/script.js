@@ -207,7 +207,7 @@ function draw() {
 }
 
 function movement() {
-  if (crouch === false || dead === false) {
+  if (crouch === false && dead === false) {
     if (kb.pressing('left') && kb.pressing('right')) {
     } else if (kb.pressing('right')) {
       meatMan.scale.x = 1
@@ -534,7 +534,6 @@ function menu() {
 }
 
 function one() {
-  dead = false
   background('#d1e8eb')
     for (let i = 0; i <= 5632; i+=1408) {
         image(skyImg, 0.1* (140 - meatMan.pos.x) + i, 0.5*(600 - meatMan.pos.y) - 100, 1408, 792)
@@ -555,6 +554,7 @@ function one() {
   }
   if (set[0]) {
     set[0] = false
+    dead = false
     tree = new Sprite(850, 503, 270, 270, "n")
     tree.img = treeImg
     tree.scale = 0.7
@@ -582,31 +582,27 @@ function one() {
   }
 
   if (meatMan.collides(spoon[0])) {
-    dead = true
-  }
-
-  if (dead) {
     meatMan.velocity.y = -5
-    //dead
+    dead = true
   }
 }
 
 function two() {
-dead = false
+//dead = false
 }
 
 function three() {
-dead = false
+//dead = false
 }
 
 function four() {
-dead = false
+//dead = false
 }
 
 function five() {
-dead = false
+//dead = false
 }
 
 function six() {
-dead = false
+//dead = false
 }
