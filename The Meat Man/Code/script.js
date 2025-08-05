@@ -65,6 +65,7 @@ let spoonDelay = 0
 let spoonBool = true
 let dead = false
 let flip = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
+let spoonDead = [, , , , , , , , , ]
 
 function preload() {
   idle = loadImage('idle.png')
@@ -182,7 +183,7 @@ function draw() {
     meatball.image.scale = 0.24
     meatball.image.offset.x = -17
     meatball.image.offset.y = 6
-    if (meatMan.y < 800) {
+    if (meatMan.y < 1200) {
     camera.pos = meatMan.pos
     } else {
     meatMan.velocity.x = 0
@@ -562,6 +563,9 @@ function one() {
     black.opacity -= 0.005
   }
   if (set[0]) {
+    for (let i = 0; i < 10; i++) {
+      spoonDead[i] = false
+    }
     set[0] = false
     dead = false
     tree = new Sprite(850, 503, 270, 270, "n")
@@ -572,6 +576,55 @@ function one() {
       ground.layer = 1
       for (let l = 0; l <= 5; l++) {
         let uFloor = new uGround.Sprite(101*i, 805 + 105*l)
+      }
+    }
+    for (let i = 0; i<= 8; i++) {
+      let ground = new floor.Sprite(2000 + 101*i, 600)
+      ground.layer = 1
+      for (let l = 0; l <= 2; l++) {
+        let uFloor = new uGround.Sprite(2000 + 101*i, 705 + 105*l)
+      }
+    }
+    for (let i = 0; i<= 8; i++) {
+      let ground = new floor.Sprite(3300 + 101*i, 1000)
+      ground.layer = 1
+      for (let l = 0; l <= 4; l++) {
+        let uFloor = new uGround.Sprite(3300 + 101*i, 1105 + 105*l)
+      }
+    }
+    for (let i = 0; i<= 5; i++) {
+      let ground = new floor.Sprite(4500 + 101*i, 800)
+      ground.layer = 1
+      for (let l = 0; l <= 4; l++) {
+        let uFloor = new uGround.Sprite(4500 + 101*i, 905 + 105*l)
+      }
+    }
+    for (let i = 0; i<= 5; i++) {
+      let ground = new floor.Sprite(5400 + 101*i, 900)
+      ground.layer = 1
+      for (let l = 0; l <= 4; l++) {
+        let uFloor = new uGround.Sprite(5400 + 101*i, 1005 + 105*l)
+      }
+    }
+    for (let i = 0; i<= 2; i++) {
+      let ground = new floor.Sprite(6000 + 101*i, 1100)
+      ground.layer = 1
+      for (let l = 0; l <= 4; l++) {
+        let uFloor = new uGround.Sprite(6000 + 101*i, 1205 + 105*l)
+      }
+    }
+    for (let i = 0; i<= 2; i++) {
+      let ground = new floor.Sprite(6500 + 101*i, 960)
+      ground.layer = 1
+      for (let l = 0; l <= 4; l++) {
+        let uFloor = new uGround.Sprite(6500 + 101*i, 1065 + 105*l)
+      }
+    }
+    for (let i = 0; i<= 20; i++) {
+      let ground = new floor.Sprite(7000 + 101*i, 820)
+      ground.layer = 1
+      for (let l = 0; l <= 4; l++) {
+        let uFloor = new uGround.Sprite(7000 + 101*i, 925 + 105*l)
       }
     }
     let p = new crate.Sprite(400, 608)
@@ -592,15 +645,33 @@ function one() {
     spoonDelay++
   }
 
-  if (meatMan.collides(spoon) && meatMan.y + 70 < spoon[0].y) {
-    //remove spoon
-  } else if (meatMan.collides(spoon)) {
+
+  if (meatMan.collides(spoon[0]) && meatMan.y + 70 < spoon[0].y) {
+    spoonDead[0] = true
+    meatMan.velocity.y = -5
+  } else if (meatMan.collides(spoon[0])) {
+    meatMan.velocity.y = -5
+    dead = true
+  }
+  if (meatMan.collides(spoon[1]) && meatMan.y + 70 < spoon[1].y) {
+    spoonDead[1] = true
+    meatMan.velocity.y = -5
+  } else if (meatMan.collides(spoon[1])) {
     meatMan.velocity.y = -5
     dead = true
   }
 
-  if (meatball.collides(spoon)) {
-    //DO SOMETHING
+  if (meatball.collides(spoon[0])) {
+    spoonDead[0] = true
+  }
+  if (meatball.collides(spoon[1])) {
+    spoonDead[1] = true
+  }
+  for (let i = 0; i < 10; i++) {
+    if (spoonDead[i]) {
+        spoon[i].collider = "n"
+        spoon[i].img = ""
+      }
   }
 }
 
