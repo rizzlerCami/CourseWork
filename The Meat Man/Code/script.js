@@ -343,6 +343,16 @@ function spoonMove() {
 
 }
 
+function groundMaker(x, y, w, h) {
+  for (let i = 0; i<= w; i++) {
+      let ground = new floor.Sprite(x + 101*i, y)
+      ground.layer = 1
+      for (let l = 0; l <= h; l++) {
+        let uFloor = new uGround.Sprite(x + 101*i, y + 105 + 105*l)
+      }
+    }
+}
+
 function menu() {
   background('#d1e8eb')
   image(skyImg, 0, 0, 1408, 792)
@@ -571,62 +581,16 @@ function one() {
     tree = new Sprite(850, 503, 270, 270, "n")
     tree.img = treeImg
     tree.scale = 0.7
-    for (let i = 0; i<= 15; i++) {
-      let ground = new floor.Sprite(101*i, 700)
-      ground.layer = 1
-      for (let l = 0; l <= 5; l++) {
-        let uFloor = new uGround.Sprite(101*i, 805 + 105*l)
-      }
-    }
-    for (let i = 0; i<= 8; i++) {
-      let ground = new floor.Sprite(2000 + 101*i, 600)
-      ground.layer = 1
-      for (let l = 0; l <= 2; l++) {
-        let uFloor = new uGround.Sprite(2000 + 101*i, 705 + 105*l)
-      }
-    }
-    for (let i = 0; i<= 8; i++) {
-      let ground = new floor.Sprite(3300 + 101*i, 1000)
-      ground.layer = 1
-      for (let l = 0; l <= 4; l++) {
-        let uFloor = new uGround.Sprite(3300 + 101*i, 1105 + 105*l)
-      }
-    }
-    for (let i = 0; i<= 5; i++) {
-      let ground = new floor.Sprite(4500 + 101*i, 800)
-      ground.layer = 1
-      for (let l = 0; l <= 4; l++) {
-        let uFloor = new uGround.Sprite(4500 + 101*i, 905 + 105*l)
-      }
-    }
-    for (let i = 0; i<= 5; i++) {
-      let ground = new floor.Sprite(5400 + 101*i, 900)
-      ground.layer = 1
-      for (let l = 0; l <= 4; l++) {
-        let uFloor = new uGround.Sprite(5400 + 101*i, 1005 + 105*l)
-      }
-    }
-    for (let i = 0; i<= 2; i++) {
-      let ground = new floor.Sprite(6000 + 101*i, 1100)
-      ground.layer = 1
-      for (let l = 0; l <= 4; l++) {
-        let uFloor = new uGround.Sprite(6000 + 101*i, 1205 + 105*l)
-      }
-    }
-    for (let i = 0; i<= 2; i++) {
-      let ground = new floor.Sprite(6500 + 101*i, 960)
-      ground.layer = 1
-      for (let l = 0; l <= 4; l++) {
-        let uFloor = new uGround.Sprite(6500 + 101*i, 1065 + 105*l)
-      }
-    }
-    for (let i = 0; i<= 20; i++) {
-      let ground = new floor.Sprite(7000 + 101*i, 820)
-      ground.layer = 1
-      for (let l = 0; l <= 4; l++) {
-        let uFloor = new uGround.Sprite(7000 + 101*i, 925 + 105*l)
-      }
-    }
+    groundMaker(0, 700, 15, 5)
+    groundMaker(2000, 600, 8, 2)
+    groundMaker(3300, 1000, 8, 4)
+    groundMaker(4500, 800, 5, 4)
+    groundMaker(5400, 900, 5, 4)
+    groundMaker(6000, 1100, 2, 4)
+    groundMaker(6500, 960, 2, 4)
+    groundMaker(7000, 820, 20, 4)
+    groundMaker(9000, 1000, 4, 1)
+    groundMaker(9700, 800, 15, 5)
     let p = new crate.Sprite(400, 608)
     spoo = new spoon.Sprite(650, 580)
     spoo2 = new spoon.Sprite(900, 580)
