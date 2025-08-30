@@ -66,6 +66,9 @@ let spoonBool = true
 let dead = false
 let flip = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
 let spoonDead = [, , , , , , , , , ]
+let meatcoin
+let meatcoinImg
+let oscillatorSwitch = true
 
 function preload() {
   idle = loadImage('idle.png')
@@ -106,6 +109,7 @@ function preload() {
   shootSound = createAudio('shootSound.mp3')
   crateImg = loadImage('crate.png')
   spoonImg = [loadImage('spoon-1.png'), loadImage('spoon-2.png'), loadImage('spoon-3.png'), loadImage('spoon-4.png')]
+  meatcoinImg = loadImage('meatcoin.png')
 }
 
 function setup() {
@@ -156,6 +160,13 @@ function setup() {
   crate.img = crateImg
   crate.img.scale = 0.25
   crate.layer = 1
+
+  meatcoin = new Group()
+  meatcoin.d = 50
+  meatcoin.img = meatcoinImg
+  meatcoin.img.scale = 0.25
+  meatcoin.rotationLock = true
+  meatcoin.collider = "k"
 }
 
 function draw() {
@@ -351,6 +362,18 @@ function groundMaker(x, y, w, h) {
         let uFloor = new uGround.Sprite(x + 101*i, y + 105 + 105*l)
       }
     }
+}
+
+function meatcoinOscillator(num, y) {
+  meatcoin[num].y -= 1
+  if (meatcoin[num].y <= y - 50 && oscillatorSwitch == true) {
+    oscillatorSwitch = false
+  } else if (meatcoin[num].y >= y + 50 && oscillatorSwitch == false) {
+    oscillatorSwitch = true
+  }
+  if (oscillatorSwitch = false) {
+    meatcoin[num].y += 2
+  }
 }
 
 function menu() {
@@ -576,6 +599,7 @@ function one() {
     for (let i = 0; i < 10; i++) {
       spoonDead[i] = false
     }
+    let me = new meatcoin.Sprite(300, 600)
     set[0] = false
     dead = false
     tree = new Sprite(850, 503, 270, 270, "n")
@@ -596,6 +620,9 @@ function one() {
     spoo2 = new spoon.Sprite(900, 580)
     spoon.velocity.x = -2
   }
+
+  meatcoinOscillator(0, 600)
+
   if (spoonDelay == 18) {
     if (spoonImgCount === 3) {
       spoonImgCount = 0
