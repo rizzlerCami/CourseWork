@@ -614,7 +614,7 @@ function one() {
     groundMaker(6500, 960, 2, 4)
     groundMaker(7000, 820, 20, 4)
     groundMaker(9000, 1000, 4, 1)
-    groundMaker(9700, 800, 15, 5)
+    groundMaker(9700, 1100, 15, 5)
     let p = new crate.Sprite(400, 608)
     spoo = new spoon.Sprite(650, 580)
     spoo2 = new spoon.Sprite(900, 580)
