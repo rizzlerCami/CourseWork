@@ -68,7 +68,7 @@ let flip = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
 let spoonDead = [, , , , , , , , , ]
 let meatcoin
 let meatcoinImg
-let oscillatorSwitch = true
+let oscillatorSwitch = false
 
 function preload() {
   idle = loadImage('idle.png')
@@ -365,15 +365,15 @@ function groundMaker(x, y, w, h) {
 }
 
 function meatcoinOscillator(num, yes) {
-  meatcoin[num].y -= 1
+  let temp = 0
   if (meatcoin[num].y <= yes - 50 && oscillatorSwitch == true) {
     oscillatorSwitch = false
+    temp = 1
   } else if (meatcoin[num].y >= yes + 50 && oscillatorSwitch == false) {
     oscillatorSwitch = true
+    temp = -1
   }
-  if (oscillatorSwitch = false) {
-    meatcoin[num].y += 2
-  }
+  meatcoin[num].y -= temp
 }
 
 function menu() {
