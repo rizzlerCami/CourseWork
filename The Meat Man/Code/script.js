@@ -364,11 +364,11 @@ function groundMaker(x, y, w, h) {
     }
 }
 
-function meatcoinOscillator(num, y) {
+function meatcoinOscillator(num, yes) {
   meatcoin[num].y -= 1
-  if (meatcoin[num].y <= y - 50 && oscillatorSwitch == true) {
+  if (meatcoin[num].y <= yes - 50 && oscillatorSwitch == true) {
     oscillatorSwitch = false
-  } else if (meatcoin[num].y >= y + 50 && oscillatorSwitch == false) {
+  } else if (meatcoin[num].y >= yes + 50 && oscillatorSwitch == false) {
     oscillatorSwitch = true
   }
   if (oscillatorSwitch = false) {
