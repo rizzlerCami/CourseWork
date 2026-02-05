@@ -66,8 +66,6 @@ let spoonBool = true
 let dead = false
 let flip = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
 let spoonDead = [, , , , , , , , , ]
-let meatcoin
-let meatcoinImg
 let oscillatorSwitch = false
 
 function preload() {
@@ -109,7 +107,6 @@ function preload() {
   shootSound = createAudio('shootSound.mp3')
   crateImg = loadImage('crate.png')
   spoonImg = [loadImage('spoon-1.png'), loadImage('spoon-2.png'), loadImage('spoon-3.png'), loadImage('spoon-4.png')]
-  meatcoinImg = loadImage('meatcoin.png')
 }
 
 function setup() {
@@ -161,12 +158,12 @@ function setup() {
   crate.img.scale = 0.25
   crate.layer = 1
 
-  meatcoin = new Group()
-  meatcoin.d = 50
-  meatcoin.img = meatcoinImg
-  meatcoin.img.scale = 0.25
-  meatcoin.rotationLock = true
-  meatcoin.collider = "k"
+  tree = new Group()
+  tree.w = 270
+  tree.h = 270
+  tree.collider = "n"
+  tree.img = treeImg
+  tree.scale = 0.7
 }
 
 function draw() {
@@ -362,18 +359,6 @@ function groundMaker(x, y, w, h) {
         let uFloor = new uGround.Sprite(x + 101*i, y + 105 + 105*l)
       }
     }
-}
-
-function meatcoinOscillator(num, yes) {
-  let temp = 0
-  if (meatcoin[num].y <= yes - 50 && oscillatorSwitch == true) {
-    oscillatorSwitch = false
-    temp = 1
-  } else if (meatcoin[num].y >= yes + 50 && oscillatorSwitch == false) {
-    oscillatorSwitch = true
-    temp = -1
-  }
-  meatcoin[num].y -= temp
 }
 
 function menu() {
@@ -599,12 +584,10 @@ function one() {
     for (let i = 0; i < 10; i++) {
       spoonDead[i] = false
     }
-    let me = new meatcoin.Sprite(300, 600)
     set[0] = false
     dead = false
-    tree = new Sprite(850, 503, 270, 270, "n")
-    tree.img = treeImg
-    tree.scale = 0.7
+    tree1 = new tree.Sprite(850, 503)
+    tree2 = new tree.Sprite(3500, 803)
     groundMaker(0, 700, 15, 5)
     groundMaker(2000, 600, 8, 2)
     groundMaker(3300, 1000, 8, 4)
@@ -620,8 +603,6 @@ function one() {
     spoo2 = new spoon.Sprite(900, 580)
     spoon.velocity.x = -2
   }
-
-  meatcoinOscillator(0, 600)
 
   if (spoonDelay == 18) {
     if (spoonImgCount === 3) {
@@ -685,3 +666,10 @@ function five() {
 function six() {
 //dead = false
 }
+
+//bonk heads to kill spoons
+//or click to shoot meatballs
+//space to jump across the gaps
+//you can also spam jump up walls
+
+//watch out, their heads are SPIKEY
