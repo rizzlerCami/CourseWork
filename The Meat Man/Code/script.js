@@ -36,7 +36,7 @@ let black
 let wind
 let wind2
 let soundDelay = 0
-let openingScene = false
+let openingScene = true
 let ctpimg
 let ctp
 let click = ["", ""]
@@ -66,7 +66,6 @@ let spoonBool = true
 let dead = false
 let flip = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
 let spoonDead = [, , , , , , , , , ]
-let oscillatorSwitch = false
 
 function preload() {
   idle = loadImage('idle.png')
