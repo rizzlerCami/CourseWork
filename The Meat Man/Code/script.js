@@ -36,7 +36,7 @@ let black
 let wind
 let wind2
 let soundDelay = 0
-let openingScene = true
+let openingScene = false
 let ctpimg
 let ctp
 let click = ["", ""]
@@ -587,6 +587,7 @@ function one() {
     dead = false
     tree1 = new tree.Sprite(850, 503)
     tree2 = new tree.Sprite(3500, 803)
+    tree2 = new tree.Sprite(6150, 903)
     groundMaker(0, 700, 15, 5)
     groundMaker(2000, 600, 8, 2)
     groundMaker(3300, 1000, 8, 4)
