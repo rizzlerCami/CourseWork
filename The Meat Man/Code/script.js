@@ -107,10 +107,12 @@ function preload() {
   crateImg = loadImage('crate.png')
   spoonImg = [loadImage('spoon-1.png'), loadImage('spoon-2.png'), loadImage('spoon-3.png'), loadImage('spoon-4.png')]
   signImg = [loadImage('meatSign-1.png'), loadImage('meatSign-2.png'), loadImage('meatSign-3.png'), loadImage('meatSign-4.png')]
+  farmImg = loadImage('FARMSIGN.png')
+  pipeImg = loadImage('farmPipe.png')
 }
 
 function setup() {
-  new Canvas(1200, 1000)
+  new Canvas(screen.width, screen.height)
   world.gravity.y = 9.8
 
   spoon = new Group()
@@ -220,6 +222,7 @@ function draw() {
   spoon.scale = 0.4
   spoon.offset.y = 10
   sign.scale = 0.25
+  allSprites.debug = true
 }
 
 function movement() {
@@ -603,16 +606,21 @@ function one() {
     sign2.img = signImg[1]
     sign3 = new sign.Sprite(1400, 600)
     sign3.img = signImg[2]
-    sign4 = new sign.Sprite(6500, 903)
+    sign4 = new sign.Sprite(4000, 903)
     sign4.img = signImg[3]
+    farmSign = new sign.Sprite(10000, 980)
+    farmSign.img = farmImg
+    farmSign.img.scale = 1.2
+    meatPipe = new Sprite([[100, 100], [200, 100], [200, 200], [100, 200], [100, 100]])
+    meatPipe.img = pipeImg
     groundMaker(0, 700, 15, 5)
-    groundMaker(2000, 600, 8, 2)
-    groundMaker(3300, 1000, 8, 4)
-    groundMaker(4500, 800, 5, 4)
-    groundMaker(5400, 900, 5, 4)
-    groundMaker(6000, 1100, 2, 4)
-    groundMaker(6500, 960, 2, 4)
-    groundMaker(7000, 820, 20, 4)
+    groundMaker(2000, 600, 8, 5)
+    groundMaker(3300, 1000, 8, 5)
+    groundMaker(4500, 800, 5, 5)
+    groundMaker(5400, 900, 5, 5)
+    groundMaker(6000, 1100, 2, 5)
+    groundMaker(6500, 960, 2, 5)
+    groundMaker(7000, 820, 20, 5)
     groundMaker(9000, 1000, 4, 1)
     groundMaker(9700, 1100, 15, 5)
     let p = new crate.Sprite(400, 608)
