@@ -611,8 +611,12 @@ function one() {
     farmSign = new sign.Sprite(10000, 980)
     farmSign.img = farmImg
     farmSign.img.scale = 1.2
-    meatPipe = new Sprite([[100, 100], [200, 100], [200, 200], [100, 200], [100, 100]])
+    meatPipe = new Sprite([[100, 600], [350, 600], [350, 500], [300, 400], [200, 250], [100, 200], [-100, 180], [-100, 400], [100, 600]])
     meatPipe.img = pipeImg
+    meatPipe.scale = 0.6
+    meatPipe.rotationLock = true
+    meatPipe.collider = "s"
+    meatPipe.layer = -1
     groundMaker(0, 700, 15, 5)
     groundMaker(2000, 600, 8, 5)
     groundMaker(3300, 1000, 8, 5)
@@ -670,6 +674,8 @@ function one() {
         spoon[i].img = ""
       }
   }
+  meatPipe.image.offset.x = 5
+  meatPipe.image.offset.y = -70
 }
 
 function two() {
