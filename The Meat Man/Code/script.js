@@ -106,6 +106,7 @@ function preload() {
   shootSound = createAudio('shootSound.mp3')
   crateImg = loadImage('crate.png')
   spoonImg = [loadImage('spoon-1.png'), loadImage('spoon-2.png'), loadImage('spoon-3.png'), loadImage('spoon-4.png')]
+  signImg = [loadImage('meatSign-1.png'), loadImage('meatSign-2.png'), loadImage('meatSign-3.png'), loadImage('meatSign-4.png')]
 }
 
 function setup() {
@@ -163,6 +164,12 @@ function setup() {
   tree.collider = "n"
   tree.img = treeImg
   tree.scale = 0.7
+
+  sign = new Group()
+  sign.w = 100
+  sign.h = 100
+  sign.collider = "n"
+  sign.layer = 0
 }
 
 function draw() {
@@ -212,6 +219,7 @@ function draw() {
   allSprites.bounciness = 0
   spoon.scale = 0.4
   spoon.offset.y = 10
+  sign.scale = 0.25
 }
 
 function movement() {
@@ -587,7 +595,16 @@ function one() {
     dead = false
     tree1 = new tree.Sprite(850, 503)
     tree2 = new tree.Sprite(3500, 803)
-    tree2 = new tree.Sprite(6150, 903)
+    tree3 = new tree.Sprite(6150, 903)
+    tree4 = new tree.Sprite(9750, 903)
+    sign1 = new sign.Sprite(-3, 470)
+    sign1.img = signImg[0]
+    sign2 = new sign.Sprite(0, 600)
+    sign2.img = signImg[1]
+    sign3 = new sign.Sprite(1400, 600)
+    sign3.img = signImg[2]
+    sign4 = new sign.Sprite(6500, 903)
+    sign4.img = signImg[3]
     groundMaker(0, 700, 15, 5)
     groundMaker(2000, 600, 8, 2)
     groundMaker(3300, 1000, 8, 4)
