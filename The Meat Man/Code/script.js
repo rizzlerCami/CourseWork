@@ -608,15 +608,15 @@ function one() {
     sign3.img = signImg[2]
     sign4 = new sign.Sprite(4000, 903)
     sign4.img = signImg[3]
-    farmSign = new sign.Sprite(10000, 980)
+    farmSign = new sign.Sprite(10100, 980)
     farmSign.img = farmImg
     farmSign.img.scale = 1.2
-    meatPipe = new Sprite([[100, 600], [350, 600], [350, 500], [300, 400], [200, 250], [100, 200], [-100, 180], [-100, 400], [100, 600]])
+    meatPipe = new Sprite([[10500, 1095], [10750, 1095], [10750, 995], [10700, 895], [10600, 745], [10500, 695], [10305, 665], [10600, 750], [10700, 900], [10745, 1000], [10550, 1000], [10305, 970], [10500, 1095]])
     meatPipe.img = pipeImg
-    meatPipe.scale = 0.6
+    meatPipe.scale = 0.8
     meatPipe.rotationLock = true
     meatPipe.collider = "s"
-    meatPipe.layer = -1
+    meatPipe.layer = 1000
     groundMaker(0, 700, 15, 5)
     groundMaker(2000, 600, 8, 5)
     groundMaker(3300, 1000, 8, 5)
