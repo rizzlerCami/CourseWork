@@ -222,7 +222,6 @@ function draw() {
   spoon.scale = 0.4
   spoon.offset.y = 10
   sign.scale = 0.25
-  allSprites.debug = true
 }
 
 function movement() {
@@ -611,7 +610,7 @@ function one() {
     farmSign = new sign.Sprite(10100, 980)
     farmSign.img = farmImg
     farmSign.img.scale = 1.2
-    meatPipe = new Sprite([[10500, 1095], [10750, 1095], [10750, 995], [10700, 895], [10600, 745], [10500, 695], [10305, 665], [10600, 750], [10700, 900], [10745, 1000], [10550, 1000], [10305, 970], [10500, 1095]])
+    meatPipe = new Sprite([[10500, 1084], [10750, 1084], [10750, 984], [10700, 884], [10600, 734], [10500, 684], [10305, 654], [10600, 739], [10700, 889], [10745, 989], [10550, 989], [10305, 959], [10500, 1084]])
     meatPipe.img = pipeImg
     meatPipe.scale = 0.8
     meatPipe.rotationLock = true
@@ -674,6 +673,10 @@ function one() {
         spoon[i].img = ""
       }
   }
+
+  if (meatMan.collides(meatPipe)) {
+    win()
+  }
   meatPipe.image.offset.x = 5
   meatPipe.image.offset.y = -70
 }
@@ -698,9 +701,8 @@ function six() {
 //dead = false
 }
 
-//bonk heads to kill spoons
-//or click to shoot meatballs
-//space to jump across the gaps
-//you can also spam jump up walls
-
-//watch out, their heads are SPIKEY
+function win() {
+  floor.remove()
+  uGround.remove()
+  spoon.remove()
+}
