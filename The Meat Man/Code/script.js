@@ -66,6 +66,8 @@ let spoonBool = true
 let dead = false
 let flip = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
 let spoonDead = [, , , , , , , , , ]
+let black2
+let won = false
 
 function preload() {
   idle = loadImage('idle.png')
@@ -415,7 +417,7 @@ function menu() {
   if (black.opacity > 0.25 && fade === false) {
     black.opacity -= 0.005
   } else {
-    fade === true
+    fade = true
   }
   if (playButton.mouse.presses()) {
     click[0].play()
@@ -630,6 +632,10 @@ function one() {
     spoo = new spoon.Sprite(650, 580)
     spoo2 = new spoon.Sprite(900, 580)
     spoon.velocity.x = -2
+    black2 = new Sprite(9500, 1500, 5000, 5000, "n")
+    black2.layer = 100000000
+    black2.color = "black"
+    black2.opacity = 0
   }
 
   if (spoonDelay == 18) {
@@ -675,6 +681,10 @@ function one() {
   }
 
   if (meatMan.collides(meatPipe)) {
+    won = true
+  }
+
+  if (won) {
     win()
   }
   meatPipe.image.offset.x = 5
@@ -702,7 +712,18 @@ function six() {
 }
 
 function win() {
-  floor.remove()
-  uGround.remove()
-  spoon.remove()
+  if (set[1]) {
+    fading = true
+    set[1] = false
+  }
+  if (fading) {
+      if (black2.opacity < 1){
+        black2.opacity += 0.02
+      } else if (black2.opacity >= 1) {
+        fading = false
+      }
+  }
+  if (black2.opacity > 0.005) {
+    black2.opacity -= 0.005
+  }
 }
