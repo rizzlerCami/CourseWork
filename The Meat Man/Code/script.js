@@ -70,6 +70,7 @@ let black2
 let won = false
 let fakePipe
 let won2 = false
+let black3
 
 function preload() {
   idle = loadImage('idle.png')
@@ -113,6 +114,7 @@ function preload() {
   signImg = [loadImage('meatSign-1.png'), loadImage('meatSign-2.png'), loadImage('meatSign-3.png'), loadImage('meatSign-4.png')]
   farmImg = loadImage('FARMSIGN.png')
   pipeImg = loadImage('farmPipe.png')
+  endPipeImg = loadImage('endPipeBig.png')
 }
 
 function setup() {
@@ -640,6 +642,10 @@ for (let i = 0; i <= 5632; i+=1408) {
     black2.layer = 100000000
     black2.color = "black"
     black2.opacity = 0
+    black3 = new Sprite(0, 1000, 5000, 5000, "n")
+    black3.layer = 100000000
+    black3.color = "black"
+    black3.opacity = 0
   }
 
   if (spoonDelay == 18) {
@@ -725,36 +731,40 @@ function win() {
     if (fading) {
       if (black2.opacity < 1){
         black2.opacity += 0.02
+        black3.opacity += 0.02
       } else if (black2.opacity >= 1) {
         fading = false
         won2 = true
         meatMan.pos.x = -1000
         meatMan.pos.y = 500
         camera.pos = meatMan.pos
-        meatMan.pos.y = 0
-        fakePipe = new Sprite(-1030, -320, 100, 100, "n")
-        fakePipe.img = pipeImg
+        meatMan.pos.y = -200
+        fakePipe = new Sprite(-1005, 100, 100, 100, "n")
+        fakePipe.img = endPipeImg
         fakePipe.img.scale = 0.7
-        fakePipe.img.scale.x = -2
-        fakePipe.rotation = 90
+        fakePipe.layer = 4
+        groundMaker(-1900, 700, 19, 2)
+        meatMan.rotationLock = false
       }
     }
-    if (black2.opacity > 0.005) {
-      black2.opacity -= 0.005
-    }
   }
+  if (black2.opacity > 0.005) {
+      black2.opacity -= 0.005
+      black3.opacity -= 0.005
+    }
   if (won2) {
-    image(skyImg, -500, 100, 1408, 792)
-    image(fMountImg, -500, 200, 1408, 792)
-    image(cMountImg, -500, 200, 1408, 792)
-    image(fCloudImg, -500, 200, 1408, 792)
-    image(mCloudImg, -500, 200, 1408, 792)
-    image(cCloudImg, -500, 200, 1408, 792)
-    image(skyImg, 908, 100, 1408, 792)
-    image(fMountImg, 908, 200, 1408, 792)
-    image(cMountImg, 908, 200, 1408, 792)
-    image(fCloudImg, 908, 200, 1408, 792)
-    image(mCloudImg, 908, 200, 1408, 792)
-    image(cCloudImg, 908, 200, 1408, 792)
+    image(skyImg, -500, 0, 1408, 792)
+    image(fMountImg, -500, -100, 1408, 792)
+    image(cMountImg, -500, -100, 1408, 792)
+    image(fCloudImg, -500, -100, 1408, 792)
+    image(mCloudImg, -500, -100, 1408, 792)
+    image(cCloudImg, -500, -100, 1408, 792)
+    image(skyImg, 908, 0, 1408, 792)
+    image(fMountImg, 908, -100, 1408, 792)
+    image(cMountImg, 908, -100, 1408, 792)
+    image(fCloudImg, 908, -100, 1408, 792)
+    image(mCloudImg, 908, -100, 1408, 792)
+    image(cCloudImg, 908, -100, 1408, 792)
+    black3.pos = camera.pos
   }
 }
