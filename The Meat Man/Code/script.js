@@ -68,6 +68,8 @@ let flip = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
 let spoonDead = [, , , , , , , , , ]
 let black2
 let won = false
+let fakePipe
+let won2 = false
 
 function preload() {
   idle = loadImage('idle.png')
@@ -201,7 +203,7 @@ function draw() {
     meatball.image.scale = 0.24
     meatball.image.offset.x = -17
     meatball.image.offset.y = 6
-    if (meatMan.y < 1200) {
+    if (meatMan.y < 1200 && won2 === false) {
     camera.pos = meatMan.pos
     } else {
     meatMan.velocity.x = 0
@@ -574,7 +576,8 @@ function menu() {
 
 function one() {
   background('#d1e8eb')
-    for (let i = 0; i <= 5632; i+=1408) {
+  if (won2 === false) {
+for (let i = 0; i <= 5632; i+=1408) {
         image(skyImg, 0.1* (140 - meatMan.pos.x) + i, 0.5*(600 - meatMan.pos.y) - 100, 1408, 792)
         image(fMountImg, 0.2* (140 - meatMan.pos.x) + i, 0.5*(600 - meatMan.pos.y), 1408, 792)
         image(cMountImg, 0.3* (140 - meatMan.pos.x) + i, 0.5*(600 - meatMan.pos.y), 1408, 792)
@@ -588,6 +591,7 @@ function one() {
   image(fCloudImg, 0.4* (140 - meatMan.pos.x) - 1408, 0.5*(600 - meatMan.pos.y), 1408, 792)
   image(mCloudImg, 0.4* (140 - meatMan.pos.x) - 1408, 0.5*(600 - meatMan.pos.y), 1408, 792)
   image(cCloudImg, 0.5* (140 - meatMan.pos.x) - 1408, 0.5*(600 - meatMan.pos.y), 1408, 792)
+  }
   if (black.opacity > 0.005) {
     black.opacity -= 0.005
   }
@@ -714,16 +718,43 @@ function six() {
 function win() {
   if (set[1]) {
     fading = true
+    fade = false
     set[1] = false
   }
-  if (fading) {
+  if (fade === false) {
+    if (fading) {
       if (black2.opacity < 1){
         black2.opacity += 0.02
       } else if (black2.opacity >= 1) {
         fading = false
+        won2 = true
+        meatMan.pos.x = -1000
+        meatMan.pos.y = 500
+        camera.pos = meatMan.pos
+        meatMan.pos.y = 0
+        fakePipe = new Sprite(-1030, -320, 100, 100, "n")
+        fakePipe.img = pipeImg
+        fakePipe.img.scale = 0.7
+        fakePipe.img.scale.x = -2
+        fakePipe.rotation = 90
       }
+    }
+    if (black2.opacity > 0.005) {
+      black2.opacity -= 0.005
+    }
   }
-  if (black2.opacity > 0.005) {
-    black2.opacity -= 0.005
+  if (won2) {
+    image(skyImg, -500, 100, 1408, 792)
+    image(fMountImg, -500, 200, 1408, 792)
+    image(cMountImg, -500, 200, 1408, 792)
+    image(fCloudImg, -500, 200, 1408, 792)
+    image(mCloudImg, -500, 200, 1408, 792)
+    image(cCloudImg, -500, 200, 1408, 792)
+    image(skyImg, 908, 100, 1408, 792)
+    image(fMountImg, 908, 200, 1408, 792)
+    image(cMountImg, 908, 200, 1408, 792)
+    image(fCloudImg, 908, 200, 1408, 792)
+    image(mCloudImg, 908, 200, 1408, 792)
+    image(cCloudImg, 908, 200, 1408, 792)
   }
 }
