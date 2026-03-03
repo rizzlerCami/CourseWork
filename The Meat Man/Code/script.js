@@ -71,6 +71,8 @@ let won = false
 let fakePipe
 let won2 = false
 let black3
+let pan
+let panFlip = false
 
 function preload() {
   idle = loadImage('idle.png')
@@ -115,6 +117,7 @@ function preload() {
   farmImg = loadImage('FARMSIGN.png')
   pipeImg = loadImage('farmPipe.png')
   endPipeImg = loadImage('endPipeBig.png')
+  panImg = loadImage('fry.png')
 }
 
 function setup() {
@@ -273,7 +276,7 @@ function movement() {
       walkSound.pause()
     }
   }
-  if (meatMan.colliding(floor) > 0 || meatMan.colliding(crate) > 0) {
+  if (meatMan.colliding(floor) > 0 || meatMan.colliding(crate) > 0 || meatMan.colliding(pan)) {
     if (kb.pressing('space')) {
       meatMan.image = crouchImg
       crouch = true
@@ -283,7 +286,7 @@ function movement() {
         meatMan.scale.x = 1
       }
     }
-    if (kb.pressed('space') && dead == false) {
+    if ((kb.pressed('space') && dead == false) || meatMan.colliding(pan)) {
       meatMan.image = idle
       crouch = false
       meatMan.velocity.y = -7
@@ -601,6 +604,13 @@ for (let i = 0; i <= 5632; i+=1408) {
     for (let i = 0; i < 10; i++) {
       spoonDead[i] = false
     }
+    pan = new Sprite ([[-1200, 660], [-800, 660], [-750, 610], [-770, 610], [-800, 640], [-1200, 640], [-1230, 610], [-1250, 610], [-1200, 660]])
+    pan.collider = "k"
+    pan.img = panImg
+    pan.img.scale = 2
+    pan.img.offset.x = 120
+    pan.img.offset.y = 30
+    pan.opacity = 0
     set[0] = false
     dead = false
     tree1 = new tree.Sprite(850, 503)
@@ -745,6 +755,8 @@ function win() {
         fakePipe.layer = 4
         groundMaker(-1900, 700, 19, 2)
         meatMan.rotationLock = false
+        pan.opacity = 1
+        fading = false
       }
     }
   }
@@ -766,5 +778,16 @@ function win() {
     image(mCloudImg, 908, -100, 1408, 792)
     image(cCloudImg, 908, -100, 1408, 792)
     black3.pos = camera.pos
+
+    if (meatMan.colliding(pan)) {
+      if (panFlip) {
+        meatMan.velocity.x = 10
+        panFlip = false
+      } else {
+        meatMan.velocity.x = -10
+        panFlip = true
+      }
+      meatMan.velocity.y = -2
+    }
   }
 }
