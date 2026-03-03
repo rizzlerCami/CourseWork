@@ -286,7 +286,7 @@ function movement() {
         meatMan.scale.x = 1
       }
     }
-    if ((kb.pressed('space') && dead == false) || meatMan.colliding(pan)) {
+    if (kb.pressed('space') && dead == false || meatMan.colliding(pan) && kb.pressed('space')) {
       meatMan.image = idle
       crouch = false
       meatMan.velocity.y = -7
@@ -298,7 +298,7 @@ function movement() {
 }
 
 function shooting() {
-  if (mouse.presses()) {
+  if (mouse.presses() || won2) {
     let meat = new meatball.Sprite()
     shootSound.play()
     if (meatMan.scale.x === -1) {
@@ -310,9 +310,11 @@ function shooting() {
     }
     meat.velocity.y = -7
     meat.y = meatMan.y - 30
-    scaleF -= 0.005
-    meatMan.w -= 1.8
-    meatMan.h -= 2
+    if (won2 === false) {
+      scaleF -= 0.005
+      meatMan.w -= 1.8
+      meatMan.h -= 2
+    }
   }
   if (meatball.collides(floor)) {
     meatball[0].remove()
@@ -611,6 +613,7 @@ for (let i = 0; i <= 5632; i+=1408) {
     pan.img.offset.x = 120
     pan.img.offset.y = 30
     pan.opacity = 0
+    pan.bounciness = -100
     set[0] = false
     dead = false
     tree1 = new tree.Sprite(850, 503)
@@ -780,14 +783,8 @@ function win() {
     black3.pos = camera.pos
 
     if (meatMan.colliding(pan)) {
-      if (panFlip) {
-        meatMan.velocity.x = 10
-        panFlip = false
-      } else {
-        meatMan.velocity.x = -10
-        panFlip = true
-      }
       meatMan.velocity.y = -2
+      meatMan.img = openMouthImg
     }
   }
 }
