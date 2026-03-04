@@ -73,6 +73,11 @@ let won2 = false
 let black3
 let pan
 let panFlip = false
+let gameOverImg
+let youWinImg
+let screenEnlarge = 0
+let temp = [,]
+let gameOver
 
 function preload() {
   idle = loadImage('idle.png')
@@ -118,6 +123,8 @@ function preload() {
   pipeImg = loadImage('farmPipe.png')
   endPipeImg = loadImage('endPipeBig.png')
   panImg = loadImage('fry.png')
+  youWinImg = loadImage('youWin.png')
+  gameOverImg = loadImage('gameOver.png')
 }
 
 function setup() {
@@ -217,6 +224,15 @@ function draw() {
   }
 
   blinking()
+
+  if (dead === true) {
+    if (screenEnlarge <= 900) {
+      screenEnlarge += 10
+    }
+    meatMan.pos.x = temp[0]
+    meatMan.pos.y = temp[1]
+  }
+
   floor.image.scale = 0.3
   floor.image.offset.y = -30
   floor.collider = "s"
@@ -238,7 +254,7 @@ function movement() {
     if (kb.pressing('left') && kb.pressing('right')) {
     } else if (kb.pressing('right')) {
       meatMan.scale.x = 1
-      if (meatMan.colliding(floor) > 0 || meatMan.colliding(crate) > 0) {
+      if (meatMan.colliding(floor) > 0 || meatMan.colliding(crate) > 0 || meatMan.colliding(pan) === false) {
         if (enlarge === 12) {
           if (spacer === 4) {
             spacer = 0
@@ -681,6 +697,12 @@ for (let i = 0; i <= 5632; i+=1408) {
   } else if (meatMan.collides(spoon[0])) {
     meatMan.velocity.y = -5
     dead = true
+    temp[0] = meatMan.pos.x
+    temp[1] = meatMan.pos.y
+    gameOver = new Sprite(temp[0], temp[1], screenEnlarge, screenEnlarge, "n")
+    gameOver.img = gameOverImg
+    gameOver.layer = 9999999999
+    gameOver.opacity = 0.9
   }
   if (meatMan.collides(spoon[1]) && meatMan.y + 70 < spoon[1].y) {
     spoonDead[1] = true
