@@ -75,9 +75,9 @@ let pan
 let panFlip = false
 let gameOverImg
 let youWinImg
-let screenEnlarge = 0
-let temp = [,]
+let screenEnlarge = 0.01
 let gameOver
+let menuButton
 
 function preload() {
   idle = loadImage('idle.png')
@@ -226,11 +226,14 @@ function draw() {
   blinking()
 
   if (dead === true) {
-    if (screenEnlarge <= 900) {
-      screenEnlarge += 10
+    if (screenEnlarge < 1.7) {
+      screenEnlarge += 0.05
+    } else {
+      //menuButton = new Sprite()
     }
-    meatMan.pos.x = temp[0]
-    meatMan.pos.y = temp[1]
+    gameOver.pos = camera.pos
+    gameOver.scale.y = 0.9
+    gameOver.img.scale = screenEnlarge
   }
 
   floor.image.scale = 0.3
@@ -247,6 +250,7 @@ function draw() {
   spoon.scale = 0.4
   spoon.offset.y = 10
   sign.scale = 0.25
+  allSprites.debug = true
 }
 
 function movement() {
@@ -694,12 +698,11 @@ for (let i = 0; i <= 5632; i+=1408) {
   if (meatMan.collides(spoon[0]) && meatMan.y + 70 < spoon[0].y) {
     spoonDead[0] = true
     meatMan.velocity.y = -5
-  } else if (meatMan.collides(spoon[0])) {
+  } else if (meatMan.collides(spoon[0]) && dead == false) {
     meatMan.velocity.y = -5
     dead = true
-    temp[0] = meatMan.pos.x
-    temp[1] = meatMan.pos.y
-    gameOver = new Sprite(temp[0], temp[1], screenEnlarge, screenEnlarge, "n")
+    gameOver = new Sprite()
+    gameOver.collider = "n"
     gameOver.img = gameOverImg
     gameOver.layer = 9999999999
     gameOver.opacity = 0.9
@@ -707,9 +710,14 @@ for (let i = 0; i <= 5632; i+=1408) {
   if (meatMan.collides(spoon[1]) && meatMan.y + 70 < spoon[1].y) {
     spoonDead[1] = true
     meatMan.velocity.y = -5
-  } else if (meatMan.collides(spoon[1])) {
+  } else if (meatMan.collides(spoon[1]) && dead == false) {
     meatMan.velocity.y = -5
     dead = true
+    gameOver = new Sprite()
+    gameOver.collider = "n"
+    gameOver.img = gameOverImg
+    gameOver.layer = 9999999999
+    gameOver.opacity = 0.9
   }
 
   if (meatball.collides(spoon[0])) {
