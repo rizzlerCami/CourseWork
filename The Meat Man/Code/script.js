@@ -16,7 +16,7 @@ let floor
 let floorImg
 let uGround
 let uGroundImg
-let set = [false, false]
+let set = [false, false, false]
 let blinkDelay = [0, 0, 0]
 let blink = ["", ""]
 let titleImg
@@ -78,6 +78,8 @@ let youWinImg
 let screenEnlarge = 0.01
 let gameOver
 let menuButton
+let menuButtonImg = [,]
+let won3 = false
 
 function preload() {
   idle = loadImage('idle.png')
@@ -125,6 +127,7 @@ function preload() {
   panImg = loadImage('fry.png')
   youWinImg = loadImage('youWin.png')
   gameOverImg = loadImage('gameOver.png')
+  menuButtonImg = [loadImage('menu-1.png'), loadImage('menu-2.png')]
 }
 
 function setup() {
@@ -215,7 +218,7 @@ function draw() {
     meatball.image.scale = 0.24
     meatball.image.offset.x = -17
     meatball.image.offset.y = 6
-    if (meatMan.y < 1200 && won2 === false) {
+    if (meatMan.y < 1200 && won2 === false && won3 == false && level[0] == false) {
     camera.pos = meatMan.pos
     } else {
     meatMan.velocity.x = 0
@@ -229,7 +232,46 @@ function draw() {
     if (screenEnlarge < 1.7) {
       screenEnlarge += 0.05
     } else {
-      //menuButton = new Sprite()
+      if (set[2] == false) {
+        menuButton = new Sprite([[90, 0], [210, 0], [250, -50], [210, -100], [90, -100], [50, -50], [90, 0]])
+        menuButton.w = 340
+        menuButton.h = 160
+        set[2] = true
+      }
+      if (menuButton.mouse.pressing()) {
+        menuButton.img = menuButtonImg[1]
+        meatMan.img = crouchImg
+      } else {
+        menuButton.img = menuButtonImg[0]
+      }
+      if (menuButton.mouse.pressed()) {
+        meatMan.velocity.y = -100000
+        won3 = true
+      }
+      menuButton.img.scale = 0.78
+      menuButton.img.offset.y = -100
+      if (won3) {
+        black.pos = gameOver.pos
+        black.layer = 999999999999999999999
+        if (black.opacity <= 1) {
+          black.opacity += 0.01
+        } else {
+          dead = false
+          set = [false, false, false]
+          level[0] = true
+          fade = false
+          menuButton.remove()
+          gameOver.remove()
+          tree.remove()
+          sign.remove()
+          crate.remove()
+          floor.remove()
+          uGround.remove()
+          spoon.remove()
+          meatMan.pos.x = 170
+          meatMan.pos.y = 300
+        }
+      }
     }
     gameOver.pos = camera.pos
     gameOver.scale.y = 0.9
@@ -603,7 +645,7 @@ function menu() {
 
 function one() {
   background('#d1e8eb')
-  if (won2 === false) {
+  if (won2 === false && won3 == false) {
 for (let i = 0; i <= 5632; i+=1408) {
         image(skyImg, 0.1* (140 - meatMan.pos.x) + i, 0.5*(600 - meatMan.pos.y) - 100, 1408, 792)
         image(fMountImg, 0.2* (140 - meatMan.pos.x) + i, 0.5*(600 - meatMan.pos.y), 1408, 792)
