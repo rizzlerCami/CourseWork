@@ -79,7 +79,9 @@ let screenEnlarge = 0.01
 let gameOver
 let menuButton
 let menuButtonImg = [,]
-let won3 = false
+let lost = false
+let temp
+let once = true
 
 function preload() {
   idle = loadImage('idle.png')
@@ -138,6 +140,7 @@ function setup() {
   spoon.h = 290
   spoon.w = 85
   spoon.rotationLock = true 
+  spoon.layer = 10
 
   black = new Sprite(0, 0, 4000, 5000, "n")
   black.layer = 100
@@ -185,6 +188,7 @@ function setup() {
   tree.collider = "n"
   tree.img = treeImg
   tree.scale = 0.7
+  tree.layer = 5.01
 
   sign = new Group()
   sign.w = 100
@@ -218,7 +222,7 @@ function draw() {
     meatball.image.scale = 0.24
     meatball.image.offset.x = -17
     meatball.image.offset.y = 6
-    if (meatMan.y < 1200 && won2 === false && won3 == false && level[0] == false) {
+    if (meatMan.y < 1200 && won2 === false && lost == false && level[0] == false) {
     camera.pos = meatMan.pos
     } else {
     meatMan.velocity.x = 0
@@ -246,9 +250,11 @@ function draw() {
       screenEnlarge += 0.05
     } else {
       if (set[2] == false) {
-        menuButton = new Sprite([[90, 0], [210, 0], [250, -50], [210, -100], [90, -100], [50, -50], [90, 0]])
+        menuButton = new Sprite([[-45, 300], [75, 300], [115, 250], [75, 200], [-45, 200], [-85, 250], [-45, 300]])
+        menuButton.collider = "k"
         menuButton.w = 340
         menuButton.h = 160
+        menuButton.layer = 100000
         set[2] = true
       }
       if (menuButton.mouse.pressing()) {
@@ -258,12 +264,14 @@ function draw() {
         menuButton.img = menuButtonImg[0]
       }
       if (menuButton.mouse.pressed()) {
-        meatMan.velocity.y = -10
-        won3 = true
+        meatMan.velocity.y = -40
+        lost = true
       }
       menuButton.img.scale = 0.78
       menuButton.img.offset.y = -100
-      if (won3) {
+      menuButton.pos.x = gameOver.pos.x
+      menuButton.pos.y = gameOver.pos.y + 200
+      if (lost) {
         black.pos = gameOver.pos
         black.layer = 999999999999999999999
         if (black.opacity <= 1) {
@@ -290,8 +298,9 @@ function draw() {
           meatTheme.play()
           meatTheme.volume(1)
           won2 = false
-          won3 = false
+          lost = false
           screenEnlarge = 0.01
+          once = true
         }
       }
     }
@@ -658,22 +667,26 @@ function menu() {
 
 function one() {
   background('#d1e8eb')
-  if (won2 === false && won3 == false) {
-for (let i = 0; i <= 5632; i+=1408) {
-        image(skyImg, 0.1* (140 - meatMan.pos.x) + i, 0.5*(600 - meatMan.pos.y) - 100, 1408, 792)
-        image(fMountImg, 0.2* (140 - meatMan.pos.x) + i, 0.5*(600 - meatMan.pos.y), 1408, 792)
-        image(cMountImg, 0.3* (140 - meatMan.pos.x) + i, 0.5*(600 - meatMan.pos.y), 1408, 792)
-        image(fCloudImg, 0.4* (140 - meatMan.pos.x) + i, 0.5*(600 - meatMan.pos.y), 1408, 792)
-        image(mCloudImg, 0.4* (140 - meatMan.pos.x) + i, 0.5*(600 - meatMan.pos.y), 1408, 792)
-        image(cCloudImg, 0.5* (140 - meatMan.pos.x) + i, 0.5*(600 - meatMan.pos.y), 1408, 792)
-    }
-  image(skyImg, 0.1* (140 - meatMan.pos.x) - 1408, 0.5*(600 - meatMan.pos.y) - 100, 1408, 792)
-  image(fMountImg, 0.2* (140 - meatMan.pos.x) - 1408, 0.5*(600 - meatMan.pos.y), 1408, 792)
-  image(cMountImg, 0.3* (140 - meatMan.pos.x) - 1408, 0.5*(600 - meatMan.pos.y), 1408, 792)
-  image(fCloudImg, 0.4* (140 - meatMan.pos.x) - 1408, 0.5*(600 - meatMan.pos.y), 1408, 792)
-  image(mCloudImg, 0.4* (140 - meatMan.pos.x) - 1408, 0.5*(600 - meatMan.pos.y), 1408, 792)
-  image(cCloudImg, 0.5* (140 - meatMan.pos.x) - 1408, 0.5*(600 - meatMan.pos.y), 1408, 792)
+  if (won2 === false && lost == false) {
+    temp = meatMan.pos.y
+  } else if (lost && once) {
+    temp = meatMan.pos.y
+    once = false
   }
+  for (let i = 0; i <= 5632; i+=1408) {
+        image(skyImg, 0.1* (140 - meatMan.pos.x) + i, 0.5*(600 - temp) - 100, 1408, 792)
+        image(fMountImg, 0.2* (140 - meatMan.pos.x) + i, 0.5*(600 - temp), 1408, 792)
+        image(cMountImg, 0.3* (140 - meatMan.pos.x) + i, 0.5*(600 - temp), 1408, 792)
+        image(fCloudImg, 0.4* (140 - meatMan.pos.x) + i, 0.5*(600 - temp), 1408, 792)
+        image(mCloudImg, 0.4* (140 - meatMan.pos.x) + i, 0.5*(600 - temp), 1408, 792)
+        image(cCloudImg, 0.5* (140 - meatMan.pos.x) + i, 0.5*(600 - temp), 1408, 792)
+  }
+  image(skyImg, 0.1* (140 - meatMan.pos.x) - 1408, 0.5*(600 - temp) - 100, 1408, 792)
+  image(fMountImg, 0.2* (140 - meatMan.pos.x) - 1408, 0.5*(600 - temp), 1408, 792)
+  image(cMountImg, 0.3* (140 - meatMan.pos.x) - 1408, 0.5*(600 - temp), 1408, 792)
+  image(fCloudImg, 0.4* (140 - meatMan.pos.x) - 1408, 0.5*(600 - temp), 1408, 792)
+  image(mCloudImg, 0.4* (140 - meatMan.pos.x) - 1408, 0.5*(600 - temp), 1408, 792)
+  image(cCloudImg, 0.5* (140 - meatMan.pos.x) - 1408, 0.5*(600 - temp), 1408, 792)
   if (black.opacity > 0.005) {
     black.opacity -= 0.005
   }
@@ -759,7 +772,7 @@ for (let i = 0; i <= 5632; i+=1408) {
     gameOver = new Sprite()
     gameOver.collider = "n"
     gameOver.img = gameOverImg
-    gameOver.layer = 9999999999
+    gameOver.layer = 99999
     gameOver.opacity = 0.9
   }
   if (meatMan.collides(spoon[1]) && meatMan.y + 70 < spoon[1].y) {
@@ -771,7 +784,7 @@ for (let i = 0; i <= 5632; i+=1408) {
     gameOver = new Sprite()
     gameOver.collider = "n"
     gameOver.img = gameOverImg
-    gameOver.layer = 9999999999
+    gameOver.layer = 99999
     gameOver.opacity = 0.9
   }
 
