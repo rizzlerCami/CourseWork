@@ -309,6 +309,14 @@ function draw() {
     gameOver.scale.y = 0.9
     gameOver.img.scale = screenEnlarge
   }
+  if (meatMan.collides(below) && dead == false) {
+    dead = true
+    gameOver = new Sprite()
+    gameOver.collider = "n"
+    gameOver.img = gameOverImg
+    gameOver.layer = 99999
+    gameOver.opacity = 0.9
+  }
   meatMan.image.scale = scaleF
   meatMan.image.offset.y = -30
   meatMan.friction = 500
@@ -820,23 +828,18 @@ function one() {
 }
 
 function two() {
-//dead = false
 }
 
 function three() {
-//dead = false
 }
 
 function four() {
-//dead = false
 }
 
 function five() {
-//dead = false
 }
 
 function six() {
-//dead = false
 }
 
 function win() {
