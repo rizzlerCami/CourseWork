@@ -82,6 +82,7 @@ let menuButtonImg = [,]
 let lost = false
 let temp
 let once = true
+let below
 
 function preload() {
   idle = loadImage('idle.png')
@@ -195,6 +196,8 @@ function setup() {
   sign.h = 100
   sign.collider = "n"
   sign.layer = 0
+
+  below = new Sprite(-500, 3000, 15000, 50, "k")
 }
 
 function draw() {
