@@ -277,6 +277,13 @@ function draw() {
         if (black.opacity <= 1) {
           black.opacity += 0.01
         } else {
+          if (won) {
+            for (let p = 6; p >= 1; p--) {
+              if (level[p]) {
+                level[p + 1] = true
+              }
+            }
+          }
           dead = false
           set = [false, false, false]
           level[0] = true
@@ -293,11 +300,11 @@ function draw() {
           meatball.remove()
           meatMan.pos.x = 155
           meatMan.pos.y = 400
-          camera.off()
           enlarge = 0
           selector = false
           meatTheme.play()
           meatTheme.volume(1)
+          won = false
           won2 = false
           lost = false
           screenEnlarge = 0.01
@@ -327,12 +334,14 @@ function movement() {
     if (kb.pressing('left') && kb.pressing('right')) {
     } else if (kb.pressing('right')) {
       meatMan.scale.x = 1
-      if (meatMan.colliding(floor) > 0 || meatMan.colliding(crate) > 0 || meatMan.colliding(pan) === false) {
+      if (meatMan.colliding(floor) > 0 || meatMan.colliding(crate) > 0 || won2) {
         if (enlarge === 12) {
           if (spacer === 4) {
             spacer = 0
           }
-          meatMan.image = walk[spacer]
+          if (won2 == false) {
+            meatMan.image = walk[spacer]
+          }
           spacer++
           enlarge = 0
         }
@@ -344,12 +353,14 @@ function movement() {
       meatMan.velocity.x = 6
     } else if (kb.pressing('left')) {
       meatMan.scale.x = -1
-      if (meatMan.colliding(floor) > 0 || meatMan.colliding(crate) > 0) {
+      if (meatMan.colliding(floor) > 0 || meatMan.colliding(crate) > 0 || won2) {
         if (enlarge === 12) {
           if (spacer === 4) {
             spacer = 0
           }
-          meatMan.image = walk[spacer]
+          if (won2 == false) {
+            meatMan.image = walk[spacer]
+          }
           spacer++
           enlarge = 0
         }
@@ -387,8 +398,9 @@ function movement() {
 }
 
 function shooting() {
-  if (mouse.presses() || won2) {
+  if ((mouse.presses() || won2) && dead == false) {
     let meat = new meatball.Sprite()
+    meat.layer = 20
     shootSound.play()
     if (meatMan.scale.x === -1) {
       meat.x = meatMan.x - 60
@@ -403,6 +415,14 @@ function shooting() {
       scaleF -= 0.005
       meatMan.w -= 1.8
       meatMan.h -= 2
+      if (meatMan.w <= 3.6 && dead == false) {
+        dead = true
+        gameOver = new Sprite()
+        gameOver.collider = "n"
+        gameOver.img = gameOverImg
+        gameOver.layer = 99999
+        gameOver.opacity = 0.9
+      }
     }
   }
   if (meatball.collides(floor)) {
@@ -474,6 +494,9 @@ function menu() {
   scaleF = 0.24
   meatMan.w = 86
   meatMan.h = 94
+  camera.x = 700
+  camera.y = 540
+  black.pos = camera.pos
   camera.on()
   background('#d1e8eb')
   image(skyImg, -500, 0, 1408, 792)
@@ -868,6 +891,12 @@ function win() {
         meatMan.rotationLock = false
         pan.opacity = 1
         fading = false
+        gameOver = new Sprite()
+        gameOver.collider = "n"
+        gameOver.img = youWinImg
+        gameOver.layer = 99999
+        gameOver.opacity = 0.9
+        dead = true
       }
     }
   }
