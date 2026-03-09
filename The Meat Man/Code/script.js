@@ -234,9 +234,6 @@ function draw() {
   }
 
   blinking()
-  meatMan.image.scale = scaleF
-  meatMan.image.offset.y = -30
-  meatMan.friction = 500
   allSprites.bounciness = 0
   floor.image.scale = 0.3
   floor.image.offset.y = -30
@@ -290,6 +287,7 @@ function draw() {
           floor.remove()
           uGround.remove()
           spoon.remove()
+          meatball.remove()
           meatMan.pos.x = 155
           meatMan.pos.y = 400
           camera.off()
@@ -308,6 +306,9 @@ function draw() {
     gameOver.scale.y = 0.9
     gameOver.img.scale = screenEnlarge
   }
+  meatMan.image.scale = scaleF
+  meatMan.image.offset.y = -30
+  meatMan.friction = 500
 }
 
 function movement() {
@@ -459,6 +460,9 @@ function groundMaker(x, y, w, h) {
 }
 
 function menu() {
+  scaleF = 0.24
+  meatMan.w = 86
+  meatMan.h = 94
   camera.on()
   background('#d1e8eb')
   image(skyImg, -500, 0, 1408, 792)
