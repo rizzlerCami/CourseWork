@@ -139,7 +139,7 @@ function setup() {
   spoon.w = 85
   spoon.rotationLock = true 
 
-  black = new Sprite(0, 0, 3000, 5000, "n")
+  black = new Sprite(0, 0, 4000, 5000, "n")
   black.layer = 100
   black.color = "black"
 
@@ -224,10 +224,23 @@ function draw() {
     meatMan.velocity.x = 0
     }
     spoonMove()
+    spoon.scale = 0.4
+    spoon.offset.y = 10
+    sign.scale = 0.25
   }
 
   blinking()
-
+  meatMan.image.scale = scaleF
+  meatMan.image.offset.y = -30
+  meatMan.friction = 500
+  allSprites.bounciness = 0
+  floor.image.scale = 0.3
+  floor.image.offset.y = -30
+  floor.collider = "s"
+  floor.bounciness = 0
+  uGround.image.scale = 0.3
+  uGround.image.offset.y = -30
+  uGround.collider = "s"
   if (dead === true) {
     if (screenEnlarge < 1.7) {
       screenEnlarge += 0.05
@@ -245,7 +258,7 @@ function draw() {
         menuButton.img = menuButtonImg[0]
       }
       if (menuButton.mouse.pressed()) {
-        meatMan.velocity.y = -100000
+        meatMan.velocity.y = -10
         won3 = true
       }
       menuButton.img.scale = 0.78
@@ -260,6 +273,7 @@ function draw() {
           set = [false, false, false]
           level[0] = true
           fade = false
+          fading = false
           menuButton.remove()
           gameOver.remove()
           tree.remove()
@@ -268,8 +282,16 @@ function draw() {
           floor.remove()
           uGround.remove()
           spoon.remove()
-          meatMan.pos.x = 170
-          meatMan.pos.y = 300
+          meatMan.pos.x = 155
+          meatMan.pos.y = 400
+          camera.off()
+          enlarge = 0
+          selector = false
+          meatTheme.play()
+          meatTheme.volume(1)
+          won2 = false
+          won3 = false
+          screenEnlarge = 0.01
         }
       }
     }
@@ -277,22 +299,6 @@ function draw() {
     gameOver.scale.y = 0.9
     gameOver.img.scale = screenEnlarge
   }
-
-  floor.image.scale = 0.3
-  floor.image.offset.y = -30
-  floor.collider = "s"
-  floor.bounciness = 0
-  uGround.image.scale = 0.3
-  uGround.image.offset.y = -30
-  uGround.collider = "s"
-  meatMan.image.scale = scaleF
-  meatMan.image.offset.y = -30
-  meatMan.friction = 500
-  allSprites.bounciness = 0
-  spoon.scale = 0.4
-  spoon.offset.y = 10
-  sign.scale = 0.25
-  allSprites.debug = true
 }
 
 function movement() {
@@ -444,13 +450,20 @@ function groundMaker(x, y, w, h) {
 }
 
 function menu() {
+  camera.on()
   background('#d1e8eb')
-  image(skyImg, 0, 0, 1408, 792)
-  image(fMountImg, 0, 0, 1408, 792)
-  image(cMountImg, 0, 0, 1408, 792)
-  image(fCloudImg, 0, 0, 1408, 792)
-  image(mCloudImg, 0, 0, 1408, 792)
-  image(cCloudImg, 0, 0, 1408, 792)
+  image(skyImg, -500, 0, 1408, 792)
+  image(fMountImg, -500, 0, 1408, 792)
+  image(cMountImg, -500, 0, 1408, 792)
+  image(fCloudImg, -500, 0, 1408, 792)
+  image(mCloudImg, -500, 0, 1408, 792)
+  image(cCloudImg, -500, 0, 1408, 792)
+  image(skyImg, 908, 0, 1408, 792)
+  image(fMountImg, 908, 0, 1408, 792)
+  image(cMountImg, 908, 0, 1408, 792)
+  image(fCloudImg, 908, 0, 1408, 792)
+  image(mCloudImg, 908, 0, 1408, 792)
+  image(cCloudImg, 908, 0, 1408, 792)
   image(treeImg, 850, 381, 270, 270)
   floor.image = floorImg
   uGround.image = uGroundImg
