@@ -197,7 +197,7 @@ function setup() {
   sign.collider = "n"
   sign.layer = 0
 
-  below = new Sprite(-500, 3000, 15000, 50, "k")
+  below = new Sprite(6000, 3000, 15000, 50, "k")
 }
 
 function draw() {
