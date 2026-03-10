@@ -437,7 +437,7 @@ function shooting() {
     meat.velocity.y = -7
     meat.y = meatMan.y - 30
   }
-  if (meatball.collides(floor) || meatball.collides(below) || meatball.collides(uGround)) {
+  if (meatball.collides(floor) || meatball.collides(uGround)) {
     meatball[0].remove()
   }
   if (mouse.pressing()) {
