@@ -263,7 +263,7 @@ function draw() {
       } else {
         menuButton.img = menuButtonImg[0]
       }
-      if (menuButton.mouse.pressed()) {
+      if (menuButton.mouse.pressed() && lost == false) {
         meatMan.velocity.y = -40
         lost = true
       }
