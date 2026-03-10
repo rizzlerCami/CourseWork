@@ -424,8 +424,20 @@ function shooting() {
         gameOver.opacity = 0.9
       }
     }
+  } else if (dead == true && won2) {
+    let meat = new meatball.Sprite()
+    meat.layer = 20
+    if (meatMan.scale.x === -1) {
+      meat.x = meatMan.x - 60
+      meat.velocity.x = -5
+    } else {
+      meat.x = meatMan.x + 60
+      meat.velocity.x = 5
+    }
+    meat.velocity.y = -7
+    meat.y = meatMan.y - 30
   }
-  if (meatball.collides(floor)) {
+  if (meatball.collides(floor) || meatball.collides(below) || meatball.collides(uGround)) {
     meatball[0].remove()
   }
   if (mouse.pressing()) {
@@ -732,7 +744,7 @@ function one() {
     for (let i = 0; i < 10; i++) {
       spoonDead[i] = false
     }
-    pan = new Sprite ([[-1200, 660], [-800, 660], [-750, 610], [-770, 610], [-800, 640], [-1200, 640], [-1230, 610], [-1250, 610], [-1200, 660]])
+    pan = new Sprite ([[-1200, 640], [-800, 640], [-750, 590], [-770, 590], [-800, 620], [-1200, 620], [-1230, 590], [-1250, 590], [-1200, 640]])
     pan.collider = "k"
     pan.img = panImg
     pan.img.scale = 2
@@ -740,6 +752,7 @@ function one() {
     pan.img.offset.y = 30
     pan.opacity = 0
     pan.bounciness = -100
+    pan.layer = 3.1
     set[0] = false
     dead = false
     tree1 = new tree.Sprite(850, 503)
