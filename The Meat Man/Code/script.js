@@ -206,18 +206,18 @@ function draw() {
   if (level[0]) {
     menu()
   } else {
-    if (level[1] && level[2] && level[3] && level[4] && level[5] && level[6]) {
-      six()
-    } else if (level[1] && level[2] && level[3] && level[4] && level[5]) {
-      five()
-    } else if (level[1] && level[2] && level[3] && level[4]) {
-      four()
-    } else if (level[1] && level[2] && level[3]) {
-      three()
-    } else if (level[1] && level[2]) {
-      two()
-    } else {
+    if (level[1]) {
       one()
+    } else if (level[2]) {
+      two()
+    } else if (level[3]) {
+      three()
+    } else if (level[4]) {
+      four()
+    } else if (level[5]) {
+      five()
+    } else {
+      six()
     }
     levelClick.remove()
     movement()
@@ -278,9 +278,11 @@ function draw() {
           black.opacity += 0.01
         } else {
           if (won) {
-            for (let p = 6; p >= 1; p--) {
+            for (let p = 5; p >= 0; p--) {
               if (level[p]) {
-                level[p + 1] = true
+                for (let j = p + 1; j >= 0; j--) {
+                  level[j] = true
+                }
               }
             }
           }
@@ -309,6 +311,9 @@ function draw() {
           lost = false
           screenEnlarge = 0.01
           once = true
+          meatMan.rotation = 0
+          meatMan.rotationLock = true
+          pan.opacity = 0
         }
       }
     }
@@ -650,8 +655,8 @@ function menu() {
     if (set[1]) {
       for (let i = 0; i <= 5; i++) {
         if (levelClick[i].mouse.presses() && levelClick[i].img != lockImg) {
-          for (let l = i + 1; l >= 1; l--) {
-            level[l] = true
+          for (let l = i - 1; l >= 0; l--) {
+            level[l] = false
           }
           fading = true
           x.remove()
