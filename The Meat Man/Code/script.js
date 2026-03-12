@@ -278,12 +278,13 @@ function draw() {
           black.opacity += 0.01
         } else {
           if (won) {
-            for (let p = 5; p >= 0; p--) {
+            for (let p = 0; p <= 5; p++) {
               if (level[p]) {
                 for (let j = p + 1; j >= 0; j--) {
                   level[j] = true
                 }
               }
+              break
             }
           }
           dead = false
