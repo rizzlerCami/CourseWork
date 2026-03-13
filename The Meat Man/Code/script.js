@@ -2,7 +2,7 @@ let meatMan
 let crouchImg
 let openMouthImg
 let walk = ["", "", "", ""]
-let level = [true, true, false, false, false, false, false]
+let level = [true, true, true, false, false, false, false]
 let selector = false
 let idle
 let scaleF
@@ -83,6 +83,13 @@ let lost = false
 let temp
 let once = true
 let below
+let cloudIn
+let cloudMid 
+let cloudOut
+let cloudLonely
+let mountains 
+let ground2
+let uGround2
 
 function preload() {
   idle = loadImage('idle.png')
@@ -131,6 +138,13 @@ function preload() {
   youWinImg = loadImage('youWin.png')
   gameOverImg = loadImage('gameOver.png')
   menuButtonImg = [loadImage('menu-1.png'), loadImage('menu-2.png')]
+  cloudIn = loadImage('clouds_mg_3.png')
+  cloudMid = loadImage('clouds_mg_2.png')
+  cloudOut = loadImage('clouds_mg_1.png')
+  cloudLonely = loadImage('cloud_lonely.png')
+  mountains = loadImage('glacial_mountains.png')
+  ground2 = loadImage('ground2.png')
+  uGround2 = loadImage('uGround2.png')
 }
 
 function setup() {
@@ -156,6 +170,7 @@ function setup() {
   floor = new Group()
   floor.w = 101
   floor.h = 105
+  floor.layer = 1000
 
   uGround = new Group()
   uGround.w = 101
@@ -283,8 +298,8 @@ function draw() {
                 for (let j = p + 1; j >= 0; j--) {
                   level[j] = true
                 }
+                break
               }
-              break
             }
           }
           dead = false
@@ -499,6 +514,13 @@ function spoonMove() {
 }
 
 function groundMaker(x, y, w, h) {
+  if (level[1]) {
+    floor.img = floorImg
+    uGround.img = uGroundImg
+  } else if (level[2]) {
+    floor.img = ground2
+    uGround.img = uGround2
+  }
   for (let i = 0; i<= w; i++) {
       let ground = new floor.Sprite(x + 101*i, y)
       ground.layer = 1
@@ -506,6 +528,67 @@ function groundMaker(x, y, w, h) {
         let uFloor = new uGround.Sprite(x + 101*i, y + 105 + 105*l)
       }
     }
+}
+
+function win() {
+  if (set[1]) {
+    fading = true
+    fade = false
+    set[1] = false
+  }
+  if (fade === false) {
+    if (fading) {
+      if (black2.opacity < 1){
+        black2.opacity += 0.02
+        black3.opacity += 0.02
+      } else if (black2.opacity >= 1) {
+        fading = false
+        won2 = true
+        meatMan.pos.x = -1000
+        meatMan.pos.y = 500
+        camera.pos = meatMan.pos
+        meatMan.pos.y = -200
+        fakePipe = new Sprite(-1005, 100, 100, 100, "n")
+        fakePipe.img = endPipeImg
+        fakePipe.img.scale = 0.7
+        fakePipe.layer = 4
+        groundMaker(-1900, 700, 19, 2)
+        meatMan.rotationLock = false
+        pan.opacity = 1
+        fading = false
+        gameOver = new Sprite()
+        gameOver.collider = "n"
+        gameOver.img = youWinImg
+        gameOver.layer = 99999
+        gameOver.opacity = 0.9
+        dead = true
+      }
+    }
+  }
+  if (black2.opacity > 0.005) {
+      black2.opacity -= 0.005
+      black3.opacity -= 0.005
+    }
+  if (won2) {
+    image(skyImg, -500, 0, 1408, 792)
+    image(fMountImg, -500, -100, 1408, 792)
+    image(cMountImg, -500, -100, 1408, 792)
+    image(fCloudImg, -500, -100, 1408, 792)
+    image(mCloudImg, -500, -100, 1408, 792)
+    image(cCloudImg, -500, -100, 1408, 792)
+    image(skyImg, 908, 0, 1408, 792)
+    image(fMountImg, 908, -100, 1408, 792)
+    image(cMountImg, 908, -100, 1408, 792)
+    image(fCloudImg, 908, -100, 1408, 792)
+    image(mCloudImg, 908, -100, 1408, 792)
+    image(cCloudImg, 908, -100, 1408, 792)
+    black3.pos = camera.pos
+
+    if (meatMan.colliding(pan)) {
+      meatMan.velocity.y = -2
+      meatMan.img = openMouthImg
+    }
+  }
 }
 
 function menu() {
@@ -656,7 +739,7 @@ function menu() {
     if (set[1]) {
       for (let i = 0; i <= 5; i++) {
         if (levelClick[i].mouse.presses() && levelClick[i].img != lockImg) {
-          for (let l = i - 1; l >= 0; l--) {
+          for (let l = i; l >= 1; l--) {
             level[l] = false
           }
           fading = true
@@ -870,6 +953,40 @@ function one() {
 }
 
 function two() {
+  if (set[0] == false) {
+    groundMaker(0, 700, 15, 5)
+    groundMaker(2000, 600, 8, 5)
+    groundMaker(3300, 1000, 8, 5)
+    groundMaker(4500, 800, 5, 5)
+    groundMaker(5400, 900, 5, 5)
+    groundMaker(6000, 1100, 2, 5)
+    groundMaker(6500, 960, 2, 5)
+    groundMaker(7000, 820, 20, 5)
+    groudMaker(9000, 1000, 4, 1)
+    groundMaker(9700, 1100, 15, 5)
+    set[0] = true
+  }
+  background('#C6EFFF')
+  if (won2 === false && lost == false) {
+    temp = meatMan.pos.y
+  } else if (lost && once) {
+    temp = meatMan.pos.y
+    once = false
+  }
+  for (let i = 0; i <= 5632; i+=1408) {
+        image(skyImg, 0.1* (140 - meatMan.pos.x) + i, 0.5*(600 - temp) - 100, 1408, 792)
+        image(mountains, 0.2* (140 - meatMan.pos.x) + i, 0.5*(600 - temp), 1408, 792)
+        image(cloudIn, 0.3* (140 - meatMan.pos.x) + i, 0.5*(600 - temp), 1408, 792)
+        image(cloudMid, 0.4* (140 - meatMan.pos.x) + i, 0.5*(600 - temp), 1408, 792)
+        image(cloudOut, 0.4* (140 - meatMan.pos.x) + i, 0.5*(600 - temp), 1408, 792)
+        image(cloudLonely, 0.5* (140 - meatMan.pos.x) + i, 0.5*(600 - temp), 1408, 792)
+  }
+  image(skyImg, 0.1* (140 - meatMan.pos.x) - 1408, 0.5*(600 - temp) - 100, 1408, 792)
+  image(mountains, 0.2* (140 - meatMan.pos.x) - 1408, 0.5*(600 - temp), 1408, 792)
+  image(cloudIn, 0.3* (140 - meatMan.pos.x) - 1408, 0.5*(600 - temp), 1408, 792)
+  image(cloudMid, 0.4* (140 - meatMan.pos.x) - 1408, 0.5*(600 - temp), 1408, 792)
+  image(cloudOut, 0.4* (140 - meatMan.pos.x) - 1408, 0.5*(600 - temp), 1408, 792)
+  image(cloudLonely, 0.5* (140 - meatMan.pos.x) - 1408, 0.5*(600 - temp), 1408, 792)
 }
 
 function three() {
@@ -882,65 +999,4 @@ function five() {
 }
 
 function six() {
-}
-
-function win() {
-  if (set[1]) {
-    fading = true
-    fade = false
-    set[1] = false
-  }
-  if (fade === false) {
-    if (fading) {
-      if (black2.opacity < 1){
-        black2.opacity += 0.02
-        black3.opacity += 0.02
-      } else if (black2.opacity >= 1) {
-        fading = false
-        won2 = true
-        meatMan.pos.x = -1000
-        meatMan.pos.y = 500
-        camera.pos = meatMan.pos
-        meatMan.pos.y = -200
-        fakePipe = new Sprite(-1005, 100, 100, 100, "n")
-        fakePipe.img = endPipeImg
-        fakePipe.img.scale = 0.7
-        fakePipe.layer = 4
-        groundMaker(-1900, 700, 19, 2)
-        meatMan.rotationLock = false
-        pan.opacity = 1
-        fading = false
-        gameOver = new Sprite()
-        gameOver.collider = "n"
-        gameOver.img = youWinImg
-        gameOver.layer = 99999
-        gameOver.opacity = 0.9
-        dead = true
-      }
-    }
-  }
-  if (black2.opacity > 0.005) {
-      black2.opacity -= 0.005
-      black3.opacity -= 0.005
-    }
-  if (won2) {
-    image(skyImg, -500, 0, 1408, 792)
-    image(fMountImg, -500, -100, 1408, 792)
-    image(cMountImg, -500, -100, 1408, 792)
-    image(fCloudImg, -500, -100, 1408, 792)
-    image(mCloudImg, -500, -100, 1408, 792)
-    image(cCloudImg, -500, -100, 1408, 792)
-    image(skyImg, 908, 0, 1408, 792)
-    image(fMountImg, 908, -100, 1408, 792)
-    image(cMountImg, 908, -100, 1408, 792)
-    image(fCloudImg, 908, -100, 1408, 792)
-    image(mCloudImg, 908, -100, 1408, 792)
-    image(cCloudImg, 908, -100, 1408, 792)
-    black3.pos = camera.pos
-
-    if (meatMan.colliding(pan)) {
-      meatMan.velocity.y = -2
-      meatMan.img = openMouthImg
-    }
-  }
 }
