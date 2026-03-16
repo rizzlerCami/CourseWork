@@ -987,7 +987,7 @@ function one() {
     spoo9.sleeping = true
   }
 
-  if (meatMan.collides(meatPipe)) {
+  if (meatMan.collides(meatPipe) && won == false) {
     won = true
   }
 
