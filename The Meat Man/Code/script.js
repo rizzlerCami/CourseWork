@@ -2,7 +2,7 @@ let meatMan
 let crouchImg
 let openMouthImg
 let walk = ["", "", "", ""]
-let level = [true, true, true, false, false, false, false]
+let level = [true, true, false, false, false, false, false]
 let selector = false
 let idle
 let scaleF
@@ -241,11 +241,10 @@ function draw() {
     meatball.image.offset.x = -17
     meatball.image.offset.y = 6
     if (meatMan.y < 1200 && won2 === false && lost == false && level[0] == false) {
-    camera.pos = meatMan.pos
+    camera.pos = spoon[8].pos
     } else {
     meatMan.velocity.x = 0
     }
-    spoonMove()
     spoon.scale = 0.4
     spoon.offset.y = 10
     sign.scale = 0.25
@@ -503,23 +502,14 @@ function blinking() {
   }
 }
 
-function spoonMove() {
-  if (spoon[0].x <= 470 || (spoon[0].collides(spoon) && flip[0] == -1)) {
-    flip[0] = 1
-    spoon[0].img.scale.x = -1
-  } else if (spoon[0].x >= 1500 || (spoon[0].collides(spoon) && flip[0] == 1)) {
-    flip[0] = -1
+function spoonMove(index, start, end) {
+  if (spoon[index].x <= start || (spoon[index].collides(spoon) && flip[index] == -1)) {
+    flip[index] = 1
+    spoon[index].img.scale.x = -1
+  } else if (spoon[index].x >= end || (spoon[index].collides(spoon) && flip[index] == 1)) {
+    flip[index] = -1
   }
-  spoon[0].x+= 2*flip[0]
-
-  if (spoon[1].x <= 470 || (spoon[1].collides(spoon) && flip[1] == -1)) {
-    flip[1] = 1
-    spoon[1].img.scale.x = -1
-  } else if (spoon[1].x >= 1500 || (spoon[1].collides(spoon) && flip[1] == 1)) {
-    flip[1] = -1
-  }
-  spoon[1].x+= 2*flip[1]
-
+  spoon[index].x+= 2*flip[index]
 }
 
 function groundMaker(x, y, w, h) {
@@ -887,8 +877,15 @@ function one() {
     groundMaker(9700, 1100, 15, 5)
     let p = new crate.Sprite(400, 608)
     spoo = new spoon.Sprite(650, 580)
-    spoo2 = new spoon.Sprite(900, 580)
-    spoon.velocity.x = -2
+    spoo1 = new spoon.Sprite(900, 580)
+    spoo2 = new spoon.Sprite(2050, 380)
+    spoo3 = new spoon.Sprite(3400, 580)
+    spoo4 = new spoon.Sprite(4700, 580)
+    spoo5 = new spoon.Sprite(5000, 580)
+    spoo6 = new spoon.Sprite(5700, 580)
+    spoo7 = new spoon.Sprite(6600, 580)
+    spoo8 = new spoon.Sprite(8800, 580)
+    spoo9 = new spoon.Sprite(9500, 580)
     black2 = new Sprite(9500, 1500, 5000, 5000, "n")
     black2.layer = 100000000
     black2.color = "black"
@@ -899,6 +896,17 @@ function one() {
     black3.opacity = 0
   }
 
+  spoonMove(0, 470, 1500)
+  spoonMove(1, 470, 1500)
+  spoonMove(2, 1980, 2810)
+  spoonMove(3, 3280, 4150)
+  spoonMove(4, 4450, 5050)
+  spoonMove(5, 4450, 5050)
+  spoonMove(6, 5350, 5950)
+  spoonMove(7, 6470, 6750)
+  spoonMove(8, 6900, 9000)
+  spoonMove(9, 9200, 10000)
+
   if (spoonDelay == 18) {
     if (spoonImgCount === 3) {
       spoonImgCount = 0
@@ -906,36 +914,26 @@ function one() {
       spoonImgCount++
     }
     spoonDelay = 0
-    spoon[0].img = spoonImg[spoonImgCount]
-    spoon[1].img = spoonImg[spoonImgCount]
+    for (let i = 0; i <= 9; i++) {
+      spoon[i].img = spoonImg[spoonImgCount]
+    }
   } else {
     spoonDelay++
   }
 
-
-  if (meatMan.collides(spoon[0]) && meatMan.y + 70 < spoon[0].y) {
-    spoonDead[0] = true
-    meatMan.velocity.y = -5
-  } else if (meatMan.collides(spoon[0]) && dead == false) {
-    meatMan.velocity.y = -5
-    dead = true
-    gameOver = new Sprite()
-    gameOver.collider = "n"
-    gameOver.img = gameOverImg
-    gameOver.layer = 99999
-    gameOver.opacity = 0.9
-  }
-  if (meatMan.collides(spoon[1]) && meatMan.y + 70 < spoon[1].y) {
-    spoonDead[1] = true
-    meatMan.velocity.y = -5
-  } else if (meatMan.collides(spoon[1]) && dead == false) {
-    meatMan.velocity.y = -5
-    dead = true
-    gameOver = new Sprite()
-    gameOver.collider = "n"
-    gameOver.img = gameOverImg
-    gameOver.layer = 99999
-    gameOver.opacity = 0.9
+  for (let g = 0; g <= 9; g++) {
+    if (meatMan.collides(spoon[g]) && meatMan.y + 70 < spoon[g].y) {
+      spoonDead[g] = true
+      meatMan.velocity.y = -5
+    } else if (meatMan.collides(spoon[g]) && dead == false) {
+      meatMan.velocity.y = -5
+      dead = true
+      gameOver = new Sprite()
+      gameOver.collider = "n"
+      gameOver.img = gameOverImg
+      gameOver.layer = 99999
+      gameOver.opacity = 0.9
+    }
   }
 
   if (meatball.collides(spoon[0])) {
