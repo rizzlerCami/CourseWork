@@ -64,7 +64,7 @@ let spoo
 let spoonDelay = 0
 let spoonBool = true
 let dead = false
-let flip = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
+let flip = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
 let spoonDead = [, , , , , , , , , ]
 let black2
 let won = false
@@ -241,7 +241,7 @@ function draw() {
     meatball.image.offset.x = -17
     meatball.image.offset.y = 6
     if (meatMan.y < 1200 && won2 === false && lost == false && level[0] == false) {
-    camera.pos = spoon[8].pos
+    camera.pos = meatMan.pos
     } else {
     meatMan.velocity.x = 0
     }
@@ -322,8 +322,8 @@ function draw() {
           crate.remove()
           floor.remove()
           uGround.remove()
-          spoon.remove()
           meatball.remove()
+          spoon.remove()
           meatMan.pos.x = 155
           meatMan.pos.y = 400
           enlarge = 0
@@ -356,6 +356,7 @@ function draw() {
   meatMan.image.scale = scaleF
   meatMan.image.offset.y = -30
   meatMan.friction = 500
+  p5play.renderStats = true
 }
 
 function movement() {
@@ -874,7 +875,7 @@ function one() {
     groundMaker(6500, 960, 2, 5)
     groundMaker(7000, 820, 20, 5)
     groundMaker(9000, 1000, 4, 1)
-    groundMaker(9700, 1100, 15, 5)
+    groundMaker(9900, 1100, 15, 5)
     let p = new crate.Sprite(400, 608)
     spoo = new spoon.Sprite(650, 580)
     spoo1 = new spoon.Sprite(900, 580)
@@ -885,7 +886,7 @@ function one() {
     spoo6 = new spoon.Sprite(5700, 580)
     spoo7 = new spoon.Sprite(6600, 580)
     spoo8 = new spoon.Sprite(8800, 580)
-    spoo9 = new spoon.Sprite(9500, 580)
+    spoo9 = new spoon.Sprite(9900, 580)
     black2 = new Sprite(9500, 1500, 5000, 5000, "n")
     black2.layer = 100000000
     black2.color = "black"
@@ -895,17 +896,6 @@ function one() {
     black3.color = "black"
     black3.opacity = 0
   }
-
-  spoonMove(0, 470, 1500)
-  spoonMove(1, 470, 1500)
-  spoonMove(2, 1980, 2810)
-  spoonMove(3, 3280, 4150)
-  spoonMove(4, 4450, 5050)
-  spoonMove(5, 4450, 5050)
-  spoonMove(6, 5350, 5950)
-  spoonMove(7, 6470, 6750)
-  spoonMove(8, 6900, 9000)
-  spoonMove(9, 9200, 10000)
 
   if (spoonDelay == 18) {
     if (spoonImgCount === 3) {
@@ -935,18 +925,44 @@ function one() {
       gameOver.opacity = 0.9
     }
   }
-
-  if (meatball.collides(spoon[0])) {
-    spoonDead[0] = true
-  }
-  if (meatball.collides(spoon[1])) {
-    spoonDead[1] = true
-  }
   for (let i = 0; i < 10; i++) {
+    if (meatball.collides(spoon[i])) {
+      spoonDead[i] = true
+    }
     if (spoonDead[i]) {
         spoon[i].collider = "n"
         spoon[i].img = ""
-      }
+    }
+  }
+  if (spoonDead[0] == false) {
+    spoonMove(0, 470, 1500)
+  }
+  if (spoonDead[1] == false) {
+    spoonMove(1, 470, 1500)
+  }
+  if (spoonDead[2] == false) {
+    spoonMove(2, 1980, 2810)
+  }
+  if (spoonDead[3] == false) {
+    spoonMove(3, 3280, 4150)
+  }
+  if (spoonDead[4] == false) {
+    spoonMove(4, 4450, 5050)
+  }
+  if (spoonDead[5] == false) {
+    spoonMove(5, 4450, 5050)
+  }
+  if (spoonDead[6] == false) {
+    spoonMove(6, 5350, 5950)
+  }
+  if (spoonDead[7] == false) {
+    spoonMove(7, 6470, 6750)
+  }
+  if (spoonDead[8] == false) {
+    spoonMove(8, 6950, 9050)
+  }
+  if (spoonDead[9] == false) {
+    spoonMove(9, 9860, 10340)
   }
 
   if (meatMan.collides(meatPipe)) {
@@ -1011,16 +1027,16 @@ function two() {
     meatPipe.rotationLock = true
     meatPipe.collider = "s"
     meatPipe.layer = 1000
-    groundMaker(0, 700, 15, 5)
-    groundMaker(2000, 600, 8, 5)
-    groundMaker(3300, 1000, 8, 5)
-    groundMaker(4500, 800, 5, 5)
-    groundMaker(5400, 900, 5, 5)
-    groundMaker(6000, 1100, 2, 5)
-    groundMaker(6500, 960, 2, 5)
-    groundMaker(7000, 820, 20, 5)
+    groundMaker(0, 700, 15, 4)
+    groundMaker(2000, 600, 8, 4)
+    groundMaker(3300, 1000, 8, 2)
+    groundMaker(4500, 800, 5, 4)
+    groundMaker(5400, 900, 5, 4)
+    groundMaker(6000, 1100, 2, 4)
+    groundMaker(6500, 960, 2, 4)
+    groundMaker(7000, 820, 20, 3)
     groundMaker(9000, 1000, 4, 1)
-    groundMaker(9700, 1100, 15, 5)
+    groundMaker(9700, 1100, 15, 4)
     let p = new crate.Sprite(400, 608)
     spoo = new spoon.Sprite(650, 580)
     spoo2 = new spoon.Sprite(900, 580)
