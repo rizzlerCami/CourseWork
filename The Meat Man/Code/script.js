@@ -2,7 +2,7 @@ let meatMan
 let crouchImg
 let openMouthImg
 let walk = ["", "", "", ""]
-let level = [true, true, false, false, false, false, false]
+let level = [true, true, true, false, false, false, false]
 let selector = false
 let idle
 let scaleF
@@ -905,7 +905,9 @@ function one() {
     }
     spoonDelay = 0
     for (let i = 0; i <= 9; i++) {
-      spoon[i].img = spoonImg[spoonImgCount]
+      if (spoonDead[i] == false) {
+        spoon[i].img = spoonImg[spoonImgCount]
+      }
     }
   } else {
     spoonDelay++
@@ -936,33 +938,53 @@ function one() {
   }
   if (spoonDead[0] == false) {
     spoonMove(0, 470, 1500)
+  } else {
+    spoo.sleeping = true
   }
   if (spoonDead[1] == false) {
     spoonMove(1, 470, 1500)
+  } else {
+    spoo1.sleeping = true
   }
   if (spoonDead[2] == false) {
     spoonMove(2, 1980, 2810)
+  } else {
+    spoo2.sleeping = true
   }
   if (spoonDead[3] == false) {
     spoonMove(3, 3280, 4150)
+  } else {
+    spoo3.sleeping = true
   }
   if (spoonDead[4] == false) {
     spoonMove(4, 4450, 5050)
+  } else {
+    spoo4.sleeping = true
   }
   if (spoonDead[5] == false) {
     spoonMove(5, 4450, 5050)
+  } else {
+    spoo5.sleeping = true
   }
   if (spoonDead[6] == false) {
     spoonMove(6, 5350, 5950)
+  } else {
+    spoo6.sleeping = true
   }
   if (spoonDead[7] == false) {
     spoonMove(7, 6470, 6750)
+  } else {
+    spoo7.sleeping = true
   }
   if (spoonDead[8] == false) {
     spoonMove(8, 6950, 9050)
+  } else {
+    spoo8.sleeping = true
   }
   if (spoonDead[9] == false) {
     spoonMove(9, 9860, 10340)
+  } else {
+    spoo9.sleeping = true
   }
 
   if (meatMan.collides(meatPipe)) {
