@@ -59,6 +59,8 @@ let crateImg
 let tree
 let spoon
 let spoonImg = ["", "", "", ""]
+let forkImg = ["", "", "", ""]
+let knifeImg = ["", "", "", ""]
 let spoonImgCount = 0
 let spoo
 let spoonDelay = 0
@@ -145,6 +147,8 @@ function preload() {
   mountains = loadImage('glacial_mountains.png')
   ground2 = loadImage('ground2.png')
   uGround2 = loadImage('uGround2.png')
+  forkImg = [loadImage('fork-1.png'), loadImage('fork-2.png'), loadImage('fork-3.png'), loadImage('fork-4.png')]
+  knifeImg = [loadImage('knife-1.png'), loadImage('knife-2.png'), loadImage('knife-3.png'), loadImage('knife-4.png')]
 }
 
 function setup() {
@@ -156,6 +160,7 @@ function setup() {
   spoon.w = 85
   spoon.rotationLock = true 
   spoon.layer = 10
+  spoon.friction = 1000
 
   black = new Sprite(0, 0, 4000, 5000, "n")
   black.layer = 100
@@ -217,7 +222,7 @@ function setup() {
 
 function draw() {
   clear()
-
+  floor.friction = 0.5
   if (level[0]) {
     menu()
   } else {
@@ -225,6 +230,7 @@ function draw() {
       one()
     } else if (level[2]) {
       two()
+      floor.friction = 0.0005
     } else if (level[3]) {
       three()
     } else if (level[4]) {
@@ -241,15 +247,18 @@ function draw() {
     meatball.image.offset.x = -17
     meatball.image.offset.y = 6
     if (meatMan.y < 1200 && won2 === false && lost == false && level[0] == false) {
-    camera.pos = meatMan.pos
+    camera.pos = knife1.pos
     } else {
     meatMan.velocity.x = 0
     }
-    spoon.scale = 0.4
+    if (level[1]) {
+      spoon.scale = 0.4
+    } else if (level[2]) {
+      spoon.scale = 0.6
+    }
     spoon.offset.y = 10
     sign.scale = 0.25
   }
-
   blinking()
   allSprites.bounciness = 0
   floor.image.scale = 0.3
@@ -380,7 +389,11 @@ function movement() {
       } else {
         meatMan.image = idle
       }
-      meatMan.velocity.x = 6
+      if (level[1]) {
+        meatMan.velocity.x = 6
+      } else if (level[2]) {
+        meatMan.velocity.x = 5
+      }
     } else if (kb.pressing('left')) {
       meatMan.scale.x = -1
       if (meatMan.colliding(floor) > 0 || meatMan.colliding(crate) > 0 || won2) {
@@ -398,7 +411,11 @@ function movement() {
       } else {
         meatMan.image = idle
       }
-      meatMan.velocity.x = -6
+      if (level[1]) {
+        meatMan.velocity.x = -6
+      } else if (level[2]) {
+        meatMan.velocity.x = -5
+      }
       walkSound.play()
     }
     if (kb.pressed('right') || kb.pressed('left') || kb.presses('space')) {
@@ -999,7 +1016,7 @@ function one() {
 }
 
 function two() {
-  background('#d1e8eb')
+  background('#c6efff')
   if (won2 === false && lost == false) {
     temp = meatMan.pos.y
   } else if (lost && once) {
@@ -1024,7 +1041,7 @@ function two() {
     black.opacity -= 0.005
   }
   if (set[0]) {
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i <= 1; i++) {
       spoonDead[i] = false
     }
     pan = new Sprite ([[-1200, 640], [-800, 640], [-750, 590], [-770, 590], [-800, 620], [-1200, 620], [-1230, 590], [-1250, 590], [-1200, 640]])
@@ -1040,29 +1057,31 @@ function two() {
     dead = false
     sign5 = new sign.Sprite(0, 600)
     sign5.img = signImg[4]
-    farmSign = new sign.Sprite(10100, 980)
+    farmSign = new sign.Sprite(6500, 200)
     farmSign.img = farmImg
     farmSign.img.scale = 1.2
-    meatPipe = new Sprite([[10500, 1084], [10750, 1084], [10750, 984], [10700, 884], [10600, 734], [10500, 684], [10305, 654], [10600, 739], [10700, 889], [10745, 989], [10550, 989], [10305, 959], [10500, 1084]])
+    meatPipe = new Sprite([[6800, 284], [7050, 284], [7050, 184], [7000, 84], [6900, -66], [6800, -116], [6605, -146], [6900, -61], [7000, 89], [7045, 189], [6850, 189], [6605, 159], [6800, 284]])
     meatPipe.img = pipeImg
     meatPipe.scale = 0.8
     meatPipe.rotationLock = true
     meatPipe.collider = "s"
     meatPipe.layer = 1000
     groundMaker(0, 700, 15, 4)
-    groundMaker(2000, 600, 8, 4)
-    groundMaker(3300, 1000, 8, 2)
-    groundMaker(4500, 800, 5, 4)
-    groundMaker(5400, 900, 5, 4)
-    groundMaker(6000, 1100, 2, 4)
-    groundMaker(6500, 960, 2, 4)
-    groundMaker(7000, 820, 20, 3)
-    groundMaker(9000, 1000, 4, 1)
-    groundMaker(9700, 1100, 15, 4)
+    groundMaker(1800, 500, 3, 1)
+    groundMaker(2400, 800, 2, 1)
+    groundMaker(3000, 640, 4, 2)
+    groundMaker(3600, 760, 3, 2)
+    groundMaker(4200, 760, 3, 2)
+    groundMaker(4900, 600, 5, 2)
+    groundMaker(5800, 450, 2, 2)
+    groundMaker(6300, 300, 7, 2)
     let p = new crate.Sprite(400, 608)
-    spoo = new spoon.Sprite(650, 580)
-    spoo2 = new spoon.Sprite(900, 580)
-    spoon.velocity.x = -2
+    fork = new spoon.Sprite(650, 553)
+    knife = new spoon.Sprite(900, 575)
+    knife1 = new spoon.Sprite(2000, 300)
+    fork.offset.y = -25
+    knife.offset.y = -10
+    knife1.offset.y = -10
     black2 = new Sprite(9500, 1500, 5000, 5000, "n")
     black2.layer = 100000000
     black2.color = "black"
@@ -1080,17 +1099,15 @@ function two() {
       spoonImgCount++
     }
     spoonDelay = 0
-    spoon[0].img = spoonImg[spoonImgCount]
-    spoon[1].img = spoonImg[spoonImgCount]
+    spoon[0].img = forkImg[spoonImgCount]
+    spoon[1].img = knifeImg[spoonImgCount]
+    spoon[2].img = knifeImg[spoonImgCount]
   } else {
     spoonDelay++
   }
 
 
-  if (meatMan.collides(spoon[0]) && meatMan.y + 70 < spoon[0].y) {
-    spoonDead[0] = true
-    meatMan.velocity.y = -5
-  } else if (meatMan.collides(spoon[0]) && dead == false) {
+  if (meatMan.collides(spoon[0]) && dead == false) {
     meatMan.velocity.y = -5
     dead = true
     gameOver = new Sprite()
@@ -1099,10 +1116,16 @@ function two() {
     gameOver.layer = 99999
     gameOver.opacity = 0.9
   }
-  if (meatMan.collides(spoon[1]) && meatMan.y + 70 < spoon[1].y) {
-    spoonDead[1] = true
+  if (meatMan.collides(spoon[1]) && dead == false) {
     meatMan.velocity.y = -5
-  } else if (meatMan.collides(spoon[1]) && dead == false) {
+    dead = true
+    gameOver = new Sprite()
+    gameOver.collider = "n"
+    gameOver.img = gameOverImg
+    gameOver.layer = 99999
+    gameOver.opacity = 0.9
+  }
+  if (meatMan.collides(spoon[2]) && dead == false) {
     meatMan.velocity.y = -5
     dead = true
     gameOver = new Sprite()
@@ -1118,15 +1141,34 @@ function two() {
   if (meatball.collides(spoon[1])) {
     spoonDead[1] = true
   }
-  for (let i = 0; i < 10; i++) {
-    if (spoonDead[i]) {
-        spoon[i].collider = "n"
-        spoon[i].img = ""
-      }
+  if (meatball.collides(spoon[2])) {
+    spoonDead[2] = true
   }
 
+  if (spoonDead[0] == false) {
+    spoonMove(0, 470, 1500)
+  } else {
+    fork.sleeping = true
+    spoon[0].collider = "n"
+    spoon[0].img = ""
+  }
+  if (spoonDead[1] == false) {
+    spoonMove(1, 470, 1500)
+  } else {
+    knife.sleeping = true
+    spoon[1].collider = "n"
+    spoon[1].img = ""
+  }
+  if (spoonDead[2] == false) {
+    spoonMove(2, 470, 1500)
+  } else {
+    knife1.sleeping = true
+    spoon[1].collider = "n"
+    spoon[1].img = ""
+  }
   if (meatMan.collides(meatPipe)) {
     won = true
+    black2.pos = camera.pos
   }
 
   if (won) {

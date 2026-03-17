@@ -259,7 +259,6 @@ function draw() {
     spoon.offset.y = 10
     sign.scale = 0.25
   }
-
   blinking()
   allSprites.bounciness = 0
   floor.image.scale = 0.3
