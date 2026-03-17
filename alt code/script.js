@@ -92,6 +92,9 @@ let cloudLonely
 let mountains 
 let ground2
 let uGround2
+let level1Music
+let level2Music
+let scream
 
 function preload() {
   idle = loadImage('idle.png')
@@ -121,7 +124,7 @@ function preload() {
   click[0] = createAudio('click.mp3')
   click[1] = createAudio('clickOff.mp3')
   ximg = loadImage('x.png')
-  meatTheme = createAudio('rem.wav')
+  meatTheme = createAudio('MeatTheme.wav')
   controlsScreenImg = loadImage('controlsScreen.png')
   crouchImg = loadImage('meatManCrouched.png')
   openMouthImg = loadImage('meatManOpenMouth.png')
@@ -149,6 +152,9 @@ function preload() {
   uGround2 = loadImage('uGround2.png')
   forkImg = [loadImage('fork-1.png'), loadImage('fork-2.png'), loadImage('fork-3.png'), loadImage('fork-4.png')]
   knifeImg = [loadImage('knife-1.png'), loadImage('knife-2.png'), loadImage('knife-3.png'), loadImage('knife-4.png')]
+  level1Music = createAudio('level1Music.mp3')
+  level2Music = createAudio('level2Music.wav')
+  scream = createAudio('scream.mp3')
 }
 
 function setup() {
@@ -297,7 +303,12 @@ function draw() {
       if (lost) {
         black.pos = gameOver.pos
         black.layer = 999999999999999999999
-        if (black.opacity <= 1) {
+        if (level[1] && level1Music.volume() >= 0.05) {
+        level1Music.volume(level1Music.volume() - 0.05)
+        } else if (level[2] && level2Music.volume() >= 0.05) {
+        level2Music.volume(level2Music.volume() - 0.05)
+        }
+        if (black.opacity < 1) {
           black.opacity += 0.01
         } else {
           if (won) {
@@ -322,7 +333,6 @@ function draw() {
           dead = false
           set = [false, false, false]
           level[0] = true
-          fade = false
           fading = false
           menuButton.remove()
           gameOver.remove()
@@ -338,7 +348,7 @@ function draw() {
           enlarge = 0
           selector = false
           meatTheme.play()
-          meatTheme.volume(1)
+          meatTheme.volume(0.7)
           won = false
           won2 = false
           lost = false
@@ -365,6 +375,7 @@ function draw() {
   meatMan.image.scale = scaleF
   meatMan.image.offset.y = -30
   meatMan.friction = 500
+  shootSound.volume(0.1)
   p5play.renderStats = true
 }
 
@@ -550,10 +561,8 @@ function groundMaker(x, y, w, h) {
 function win() {
   if (set[1]) {
     fading = true
-    fade = false
     set[1] = false
   }
-  if (fade === false) {
     if (fading) {
       if (black2.opacity < 1){
         black2.opacity += 0.02
@@ -572,7 +581,6 @@ function win() {
         groundMaker(-1900, 700, 19, 2)
         meatMan.rotationLock = false
         pan.opacity = 1
-        fading = false
         gameOver = new Sprite()
         gameOver.collider = "n"
         gameOver.img = youWinImg
@@ -580,13 +588,13 @@ function win() {
         gameOver.opacity = 0.9
         dead = true
       }
-    }
   }
   if (black2.opacity > 0.005) {
       black2.opacity -= 0.005
       black3.opacity -= 0.005
     }
   if (won2) {
+    scream.play()
     image(skyImg, -500, 0, 1408, 792)
     image(fMountImg, -500, -100, 1408, 792)
     image(cMountImg, -500, -100, 1408, 792)
@@ -600,7 +608,6 @@ function win() {
     image(mCloudImg, 908, -100, 1408, 792)
     image(cCloudImg, 908, -100, 1408, 792)
     black3.pos = camera.pos
-
     if (meatMan.colliding(pan)) {
       meatMan.velocity.y = -2
       meatMan.img = openMouthImg
@@ -609,6 +616,9 @@ function win() {
 }
 
 function menu() {
+  level1Music.stop()
+  level2Music.stop()
+  scream.stop()
   scaleF = 0.24
   meatMan.w = 86
   meatMan.h = 94
@@ -851,6 +861,8 @@ function one() {
     for (let i = 0; i <= 1; i++) {
       spoonDead[i] = false
     }
+    level1Music.play()
+    level1Music.volume(1)
     pan = new Sprite ([[-1200, 640], [-800, 640], [-750, 590], [-770, 590], [-800, 620], [-1200, 620], [-1230, 590], [-1250, 590], [-1200, 640]])
     pan.collider = "k"
     pan.img = panImg
@@ -905,7 +917,6 @@ function one() {
     black3.color = "black"
     black3.opacity = 0
   }
-
   if (spoonDelay == 18) {
     if (spoonImgCount === 3) {
       spoonImgCount = 0
@@ -996,6 +1007,8 @@ function two() {
     for (let i = 0; i <= 1; i++) {
       spoonDead[i] = false
     }
+    level2Music.play()
+    level2Music.volume(1)
     pan = new Sprite ([[-1200, 640], [-800, 640], [-750, 590], [-770, 590], [-800, 620], [-1200, 620], [-1230, 590], [-1250, 590], [-1200, 640]])
     pan.collider = "k"
     pan.img = panImg
@@ -1099,6 +1112,7 @@ function two() {
   }
   if (meatMan.collides(meatPipe)) {
     won = true
+    black2.pos = camera.pos
   }
 
   if (won) {
