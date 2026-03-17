@@ -366,6 +366,7 @@ function draw() {
   meatMan.image.scale = scaleF
   meatMan.image.offset.y = -30
   meatMan.friction = 500
+  p5play.renderStats = true
 }
 
 function movement() {
@@ -1009,10 +1010,10 @@ function two() {
     dead = false
     sign5 = new sign.Sprite(0, 600)
     sign5.img = signImg[4]
-    farmSign = new sign.Sprite(10100, 980)
+    farmSign = new sign.Sprite(6500, 200)
     farmSign.img = farmImg
     farmSign.img.scale = 1.2
-    meatPipe = new Sprite([[10500, 1084], [10750, 1084], [10750, 984], [10700, 884], [10600, 734], [10500, 684], [10305, 654], [10600, 739], [10700, 889], [10745, 989], [10550, 989], [10305, 959], [10500, 1084]])
+    meatPipe = new Sprite([[6800, 284], [7050, 284], [7050, 184], [7000, 84], [6900, -66], [6800, -116], [6605, -146], [6900, -61], [7000, 89], [7045, 189], [6850, 189], [6605, 159], [6800, 284]])
     meatPipe.img = pipeImg
     meatPipe.scale = 0.8
     meatPipe.rotationLock = true
@@ -1021,22 +1022,15 @@ function two() {
     groundMaker(0, 700, 15, 4)
     groundMaker(1800, 500, 3, 1)
     groundMaker(2400, 800, 2, 1)
-
-    /*groundMaker(2000, 600, 8, 4)
-    groundMaker(3300, 1000, 8, 2)
-    groundMaker(4500, 800, 5, 4)
-    groundMaker(5400, 900, 5, 4)
-    groundMaker(6000, 1100, 2, 4)
-    groundMaker(6500, 960, 2, 4)
-    groundMaker(7000, 820, 20, 3)
-    groundMaker(9000, 1000, 4, 1)
-    groundMaker(9700, 1100, 15, 4)*/
-
+    groundMaker(3000, 640, 4, 2)
+    groundMaker(3600, 760, 3, 2)
+    groundMaker(4200, 760, 3, 2)
+    groundMaker(4900, 600, 5, 2)
+    groundMaker(5800, 450, 2, 2)
+    groundMaker(6300, 300, 7, 2)
     let p = new crate.Sprite(400, 608)
-    fork = new spoon.Sprite(650, 550)
-    knife = new spoon.Sprite(900, 580)
-    fork.w = 85
-    fork.h = 270
+    fork = new spoon.Sprite(650, 553)
+    knife = new spoon.Sprite(900, 575)
     fork.offset.y = -25
     knife.offset.y = -10
     spoon.velocity.x = -2
