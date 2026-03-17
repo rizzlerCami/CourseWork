@@ -247,7 +247,7 @@ function draw() {
     meatball.image.offset.x = -17
     meatball.image.offset.y = 6
     if (meatMan.y < 1200 && won2 === false && lost == false && level[0] == false) {
-    camera.pos = knife1.pos
+    camera.pos = meatMan.pos
     } else {
     meatMan.velocity.x = 0
     }
@@ -929,8 +929,7 @@ function one() {
   } else {
     spoonDelay++
   }
-
-  for (let g = 0; g <= 9; g++) {
+  for (let i = 0; i <= 9; i++) {
     if (meatMan.collides(spoon[g]) && meatMan.y + 70 < spoon[g].y) {
       spoonDead[g] = true
       meatMan.velocity.y = -5
@@ -943,8 +942,6 @@ function one() {
       gameOver.layer = 99999
       gameOver.opacity = 0.9
     }
-  }
-  for (let i = 0; i < 10; i++) {
     if (meatball.collides(spoon[i])) {
       spoonDead[i] = true
     }
@@ -1041,7 +1038,7 @@ function two() {
     black.opacity -= 0.005
   }
   if (set[0]) {
-    for (let i = 0; i <= 1; i++) {
+    for (let i = 0; i <= 6; i++) {
       spoonDead[i] = false
     }
     pan = new Sprite ([[-1200, 640], [-800, 640], [-750, 590], [-770, 590], [-800, 620], [-1200, 620], [-1230, 590], [-1250, 590], [-1200, 640]])
@@ -1076,12 +1073,20 @@ function two() {
     groundMaker(5800, 450, 2, 2)
     groundMaker(6300, 300, 7, 2)
     let p = new crate.Sprite(400, 608)
-    fork = new spoon.Sprite(650, 553)
-    knife = new spoon.Sprite(900, 575)
-    knife1 = new spoon.Sprite(2000, 300)
+    fork = new spoon.Sprite(3700, 553)
+    fork1 = new spoon.Sprite(5200, 300)
+    fork2 = new spoon.Sprite(5900, 300)
+    knife3 = new spoon.Sprite(850, 553)
+    knife4 = new spoon.Sprite(2000, 300)
+    knife5 = new spoon.Sprite(5000, 300)
+    knife6 = new spoon.Sprite(6600, 0)
     fork.offset.y = -25
-    knife.offset.y = -10
-    knife1.offset.y = -10
+    fork1.offset.y = -25
+    fork2.offset.y = -25
+    knife3.offset.y = -10
+    knife4.offset.y = -10
+    knife5.offset.y = -10
+    knife6.offset.y = -10
     black2 = new Sprite(9500, 1500, 5000, 5000, "n")
     black2.layer = 100000000
     black2.color = "black"
@@ -1099,15 +1104,17 @@ function two() {
       spoonImgCount++
     }
     spoonDelay = 0
-    spoon[0].img = forkImg[spoonImgCount]
-    spoon[1].img = knifeImg[spoonImgCount]
-    spoon[2].img = knifeImg[spoonImgCount]
+    for (let g = 0; g <= 2; g++) {
+      spoon[g].img = forkImg[spoonImgCount]
+    }
+    for (let c = 3; c <= 6; c++) {
+      spoon[c].img = knifeImg[spoonImgCount]
+    }
   } else {
     spoonDelay++
   }
-
-
-  if (meatMan.collides(spoon[0]) && dead == false) {
+  for (let i = 0; i <= 6; i++) {
+    if (meatMan.collides(spoon[i]) && dead == false) {
     meatMan.velocity.y = -5
     dead = true
     gameOver = new Sprite()
@@ -1115,56 +1122,60 @@ function two() {
     gameOver.img = gameOverImg
     gameOver.layer = 99999
     gameOver.opacity = 0.9
-  }
-  if (meatMan.collides(spoon[1]) && dead == false) {
-    meatMan.velocity.y = -5
-    dead = true
-    gameOver = new Sprite()
-    gameOver.collider = "n"
-    gameOver.img = gameOverImg
-    gameOver.layer = 99999
-    gameOver.opacity = 0.9
-  }
-  if (meatMan.collides(spoon[2]) && dead == false) {
-    meatMan.velocity.y = -5
-    dead = true
-    gameOver = new Sprite()
-    gameOver.collider = "n"
-    gameOver.img = gameOverImg
-    gameOver.layer = 99999
-    gameOver.opacity = 0.9
-  }
-
-  if (meatball.collides(spoon[0])) {
-    spoonDead[0] = true
-  }
-  if (meatball.collides(spoon[1])) {
-    spoonDead[1] = true
-  }
-  if (meatball.collides(spoon[2])) {
-    spoonDead[2] = true
+    }
+    if (meatball.collides(spoon[i])) {
+    spoonDead[i] = true
+    }
   }
 
   if (spoonDead[0] == false) {
-    spoonMove(0, 470, 1500)
+    spoonMove(0, 3570, 3930)
   } else {
     fork.sleeping = true
     spoon[0].collider = "n"
     spoon[0].img = ""
   }
   if (spoonDead[1] == false) {
-    spoonMove(1, 470, 1500)
+    spoonMove(1, 4870, 5430)
   } else {
-    knife.sleeping = true
+    fork1.sleeping = true
     spoon[1].collider = "n"
     spoon[1].img = ""
   }
   if (spoonDead[2] == false) {
-    spoonMove(2, 470, 1500)
+    spoonMove(2, 5780, 6000)
   } else {
-    knife1.sleeping = true
-    spoon[1].collider = "n"
-    spoon[1].img = ""
+    fork2.sleeping = true
+    spoon[2].collider = "n"
+    spoon[2].img = ""
+  }
+  if (spoonDead[3] == false) {
+    spoonMove(3, 470, 1500)
+  } else {
+    knife3.sleeping = true
+    spoon[3].collider = "n"
+    spoon[3].img = ""
+  }
+  if (spoonDead[4] == false) {
+    spoonMove(4, 1780, 2120)
+  } else {
+    knife4.sleeping = true
+    spoon[4].collider = "n"
+    spoon[4].img = ""
+  }
+  if (spoonDead[5] == false) {
+    spoonMove(5, 4870, 5430)
+  } else {
+    knife5.sleeping = true
+    spoon[5].collider = "n"
+    spoon[5].img = ""
+  }
+  if (spoonDead[6] == false) {
+    spoonMove(6, 6300, 6620)
+  } else {
+    knife6.sleeping = true
+    spoon[6].collider = "n"
+    spoon[6].img = ""
   }
   if (meatMan.collides(meatPipe)) {
     won = true
