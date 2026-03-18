@@ -2,7 +2,7 @@ let meatMan
 let crouchImg
 let openMouthImg
 let walk = ["", "", "", ""]
-let level = [true, true, true, false, false, false, false]
+let level = [true, true, false, false, false, false, false]
 let selector = false
 let idle
 let scaleF
@@ -36,7 +36,7 @@ let black
 let wind
 let wind2
 let soundDelay = 0
-let openingScene = false
+let openingScene = true
 let ctpimg
 let ctp
 let click = ["", ""]
