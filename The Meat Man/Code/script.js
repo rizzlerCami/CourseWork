@@ -152,7 +152,7 @@ function preload() {
   forkImg = [loadImage('fork-1.png'), loadImage('fork-2.png'), loadImage('fork-3.png'), loadImage('fork-4.png')]
   knifeImg = [loadImage('knife-1.png'), loadImage('knife-2.png'), loadImage('knife-3.png'), loadImage('knife-4.png')]
   level1Music = createAudio('level1Music.wav')
-  level2Music = createAudio('level2Music.wav')
+  level2Music = createAudio('level2Music.mp3')
   scream = createAudio('scream.mp3')
 }
 
@@ -564,6 +564,7 @@ function win() {
   }
     if (fading) {
       if (black2.opacity < 1){
+        black.opacity += 0.02
         black2.opacity += 0.02
         black3.opacity += 0.02
       } else if (black2.opacity >= 1) {
@@ -589,6 +590,7 @@ function win() {
       }
   }
   if (black2.opacity > 0.005) {
+      black.opacity -= 0.005
       black2.opacity -= 0.005
       black3.opacity -= 0.005
     }
