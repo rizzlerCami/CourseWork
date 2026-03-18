@@ -399,11 +399,15 @@ function draw() {
 }
 
 function movement() {
+  //can't move if he's dead or about to jump
   if (crouch === false && dead === false) {
+    //cancels out movement
     if (kb.pressing('left') && kb.pressing('right')) {
     } else if (kb.pressing('right')) {
       meatMan.scale.x = 1
       if (meatMan.colliding(floor) > 0 || meatMan.colliding(crate) > 0 || won2) {
+        //scrolls through the animation of meatman walking
+        //enlarge here is being repurposed as a walking animation delay (will only change image every 12 frames)
         if (enlarge === 12) {
           if (spacer === 4) {
             spacer = 0
@@ -419,12 +423,14 @@ function movement() {
       } else {
         meatMan.image = idle
       }
+      //meatman has to travel a bit slower on level 2 because of the floor having less friction
       if (level[1]) {
         meatMan.velocity.x = 6
       } else if (level[2]) {
         meatMan.velocity.x = 5
       }
     } else if (kb.pressing('left')) {
+      //duplicate code modified for moving left. The scale being -1 flips him to face left
       meatMan.scale.x = -1
       if (meatMan.colliding(floor) > 0 || meatMan.colliding(crate) > 0 || won2) {
         if (enlarge === 12) {
@@ -457,6 +463,7 @@ function movement() {
     if (kb.pressing('space')) {
       meatMan.image = crouchImg
       crouch = true
+      //can rotate but not move
       if (kb.presses('left')) {
         meatMan.scale.x = -1
       } else if (kb.presses('right')) {
@@ -488,6 +495,7 @@ function shooting() {
     }
     meat.velocity.y = -7
     meat.y = meatMan.y - 30
+    //only decrease in size if meatman is alive
     if (won2 === false) {
       scaleF -= 0.01
       meatMan.w -= 3.6
@@ -501,6 +509,7 @@ function shooting() {
         gameOver.opacity = 0.9
       }
     }
+    //constantly shoot if game has been beaten
   } else if (dead == true && won2) {
     let meat = new meatball.Sprite()
     meat.layer = 20
@@ -526,6 +535,8 @@ function shooting() {
 }
 
 function blinking() {
+  //only blink when meatman is idle
+  // 3 delay variables are used, 1 is to make sure hes idle for 450 frames before he blinks. 2 is to ensure the spacing between images is correct, and 3 is to cycle through the animation of him blinking
   if (meatMan.velocity.x == 0 && meatMan.velocity.y == 0) {
     if (blinkDelay[0] === 450) {
     if (blinkDelay[1] === 6) {
@@ -544,12 +555,12 @@ function blinking() {
     } else {
       blinkDelay[1]++
     }
-  } else {
-    blinkDelay[0]++
-  }
+    } else {
+      blinkDelay[0]++
+    }
   }
 }
-
+//this function gives a boundary for the enemies to move between. If flip is -1 then the enemy moves left, otherwise they moves right. The sprites are also flipped
 function enemyMove(index, start, end) {
   if (enemy[index].x <= start || (enemy[index].collides(enemy) && flip[index] == -1)) {
     flip[index] = 1
@@ -559,7 +570,7 @@ function enemyMove(index, start, end) {
   }
   enemy[index].x+= 2*flip[index]
 }
-
+//this function creates the ground for the levels. The ground is made up of many blocks, and the loops add more or less depending on the width or height
 function groundMaker(x, y, w, h) {
   if (level[1]) {
     floor.img = floorImg
@@ -582,6 +593,7 @@ function win() {
     fading = true
     set[1] = false
   }
+  //fading is used to check whether the fade in/out has finished or not. It is also used as another setup variable to spawn the pipe and ground etc
     if (fading) {
       if (black2.opacity < 1){
         black.opacity += 0.02
@@ -628,7 +640,6 @@ function win() {
     image(fCloudImg, 908, -100, 1408, 792)
     image(mCloudImg, 908, -100, 1408, 792)
     image(cCloudImg, 908, -100, 1408, 792)
-    //black3.pos = camera.pos
     if (scream.volume() > 0) {
       scream.volume(scream.volume - 0.05)
     }
@@ -643,6 +654,7 @@ function menu() {
   level1Music.stop()
   level2Music.stop()
   scream.stop()
+  //reset meatman scale etc
   scaleF = 0.24
   meatMan.w = 86
   meatMan.h = 94
@@ -719,7 +731,7 @@ function menu() {
   }
   if (exit.mouse.pressing()) {
     exit.img = exitImg[1]
-    //terminate
+    //Terminate code. Since I don't know what exiting the game would do, the player can never stop playing
   } else {
     exit.img = exitImg[0]
   }
@@ -740,17 +752,19 @@ function menu() {
   playButton.image.scale = 0.6
   exit.image.scale = 0.6
   controls.image.scale = 0.86
-
+  //controlsBool is true when the controls screen is being displayed
   if (controlsBool) {
     playButton.remove()
     controls.remove()
     exit.remove()
+    //allows the screens to zoom
     if (enlarge != 900) {
       enlarge += 75
     }
     image(controlsScreenImg, 150, -50, enlarge, enlarge)
     x.opacity = 1
     if (x.mouse.presses()) {
+      //reset variables
       enlarge = 0
       controlsBool = false
       set[0] = false
@@ -768,11 +782,13 @@ function menu() {
       if (set[1] === false) {
         for (let i = 1; i<=6; i++) {
           if (i === 6) {
+            //spawns in the sprites to click which level to play
             let levels = new levelClick.Sprite(618, 475, 170, 170, "k")
           } else {
             let levels = new levelClick.Sprite(322 + spacer, 305, 120, 120, "k")
             spacer += 148.3
           }
+          //puts a lock sprite on the locked levels
           if (level[i] === false) {
             levelClick[i - 1].img = lockImg
           } else {
@@ -789,6 +805,7 @@ function menu() {
     x.opacity = 1
     if (set[1]) {
       for (let i = 0; i <= 5; i++) {
+        //if you press the level button for a certain level, the values of all the levels below that one will be set to false, and it will be fading
         if (levelClick[i].mouse.presses() && levelClick[i].img != lockImg) {
           for (let l = i; l >= 1; l--) {
             level[l] = false
@@ -815,6 +832,7 @@ function menu() {
       }
     }
     if (x.mouse.presses()) {
+      //reset to menu screen
       enlarge = 0
       selector = false
       set[0] = false
@@ -827,6 +845,7 @@ function menu() {
       spacer = 0
     }
   }
+  //the blink delays are repurposed again and used for the opening scene as the timing for cpt to display on screen and for the black screen to fade out
   if (openingScene) {
     if (blinkDelay[0] === 3100) {
       openingScene = false
@@ -858,12 +877,14 @@ function menu() {
 
 function one() {
   background('#d1e8eb')
+  //if meatman is playing the level, then the background may be updated to scroll up and down with meatmans y movement. Otherwise, meatmans position is stored once, and then the background is frozen.
   if (won2 === false && lost == false) {
     temp = meatMan.pos.y
   } else if (lost && once) {
     temp = meatMan.pos.y
     once = false
   }
+  //This displays the background, and moves its position at different rates depending on meatmans position. 1408 pixels is added to each image so that they perfectly match next to each other
   for (let i = 0; i <= 5632; i+=1408) {
         image(skyImg, 0.1* (140 - meatMan.pos.x) + i, 0.5*(600 - temp) - 100, 1408, 792)
         image(fMountImg, 0.2* (140 - meatMan.pos.x) + i, 0.5*(600 - temp), 1408, 792)
@@ -882,11 +903,13 @@ function one() {
     black.opacity -= 0.005
   }
   if (set[0]) {
+    //all enemies are not dead
     for (let i = 0; i <= 9; i++) {
       enemyDead[i] = false
     }
     level1Music.play()
     level1Music.volume(1)
+    //the pan for the end of the level is spawned outside of the boundary of the level, but is invisible
     pan = new Sprite ([[-1200, 640], [-800, 640], [-750, 590], [-770, 590], [-800, 620], [-1200, 620], [-1230, 590], [-1250, 590], [-1200, 640]])
     pan.collider = "k"
     pan.img = panImg
@@ -949,6 +972,7 @@ function one() {
     black3.color = "black"
     black3.opacity = 0
   }
+  //this animates the enemies images almost exactly the same as meatmans, except they will always be moving and will always need to be animated
   if (enemyDelay == 18) {
     if (enemyImgCount === 3) {
       enemyImgCount = 0
@@ -964,6 +988,7 @@ function one() {
   } else {
     enemyDelay++
   }
+  //this checks to see if meatman hits the enemy on the head. If he does he kills them. If not then he dies.
   for (let i = 0; i <= 9; i++) {
     if (meatMan.collides(enemy[i]) && meatMan.y + 70 < enemy[i].y) {
       enemyDead[i] = true
@@ -980,11 +1005,13 @@ function one() {
     if (meatball.collides(enemy[i])) {
       enemyDead[i] = true
     }
+    //this hides them without removing them. I got an error when I removed them
     if (enemyDead[i]) {
         enemy[i].collider = "n"
         enemy[i].img = ""
     }
   }
+  //this checks if their movement needs to be updated. If they're dead then the sprites can sleep.
   if (enemyDead[0] == false) {
     enemyMove(0, 470, 1500)
   } else {
@@ -1110,6 +1137,7 @@ function two() {
     groundMaker(5800, 450, 2, 2)
     groundMaker(6300, 300, 7, 2)
     let p = new crate.Sprite(400, 608)
+    //creates knives and forks instead of spoons which can NOT die to bouncing on head
     fork = new enemy.Sprite(3700, 553)
     fork1 = new enemy.Sprite(5200, 300)
     fork2 = new enemy.Sprite(5900, 300)
@@ -1133,7 +1161,7 @@ function two() {
     black3.color = "black"
     black3.opacity = 0
   }
-
+  //animates enemies differently depending on whether they're a knife or a fork
   if (enemyDelay == 18) {
     if (enemyImgCount === 3) {
       enemyImgCount = 0
@@ -1150,6 +1178,7 @@ function two() {
   } else {
     enemyDelay++
   }
+  //if meatman collides at all then he dies
   for (let i = 0; i <= 6; i++) {
     if (meatMan.collides(enemy[i]) && dead == false) {
     meatMan.velocity.y = -5
@@ -1164,7 +1193,7 @@ function two() {
     enemyDead[i] = true
     }
   }
-
+  //if the enemy is dead, they turn invisible and sleep
   if (enemyDead[0] == false) {
     enemyMove(0, 3570, 3930)
   } else {
