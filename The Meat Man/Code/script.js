@@ -123,7 +123,7 @@ function preload() {
   click[0] = createAudio('click.mp3')
   click[1] = createAudio('clickOff.mp3')
   ximg = loadImage('x.png')
-  meatTheme = createAudio('MeatTheme.wav')
+  meatTheme = createAudio('MeatTheme.mp3')
   controlsScreenImg = loadImage('controlsScreen.png')
   crouchImg = loadImage('meatManCrouched.png')
   openMouthImg = loadImage('meatManOpenMouth.png')
@@ -151,7 +151,7 @@ function preload() {
   uGround2 = loadImage('uGround2.png')
   forkImg = [loadImage('fork-1.png'), loadImage('fork-2.png'), loadImage('fork-3.png'), loadImage('fork-4.png')]
   knifeImg = [loadImage('knife-1.png'), loadImage('knife-2.png'), loadImage('knife-3.png'), loadImage('knife-4.png')]
-  level1Music = createAudio('level1Music.mp3')
+  level1Music = createAudio('level1Music.wav')
   level2Music = createAudio('level2Music.wav')
   scream = createAudio('scream.mp3')
 }
@@ -606,7 +606,7 @@ function win() {
     image(fCloudImg, 908, -100, 1408, 792)
     image(mCloudImg, 908, -100, 1408, 792)
     image(cCloudImg, 908, -100, 1408, 792)
-    black3.pos = camera.pos
+    //black3.pos = camera.pos
     if (scream.volume() > 0) {
       scream.volume(scream.volume - 0.05)
     }
