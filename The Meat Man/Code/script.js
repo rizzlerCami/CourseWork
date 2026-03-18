@@ -167,6 +167,7 @@ function setup() {
   enemy.layer = 10
   enemy.friction = 1000
 
+  //this is the black screen for fading in and out
   black = new Sprite(0, 0, 4000, 5000, "n")
   black.layer = 100
   black.color = "black"
@@ -175,6 +176,8 @@ function setup() {
   meatMan.image = idle
   meatMan.rotationLock = true
   meatMan.layer = 3
+
+  //scaleF is the variable image scale of meatMan, keeps track of his size for when he releases meatballs
   scaleF = 0.24
 
   floor = new Group()
@@ -187,11 +190,13 @@ function setup() {
   uGround.h = 105
   uGround.layer = 3
 
+  //these are the buttons to enter each level from the menu
   levelClick = new Group()
   levelClick.layer = 5
 
   wind2.play()
 
+  //ctp is the "Cameron Tate Productions" sprite seen in the intro
   ctp = new Sprite(600, 360, 400, 400, "n")
   ctp.img = ctpimg
   ctp.opacity = 0
@@ -203,6 +208,7 @@ function setup() {
   crate = new Group()
   crate.w = 80
   crate.h = 80
+  //"s" means stationary, it wont move
   crate.collider = "s"
   crate.img = crateImg
   crate.img.scale = 0.25
@@ -211,6 +217,7 @@ function setup() {
   tree = new Group()
   tree.w = 270
   tree.h = 270
+  //"n" = none
   tree.collider = "n"
   tree.img = treeImg
   tree.scale = 0.7
@@ -222,6 +229,7 @@ function setup() {
   sign.collider = "n"
   sign.layer = 0
 
+  //below is the void below the map to trigger the game over screen and catch meatman so he doesn't despawn
   below = new Sprite(6000, 3000, 15000, 50, "k")
 }
 
@@ -235,6 +243,7 @@ function draw() {
       one()
     } else if (level[2]) {
       two()
+      //less friction so he may slide
       floor.friction = 0.0005
     } else if (level[3]) {
       three()
@@ -251,11 +260,13 @@ function draw() {
     meatball.image.scale = 0.24
     meatball.image.offset.x = -17
     meatball.image.offset.y = 6
+    //as long as meatman isn't off the map, and he hasn't won or lost, and he's not on the menu
     if (meatMan.y < 1200 && won2 === false && lost == false && level[0] == false) {
     camera.pos = meatMan.pos
     } else {
     meatMan.velocity.x = 0
     }
+    //scaling the different sprites
     if (level[1]) {
       enemy.scale = 0.4
     } else if (level[2]) {
@@ -274,10 +285,13 @@ function draw() {
   uGround.image.offset.y = -30
   uGround.collider = "s"
   if (dead === true) {
+    //enlarges the game over screen
     if (screenEnlarge < 1.7) {
       screenEnlarge += 0.05
     } else {
+      //I have used these set variables to ensure the code is only ran once, since the draw function runs once every frame
       if (set[2] == false) {
+        //manual hitbox
         menuButton = new Sprite([[-45, 300], [75, 300], [115, 250], [75, 200], [-45, 200], [-85, 250], [-45, 300]])
         menuButton.collider = "k"
         menuButton.w = 340
@@ -297,19 +311,23 @@ function draw() {
       }
       menuButton.img.scale = 0.78
       menuButton.img.offset.y = -100
+      //lines it up with game over screen
       menuButton.pos.x = gameOver.pos.x
       menuButton.pos.y = gameOver.pos.y + 200
       if (lost) {
         black.pos = gameOver.pos
         black.layer = 999999999999999999999
+        //gradually decreases volume
         if (level[1] && level1Music.volume() >= 0.05) {
         level1Music.volume(level1Music.volume() - 0.05)
         } else if (level[2] && level2Music.volume() >= 0.05) {
         level2Music.volume(level2Music.volume() - 0.05)
         }
+        //fades out
         if (black.opacity < 1) {
           black.opacity += 0.01
         } else {
+          //if the level has been beaten, then all of the levels from the level above that one may be set to true, otherwise the levels going down from the level you've just lost will be set to true
           if (won) {
             for (let p = 0; p <= 5; p++) {
               if (level[p]) {
@@ -329,6 +347,7 @@ function draw() {
               }
             }
           }
+          //reset variables and remove sprites
           dead = false
           set = [false, false, false]
           level[0] = true
@@ -361,6 +380,7 @@ function draw() {
     }
     gameOver.pos = camera.pos
     gameOver.scale.y = 0.9
+    //constantly update the size so it zooms in
     gameOver.img.scale = screenEnlarge
   }
   if (meatMan.collides(below) && dead == false) {
@@ -373,9 +393,9 @@ function draw() {
   }
   meatMan.image.scale = scaleF
   meatMan.image.offset.y = -30
+  //so he doesn't slide on level 1
   meatMan.friction = 500
   shootSound.volume(0.1)
-  p5play.renderStats = true
 }
 
 function movement() {
