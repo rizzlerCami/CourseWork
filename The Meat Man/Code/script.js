@@ -63,7 +63,6 @@ let forkImg = ["", "", "", ""]
 let knifeImg = ["", "", "", ""]
 let enemyImgCount = 0
 let enemyDelay = 0
-let enemyBool = true
 let dead = false
 let flip = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
 let enemyDead = [, , , , , , , , , ]
